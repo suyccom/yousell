@@ -38,8 +38,11 @@ gem 'jquery-rails', '2.2.1'
 # gem 'debugger'
 
 gem "hobo", "= 2.0.0"
-# Hobo has a lot of assets.   Stop cluttering the log in development mode.
-gem "quiet_assets", :group => :development
+group :development do
+  gem 'thin'
+  # Stop cluttering the log in development mode.
+  gem 'quiet_assets'
+end
 # Hobo's version of will_paginate is required.
 gem "will_paginate", :git => "git://github.com/Hobo/will_paginate.git"
 gem "hobo_bootstrap", "2.0.0"
