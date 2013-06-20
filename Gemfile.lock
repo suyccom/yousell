@@ -102,6 +102,7 @@ GEM
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
     ffi (1.9.0)
+    headless (1.0.1)
     hike (1.2.3)
     hirb (0.7.1)
     hobo (2.0.0)
@@ -257,6 +258,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   factory_girl_rails (= 4.2.0)
   faker!
+  headless
   hirb
   hobo (= 2.0.0)
   hobo-metasearch!

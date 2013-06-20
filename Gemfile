@@ -74,5 +74,6 @@ group :test do
   gem "capybara"
   gem "capybara-webkit", "0.12.1"
   gem "timecop"
+  gem "headless"
 end
 gem "rails-settings-cached", "0.2.4"
