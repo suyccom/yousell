@@ -19,6 +19,9 @@ es:
       user:
         one: Usuario
         other: Usuarios
+      warehouse:
+        one: Almacén
+        other: Almacenes
     attributes:
       user:
         name: Nombre
@@ -26,6 +29,14 @@ es:
         current_password: Contraseña Actual
         password_confirmation: Confirmación Contraseña
         email_address: Correo Electrónico
+      warehouse:
+        Warehouse: Almacén
+        actions: Acciones
+                
+  menu:
+    administration: Administración
+  user:
+    change_language: Cambiar idioma
 #    attribute_help:
 #      user:
 #        email_address:
