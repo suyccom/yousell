@@ -49,3 +49,31 @@ gem "hobo_bootstrap", "2.0.0"
 gem "hobo_jquery_ui", "2.0.0"
 gem "hobo_bootstrap_ui", "2.0.0"
 gem "jquery-ui-themes", "~> 0.0.4"
+gem 'bootswatch-rails'
+gem 'hobo-metasearch', :git => "git://github.com/suyccom/hobo-metasearch"
+gem "factory_girl_rails", "4.2.0"
+gem "faker", :git => 'git://github.com/jorgegorka/faker'
+gem "turbolinks"
+
+# Development gems
+group :development do
+  gem 'wirb'
+  gem 'hirb'
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem "ZenTest", '4.8.3'
+  gem "awesome_print"
+end
+
+# Testing gems
+group :test do
+  gem "rspec-rails", ">= 2.5.0"
+  gem "spork", ">= 1.0.0rc3"
+  gem "autotest"
+  gem "autotest-growl"
+  gem "capybara"
+  gem "capybara-webkit", "0.12.1"
+  gem "timecop"
+  gem "headless"
+end
+gem "rails-settings-cached", "0.2.4"

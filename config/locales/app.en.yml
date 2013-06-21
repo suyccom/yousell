@@ -2,8 +2,10 @@
 # e.g.
 
 en:
-  hello: "Hello world"
-
+  menu:
+    administration: Administration
+  user:
+    change_language: Change language
 #  attributes:
 #    created_at: Created at
 #    updated_at: Updated at

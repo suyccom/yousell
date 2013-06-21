@@ -15,3 +15,5 @@
 <include src="taglibs/auto/rapid/forms"/>
 
 <include src="application"/>
+
+<include src="main_nav"/>

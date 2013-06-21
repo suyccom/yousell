@@ -1,0 +1,9 @@
+<show-page:>
+  <after-field-list:>
+    <div class="well">
+      <h4><t key="user.change_language"/></h4>
+      <a class="btn" href="?locale=en" unless="&I18n.locale == 'en'">English</a>
+      <a class="btn" href="?locale=es" unless="&I18n.locale == 'es'">Castellano</a>
+    </div>
+  </after-field-list:>
+</show-page:>
