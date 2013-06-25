@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130620124142) do
+ActiveRecord::Schema.define(:version => 20130625220540) do
 
   create_table "users", :force => true do |t|
     t.string   "crypted_password",          :limit => 40
@@ -28,6 +28,13 @@ ActiveRecord::Schema.define(:version => 20130620124142) do
   end
 
   add_index "users", ["state"], :name => "index_users_on_state"
+
+  create_table "variations", :force => true do |t|
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "warehouses", :force => true do |t|
     t.string   "name"
