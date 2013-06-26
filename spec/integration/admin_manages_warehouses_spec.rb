@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 require 'spec_helper'
- 
+
 feature 'The admin wants to manage warehouses', :driver => :selenium do
 
   scenario 'Admin adds and edits warehouses' do
@@ -27,7 +27,7 @@ feature 'The admin wants to manage warehouses', :driver => :selenium do
     page.should have_css("tr.warehouse", :count => 2)
     page.find('tr.warehouse:nth-child(2) .this-view').should have_content 'Elkano 3'
   end
-  
+
   scenario 'The user can delete warehouses only when they are empty' do
     # The user can destroy a warehouse, and the system forces him to move the stock to another warehouse
     # The user can't destroy the only remaining warehouse (he can only destroy if there is no product in it)

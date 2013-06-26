@@ -32,7 +32,10 @@ es:
       warehouse:
         Warehouse: Almacén
         actions: Acciones
-                
+    attribute_help:
+      variation:
+        value: Utiliza valores separados por comas
+
   menu:
     administration: Administración
   user:
