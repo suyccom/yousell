@@ -13,6 +13,7 @@ feature 'The admin wants to manage variations', :driver => :selenium do
     click_on 'New Variation'
     fill_in 'variation[name]', :with => 'Tamaño'
     fill_in 'variation[value]', :with => 'pequeña, mediana, grande'
+    page.find('p.value-help').should have_content 'Use comma separated values'
     click_on 'Create Variation'
     page.find('tr.variation:nth-child(1) .this-view').should have_content 'Tamaño'
     page.find('tr.variation:nth-child(1) .value-view').should have_content 'pequeña, mediana, grande'

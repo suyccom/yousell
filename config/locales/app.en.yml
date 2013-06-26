@@ -10,7 +10,10 @@ en:
 #    created_at: Created at
 #    updated_at: Updated at
 #
-#  activerecord:
+  activerecord:
+    attribute_help:
+      variation:
+        value: Use comma separated values
 #    models:
 #      user:
 #        one: User
