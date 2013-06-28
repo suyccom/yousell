@@ -1,5 +1,5 @@
 <def tag="main-nav">
-  <hobo-cache suffix="nav" loggedin="&current_user.signed_up?">
+  <hobo-cache suffix="nav" language="&I18n.locale">
     <navigation class="main-nav" merge-attrs param="default">
       <nav-item href="#{base_url}/">Home</nav-item>
       <li class="dropdown">

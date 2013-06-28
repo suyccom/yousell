@@ -1,0 +1,11 @@
+production:
+  domain:
+  - name: "robot@tallasycolores.dnsalias.com"
+    ssh_options:
+    - "-p 22022"
+  deploy_to: "/srv/www/yousell"
+  repository: "https://github.com/suyccom/yousell.git"
+  branch: "master"
+  rake_command: "bundle exec rake"
+  rake_env:
+    RAILS_ENV: 'production'

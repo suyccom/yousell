@@ -4,4 +4,6 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+require 'whiskey_disk/rake'
+
 Yousell::Application.load_tasks
