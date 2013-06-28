@@ -22,6 +22,12 @@ es:
       warehouse:
         one: Almacén
         other: Almacenes
+      product_type:
+        one: Tipo de producto
+        other: Tipos de producto
+      variation:
+        one: Atributo
+        other: Atributos
     attributes:
       user:
         name: Nombre
@@ -32,6 +38,17 @@ es:
       warehouse:
         Warehouse: Almacén
         actions: Acciones
+      product_type:
+        ProductType: Tipo de producto
+        actions: Acciones
+        default_price: Precio por defecto
+        variations: Atributos
+        name: Nombre
+      variation:
+        Variation: Atributo
+        value: Valor
+        actions: Acciones
+        name: Nombre
     attribute_help:
       variation:
         value: Utiliza valores separados por comas
