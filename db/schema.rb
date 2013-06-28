@@ -13,6 +13,16 @@
 
 ActiveRecord::Schema.define(:version => 20130628092048) do
 
+  create_table "product_type_variations", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "product_type_id"
+    t.integer  "variation_id"
+  end
+
+  add_index "product_type_variations", ["product_type_id"], :name => "index_product_type_variations_on_product_type_id"
+  add_index "product_type_variations", ["variation_id"], :name => "index_product_type_variations_on_variation_id"
+
   create_table "product_types", :force => true do |t|
     t.string   "name"
     t.decimal  "default_price", :precision => 8, :scale => 2, :default => 0.0
