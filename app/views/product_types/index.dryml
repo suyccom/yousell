@@ -1,0 +1,3 @@
+<index-page:>
+  <collection: fields='name, default_price, variations, actions'/>
+</index-page:>

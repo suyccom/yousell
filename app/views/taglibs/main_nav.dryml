@@ -11,11 +11,13 @@
             <ht key="warehouse.nav_item" count="100"><model-name-human count="100"/></ht>
           </nav-item>
           <nav-item with='&Variation'>
-            <ht key='warehouse.nav_item' count='100'><model-name-human count='100'/></ht>
+            <ht key='variation.nav_item' count='100'><model-name-human count='100'/></ht>
+          </nav-item>
+          <nav-item with='&ProductType'>
+            <ht key='product_type.nav_item' count='100'><model-name-human count='100'/></ht>
           </nav-item>
         </ul>
       </li>
     </navigation>
   </hobo-cache>
 </def>
-

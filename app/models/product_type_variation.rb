@@ -1,16 +1,14 @@
-class ProductType < ActiveRecord::Base
+class ProductTypeVariation < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
 
   fields do
-    name          :string
-    default_price :decimal, :precision => 8, :scale => 2, :default => 0
     timestamps
   end
-  attr_accessible :name, :default_price, :variations
+  attr_accessible
 
-  has_many :variations, :through => :product_type_variations, :accessible => true
-  has_many :product_type_variations, :dependent => :destroy
+  belongs_to :product_type
+  belongs_to :variation
 
   # --- Permissions --- #
 

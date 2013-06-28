@@ -9,6 +9,9 @@ class Variation < ActiveRecord::Base
   end
   attr_accessible :name, :value
 
+  has_many :product_types, :through => :product_type_variations, :accessible => true
+  has_many :product_type_variations, :dependent => :destroy
+
   # --- Permissions --- #
 
   def create_permitted?
