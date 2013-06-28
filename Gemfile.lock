@@ -235,6 +235,8 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     websocket (1.0.7)
+    whisk_deploy (0.6.26)
+      rake
     will_paginate-bootstrap (0.2.3)
       will_paginate (>= 3.0.3)
     wirb (1.0.1)
@@ -278,5 +280,6 @@ DEPENDENCIES
   timecop
   turbolinks
   uglifier (>= 1.0.3)
+  whisk_deploy
   will_paginate!
   wirb
