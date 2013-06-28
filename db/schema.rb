@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130626124528) do
+ActiveRecord::Schema.define(:version => 20130628092048) do
 
   create_table "product_types", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20130626124528) do
     t.datetime "updated_at"
     t.string   "state",                                   :default => "active"
     t.datetime "key_timestamp"
+    t.string   "language",                                :default => "en"
   end
 
   add_index "users", ["state"], :name => "index_users_on_state"

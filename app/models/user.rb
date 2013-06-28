@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
     name          :string, :required, :unique
     email_address :email_address, :login => true
     administrator :boolean, :default => false
+    language      :string, :default => "en"
     timestamps
   end
   attr_accessible :name, :email_address, :password, :password_confirmation, :current_password

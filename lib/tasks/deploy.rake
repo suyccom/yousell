@@ -30,7 +30,7 @@ namespace :deploy do
   task :restart_passenger do
     puts "restarting Passenger web server"
     system("touch tmp/restart.txt")
-    system("wget http://demo.asedoc.es -O /dev/null")
+    system("wget http://tallasycolores.dnsalias.com -O /dev/null")
   end
  
   task :post_deploy => [ :bundle_gems, 
