@@ -15,7 +15,7 @@ namespace :deploy do
     if changed?('db/migrate')
       puts "Yes, we are running migrations"
       #Rake::Task['db:migrate']
-      system("rake db:migrate")
+      system("bundle exec rake db:migrate")
     end
   end
  
@@ -23,7 +23,7 @@ namespace :deploy do
     puts "Checking whether to compile assets"
     if changed?('app/assets')
       puts "Yes, we are compiling assets"
-      system("rake assets:precompile")
+      system("bundle exec rake assets:precompile")
     end
   end
  
