@@ -14,6 +14,11 @@ en:
     attribute_help:
       variation:
         value: Use comma separated values
+  product:
+    nav_item: Stock
+    index:
+      heading: Stock
+      title: Stock
 #    models:
 #      user:
 #        one: User

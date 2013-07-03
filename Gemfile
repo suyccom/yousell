@@ -63,6 +63,7 @@ group :development do
   gem "binding_of_caller"
   gem "ZenTest", '4.8.3'
   gem "awesome_print"
+  gem "debugger"
 end
 
 # Testing gems
