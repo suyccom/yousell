@@ -12,6 +12,8 @@ class ProductType < ActiveRecord::Base
   has_many :variations, :through => :product_type_variations, :accessible => true
   has_many :product_type_variations, :dependent => :destroy
 
+  has_many :products
+
   # --- Permissions --- #
 
   def create_permitted?

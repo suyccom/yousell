@@ -1,0 +1,3 @@
+<index-page>
+  <collection: fields="name, amount, price, barcode, actions"/>
+</index-page>
