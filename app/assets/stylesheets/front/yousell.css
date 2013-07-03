@@ -1,0 +1,16 @@
+.product .form-horizontal ul.input-many{
+  margin-left: 0px;
+}
+.product .form-horizontal .input-many-item .control-group {
+  margin-bottom: 6px;
+}
+.product ul.input-many > li > div.input-many-item {
+  border: 0;
+  padding-top: 5px;
+}
+.product ul.input-many .buttons{
+  display: none;
+}
+.product ul.input-many .variation-field{
+  display: none;
+}

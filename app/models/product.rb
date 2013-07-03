@@ -8,12 +8,16 @@ class Product < ActiveRecord::Base
     barcode :string
     timestamps
   end
-  attr_accessible :price, :amount, :barcode
+  attr_accessible :price, :amount, :barcode, :product_type, :product_type_id, :product_variations
 
   belongs_to :product_type
 
-  has_many :product_variations
-  has_many :variations, :through => :product_variations, :accessible => true
+  has_many :product_variations, :accessible => true
+  has_many :variations, :through => :product_variations
+  
+  def name
+    "#{product_type} #{product_variations.*.value.join(' ')}"
+  end
 
   # --- Permissions --- #
 

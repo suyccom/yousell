@@ -1,8 +1,9 @@
 <def tag="main-nav">
   <hobo-cache suffix="nav" language="&I18n.locale">
     <navigation class="main-nav" merge-attrs param="default">
-      <nav-item href="#{base_url}/">Home</nav-item>
-      <nav-item href='/products'>Almacén</nav-item>
+      <nav-item with="&Product">
+        <ht key="product.nav_item" count="100"><model-name-human count="100"/></ht>
+      </nav-item>
       <li class="dropdown">
         <a href="#" data-toggle="dropdown" role="button" id="drop-administration" class="dropdown-toggle">
           <t key='menu.administration' /> <b class="caret"></b>

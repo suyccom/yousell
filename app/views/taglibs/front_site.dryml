@@ -17,3 +17,5 @@
 <include src="application"/>
 
 <include src="main_nav"/>
+<include src="bootstrap_table_actions"/>
+

@@ -6,7 +6,7 @@ class ProductVariation < ActiveRecord::Base
     value :string
     timestamps
   end
-  attr_accessible :value
+  attr_accessible :value, :variation, :variation_id, :product, :product_id
 
   belongs_to :variation
   belongs_to :product
