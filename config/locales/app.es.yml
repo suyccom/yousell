@@ -28,6 +28,9 @@ es:
       variation:
         one: Atributo
         other: Atributos
+      product:
+        one: Producto
+        other: Productos
     attributes:
       user:
         name: Nombre
@@ -49,6 +52,11 @@ es:
         value: Valor
         actions: Acciones
         name: Nombre
+      product:
+        Product: Producto
+        price: Precio
+        amount: Cantidad
+        barcode: Código de barras
     attribute_help:
       variation:
         value: Utiliza valores separados por comas
