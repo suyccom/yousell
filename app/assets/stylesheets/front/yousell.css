@@ -14,3 +14,13 @@
 .product ul.input-many .variation-field{
   display: none;
 }
+
+
+
+
+.new-page.sell #add-product-form input {
+  margin-top: 0;
+  font-size: 2em;
+  height: 1em;
+  width: 40%;
+}

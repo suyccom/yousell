@@ -1,0 +1,33 @@
+<new-page title="&t('sell', :default => 'Sell')" without-heading>
+  <form: action="/" updates="#lines, #add-product-form">
+    <field-list: replace>
+      <add-product-form/>
+      <lines/>
+    </field-list:>
+    <cancel: replace/>
+    <submit: class="btn-large btn-success span6"/>
+  </form:>
+</new-page>
+
+
+<def tag="add-product-form">
+  <div id="add-product-form" part="add-product-form" class="well">
+    <div class="form-inline">
+      <input type="text" placeholder="Barcode" name="barcode" autofocus/>&nbsp;
+      <input type="text" placeholder="Search" name="search"/>
+      <button type="submit" class="btn">+</button>
+    </div>
+    <error-messages/>
+  </div>
+</def>
+
+
+<def tag="lines">
+  <div id="lines" part="lines">
+    <table:lines class="table table-striped table-bordered collection" fields="name, amount, price, actions">
+      <actions-view:>Patata</actions-view:>
+    </table>
+    <input-many:lines class="hidden"/>
+    <%= rand.to_s %>
+  </div>
+</def>

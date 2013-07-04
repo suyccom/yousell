@@ -9,6 +9,7 @@
 # please post it to http://hobousers.googlegroups.com. Thank you!
 
 es:
+  sell: Vender
 
   attributes:
     created_at: Creado el
@@ -73,6 +74,9 @@ es:
     index:
       heading: Almacén
       title: Almacén
+
+      
+      
 #    attribute_help:
 #      user:
 #        email_address:
