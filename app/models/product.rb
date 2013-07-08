@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
+    name    :string
     price   :decimal, :precision => 8, :scale => 2, :default => 0
     amount  :integer
     barcode :string
@@ -15,8 +16,9 @@ class Product < ActiveRecord::Base
   has_many :product_variations, :accessible => true
   has_many :variations, :through => :product_variations
   
-  def name
-    "#{product_type} #{product_variations.*.value.join(' ')}"
+  before_save :set_name
+  def set_name
+    self.name = "#{product_type} #{product_variations.*.value.join(' ')}"
   end
 
   # --- Permissions --- #

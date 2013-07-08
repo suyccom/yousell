@@ -1,0 +1,8 @@
+<show-page without-edit-link without-record-flags>
+  <collection: replace>
+    <table:lines class="table table-striped table-bordered collection" 
+                 fields="name, amount, price">
+      <price-view:><currency/></price-view:>
+    </table>
+  </collection:>
+</show-page>

@@ -19,6 +19,17 @@ en:
     index:
       heading: Stock
       title: Stock
+
+
+  sale:
+    nav_item: Sales
+    actions:
+      new: Sell
+      save: Complete Sale
+    messages:
+      create:
+        success: The sale has been completed successfully
+
 #    models:
 #      user:
 #        one: User

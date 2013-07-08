@@ -11,20 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130704231437) do
+ActiveRecord::Schema.define(:version => 20130708053106) do
 
   create_table "lines", :force => true do |t|
     t.string   "name"
     t.decimal  "price",      :precision => 8, :scale => 2, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "sell_id"
+    t.integer  "sale_id"
     t.integer  "product_id"
     t.integer  "amount",                                   :default => 1
   end
 
   add_index "lines", ["product_id"], :name => "index_lines_on_product_id"
-  add_index "lines", ["sell_id"], :name => "index_lines_on_sell_id"
+  add_index "lines", ["sale_id"], :name => "index_lines_on_sale_id"
 
   create_table "product_type_variations", :force => true do |t|
     t.datetime "created_at"
@@ -61,11 +61,14 @@ ActiveRecord::Schema.define(:version => 20130704231437) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_type_id"
+    t.string   "name"
   end
 
   add_index "products", ["product_type_id"], :name => "index_products_on_product_type_id"
 
-  create_table "sells", :force => true do |t|
+  create_table "sales", :force => true do |t|
+    t.boolean  "complete",     :default => false
+    t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

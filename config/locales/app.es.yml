@@ -9,7 +9,7 @@
 # please post it to http://hobousers.googlegroups.com. Thank you!
 
 es:
-  sell: Vender
+  product_not_found: No se ha encontrado el producto
 
   attributes:
     created_at: Creado el
@@ -32,6 +32,9 @@ es:
       product:
         one: Producto
         other: Productos
+      sale:
+        one: Venta
+        other: Ventas
     attributes:
       user:
         name: Nombre
@@ -61,6 +64,16 @@ es:
         barcode: Código de barras
         product_type: Tipo de producto
         product_variations: Variaciones
+      sale:
+        Sale: Venta
+        completed_at: Fecha de venta
+        actions: Acciones
+        lines: Líneas
+      line:
+        name: Nombre
+        amount: Cantidad
+        price: Precio
+        actions: Acciones
     attribute_help:
       variation:
         value: Utiliza valores separados por comas
@@ -74,7 +87,16 @@ es:
     index:
       heading: Almacén
       title: Almacén
-
+  sale:
+    nav_item: Ventas
+    barcode: Código de barras
+    search: Buscar
+    actions:
+      new: Vender
+      save: Efectuar Venta
+    messages:
+      create:
+        success: La venta se ha efectuado con éxito
       
       
 #    attribute_help:
