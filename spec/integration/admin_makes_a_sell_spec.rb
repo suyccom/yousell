@@ -32,15 +32,18 @@ feature 'The admin wants to make a sell', :driver => :selenium do
       fill_in 'barcode', :with => '11BLACK'
       click_on '+'
     end
+    page.should have_css 'tr.line:nth-child(1)'
     page.find('tr.line:nth-child(1)').should have_content 'Shoes 35 black'
     page.should have_content 'Total: $15.00'
     
     # Adds another product
     within '#add-product-form' do
+      fill_in 'barcode', :with => ''
       fill_in 'search', :with => 'Shoes'
       click_on 'Shoes 35 white'
       click_on '+'
     end
+    #page.should have_css 'tr.line:nth-child(2)'
     page.find('tr.line:nth-child(2)').should have_content 'Shoes 35 white'
     page.should have_content 'Total: $31.00'
     
@@ -51,6 +54,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     page.should have_content 'Total: $47.00'
     
     # Adds an incorrect barcode
+    fill_in 'search', :with => ''
     fill_in 'barcode', :with => '11GREEN'
     click_on '+'
     page.driver.browser.switch_to.alert.accept # Accept the error dialog
