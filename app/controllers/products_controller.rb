@@ -4,6 +4,8 @@ class ProductsController < ApplicationController
 
   auto_actions :all, :except => :show
   
+  autocomplete
+  
   def new
     hobo_new do
       if @product.product_type

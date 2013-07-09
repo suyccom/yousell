@@ -1,6 +1,7 @@
 <def tag="main-nav">
   <hobo-cache suffix="nav" language="&I18n.locale">
     <navigation class="main-nav" merge-attrs param="default">
+      <nav-item href="#{base_url}/"><t key="sale.actions.new">Sale</t></nav-item>
       <nav-item with="&Product">
         <ht key="product.nav_item" count="100"><model-name-human count="100"/></ht>
       </nav-item>
@@ -9,6 +10,9 @@
           <t key='menu.administration' /> <b class="caret"></b>
         </a>
         <ul aria-labelledby="drop-administration" role="menu" class="dropdown-menu">
+          <nav-item with="&Sale">
+            <ht key="sale.nav_item" count="100"><model-name-human count="100"/></ht>
+          </nav-item>
           <nav-item with="&Warehouse">
             <ht key="warehouse.nav_item" count="100"><model-name-human count="100"/></ht>
           </nav-item>
