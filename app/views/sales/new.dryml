@@ -8,7 +8,7 @@
 
 
 <def tag="add-line-form">
-  <form with="&this.lines.new" updates="#lines" success="new_line_hook()" refocus-form reset-form>
+  <form with="&this.lines.new" updates="#lines" refocus-form reset-form>
     <div id="add-product-form" part="add-product-form">
       <flash-messages/>
       <div class="form-inline well">
