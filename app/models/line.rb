@@ -14,9 +14,6 @@ class Line < ActiveRecord::Base
   belongs_to :product
 
   validates_presence_of :sale, :product
-  validate :only_one_line_per_sale
-  def only_one_line_per_sale
-  end
 
   # --- Hooks --- #
   before_create :copy_product_name
