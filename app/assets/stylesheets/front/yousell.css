@@ -14,3 +14,19 @@
 .product ul.input-many .variation-field{
   display: none;
 }
+
+
+
+
+.new-page.sale #add-product-form input {
+  font-size: 1.8em;
+  height: 1.5em;
+  margin-top: 0;
+}
+.new-page.sale #add-product-form button{
+  margin-top:2px;
+}
+
+.new-page.sale .form-horizontal .actions {
+  padding-left: 0px;
+}

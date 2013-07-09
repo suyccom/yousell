@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130628115123) do
+ActiveRecord::Schema.define(:version => 20130708053106) do
+
+  create_table "lines", :force => true do |t|
+    t.string   "name"
+    t.decimal  "price",      :precision => 8, :scale => 2, :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "sale_id"
+    t.integer  "product_id"
+    t.integer  "amount",                                   :default => 1
+  end
+
+  add_index "lines", ["product_id"], :name => "index_lines_on_product_id"
+  add_index "lines", ["sale_id"], :name => "index_lines_on_sale_id"
 
   create_table "product_type_variations", :force => true do |t|
     t.datetime "created_at"
@@ -42,15 +55,23 @@ ActiveRecord::Schema.define(:version => 20130628115123) do
   add_index "product_variations", ["variation_id"], :name => "index_product_variations_on_variation_id"
 
   create_table "products", :force => true do |t|
-    t.decimal  "price"
+    t.decimal  "price",           :precision => 8, :scale => 2, :default => 0.0
     t.integer  "amount"
     t.string   "barcode"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_type_id"
+    t.string   "name"
   end
 
   add_index "products", ["product_type_id"], :name => "index_products_on_product_type_id"
+
+  create_table "sales", :force => true do |t|
+    t.boolean  "complete",     :default => false
+    t.datetime "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "crypted_password",          :limit => 40
