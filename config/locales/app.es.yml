@@ -35,6 +35,9 @@ es:
       sale:
         one: Venta
         other: Ventas
+      provider:
+        one: Proveedor
+        other: Proveedores
     attributes:
       user:
         name: Nombre
@@ -64,11 +67,17 @@ es:
         barcode: Código de barras
         product_type: Tipo de producto
         product_variations: Variaciones
+        provider: Proveedor
+        provider_code: Código proveedor
       sale:
         Sale: Venta
         completed_at: Fecha de venta
         actions: Acciones
         lines: Líneas
+      provider:
+        Provider: Proveedor
+        code: Código
+        actions: Acciones
       line:
         name: Nombre
         amount: Cantidad
@@ -77,6 +86,12 @@ es:
     attribute_help:
       variation:
         value: Utiliza valores separados por comas
+    errors:
+      models:
+        product:
+          attributes:
+            provider_code:
+              taken: 'está repetido. <a href="%{link}">Haz clic aquí para ir al producto con código de proveedor %{provider_code}</a>.'
 
   menu:
     administration: Administración

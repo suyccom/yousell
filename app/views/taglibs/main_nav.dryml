@@ -19,6 +19,9 @@
           <nav-item with='&Variation'>
             <ht key='variation.nav_item' count='100'><model-name-human count='100'/></ht>
           </nav-item>
+          <nav-item with='&Provider'>
+            <ht key='provider.nav_item' count='100'><model-name-human count='100'/></ht>
+          </nav-item>
           <nav-item with='&ProductType'>
             <ht key='product_type.nav_item' count='100'><model-name-human count='100'/></ht>
           </nav-item>

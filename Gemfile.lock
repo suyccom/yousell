@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/Hobo/hobo_bootstrap.git
+  revision: 1cb0b1790ea3220f3c3d3ccd9672b6d768cc3586
+  specs:
+    hobo_bootstrap (2.0.1)
+      bootstrap-sass (~> 2.1)
+      hobo (~> 2.0.0.pre6)
+      hobo_jquery (~> 2.0.0.pre6)
+      will_paginate-bootstrap (~> 0.2.1)
+
+GIT
   remote: git://github.com/Hobo/will_paginate.git
   revision: cc7ef01551b94fe4f607e38929037234dc70bb62
   specs:
@@ -118,11 +128,6 @@ GEM
       hobo_fields (= 2.0.0)
       hobo_support (= 2.0.0)
       will_paginate (~> 3.0.0)
-    hobo_bootstrap (2.0.0)
-      bootstrap-sass (~> 2.1)
-      hobo (~> 2.0.0.pre6)
-      hobo_jquery (~> 2.0.0.pre6)
-      will_paginate-bootstrap (~> 0.2.1)
     hobo_bootstrap_ui (2.0.0)
       bootstrap-datepicker-rails
       hobo_bootstrap (~> 2.0.0.pre1)
@@ -273,7 +278,7 @@ DEPENDENCIES
   hirb
   hobo (= 2.0.0)
   hobo-metasearch!
-  hobo_bootstrap (= 2.0.0)
+  hobo_bootstrap!
   hobo_bootstrap_ui (= 2.0.0)
   hobo_jquery_ui (= 2.0.0)
   jquery-rails (= 2.2.1)

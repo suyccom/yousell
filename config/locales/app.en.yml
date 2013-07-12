@@ -14,6 +14,12 @@ en:
     attribute_help:
       variation:
         value: Use comma separated values
+    errors:
+      models:
+        product:
+          attributes:
+            provider_code:
+              taken: 'has already been taken. <a href="%{link}">Click here to go to the product with provider code %{provider_code}</a>.'
   product:
     nav_item: Stock
     index:
