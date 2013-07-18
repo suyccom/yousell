@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
 
   hobo_model_controller
 
-  auto_actions :all, :except => :show
+  auto_actions :all
   
   autocomplete
   
@@ -13,6 +13,9 @@ class ProductsController < ApplicationController
         for v in @product.product_type.variations
           @product.product_variations << ProductVariation.new(:variation => v)
         end
+      end
+      if @product.provider && @product.provider_code == ''
+        @product.provider_code = @product.provider.code
       end
     end
   end
