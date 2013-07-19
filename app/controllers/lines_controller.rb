@@ -5,10 +5,13 @@ class LinesController < ApplicationController
   auto_actions :all
   
   def create
-    # There's no need to use else here: Hobo will throw a validation error :)
-    if product = Product.find_by_barcode(params[:barcode]) || Product.find_by_name(params[:search])
-      params[:line][:product_id] = product.id
-    end
+    
+    if params[:barcode] && !params[:barcode].blank?
+      product = Product.find_by_barcode(params[:barcode])
+    elsif params[:search] && !params[:search].blank?
+      product = Product.find_by_name(params[:search])
+    end # There's no need to use else here: Hobo will throw a validation error :)
+    params[:line][:product_id] = product.id if product
     # If the sale already has the same product, just add one unit to it instead of creating a new line
     sale = Sale.find(params[:line][:sale_id])
     line = sale.lines.find{|s| s.product == product;}
