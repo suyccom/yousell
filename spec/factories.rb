@@ -11,6 +11,28 @@ FactoryGirl.define do
     password 'RobotRobot'
     password_confirmation 'RobotRobot'
   end
+  
+  factory :product_type, class: ProductType do
+    name 'Zapatillas Lewis'
+  end
+  
+  factory :product, class: Product do
+    price 10
+    amount 5
+    barcode 'ZZ11'
+    association :product_type
+  end
+  
+  factory :line, class: Line do
+    association :product
+  end
+  
+  factory :sale, class: Sale do
+    after(:create) do |sale, evaluator|
+      FactoryGirl.create(:line, :sale => sale)
+      sale.update_attribute(:complete, true)
+    end
+  end
 end
 
 
