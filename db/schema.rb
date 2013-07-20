@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130711165237) do
+ActiveRecord::Schema.define(:version => 20130720185628) do
 
   create_table "lines", :force => true do |t|
     t.string   "name"
@@ -77,11 +77,14 @@ ActiveRecord::Schema.define(:version => 20130711165237) do
   end
 
   create_table "sales", :force => true do |t|
-    t.boolean  "complete",     :default => false
+    t.boolean  "complete",           :default => false
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "refunded_ticket_id"
   end
+
+  add_index "sales", ["refunded_ticket_id"], :name => "index_sales_on_refunded_ticket_id"
 
   create_table "users", :force => true do |t|
     t.string   "crypted_password",          :limit => 40

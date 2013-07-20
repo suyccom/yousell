@@ -1,0 +1,5 @@
+<index-page>
+  <collection: fields="this, completed_at, total">
+    <total-view:><currency/></total-view:>
+  </collection:>
+</index-page>
