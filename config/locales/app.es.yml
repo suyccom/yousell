@@ -11,6 +11,9 @@
 es:
   product_not_found: No se ha encontrado el producto
 
+  placeholder:
+    discount: Descuento en € o %
+
   attributes:
     created_at: Creado el
     updated_at: Actualizado el

@@ -51,19 +51,34 @@
     <table:lines.reload class="table table-striped table-bordered collection" fields="name, amount, price, actions">
       <actions-view:>
         <div class="row">
-          <formlet ajax with="&this_parent" class="span1">
+          <formlet ajax with="&this_parent" class="span">
             <input type="hidden" name="minus" value="true"/>
             <input type="submit" class="btn" value="-"/>
           </formlet>
           &nbsp;
-          <formlet ajax with="&this_parent" class="pull-left">
+          <formlet ajax with="&this_parent" class="pull-left ">
             <input type="hidden" name="sum" value="true"/>
+            <input type="submit" class="btn" value="+"/>
+          </formlet>
+          &nbsp;
+          <formlet ajax with="&this_parent" class="pull-left span4">
+            <input type="text" name="discount" placeholder="#{I18n.t 'placeholder.discount'}" value="#{this.discount}"/>
             <input type="submit" class="btn" value="+"/>
           </formlet>
         </div>
       </actions-view:>
       <price-view:><currency/></price-view:>
     </table>
-    <h4>Total: <currency:total/></h4>
+    <h4>
+    Total: <currency:total/>
+    <formlet ajax with="&this" class="pull-right span4">
+      <div style="font-size:10px;">
+        Total Discount&nbsp;
+        <input type="text" name="total_discount" placeholder="#{I18n.t 'placeholder.discount'}" value="#{this.total_discount}"/>
+        <input type="submit" class="btn" value="+"/>
+      </div>
+    </formlet>
+</h4>
+
   </div>
 </def>

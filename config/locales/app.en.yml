@@ -2,6 +2,8 @@
 # e.g.
 
 en:
+  placeholder:
+    discount: Discount in $ or %
   menu:
     administration: Administration
   user:

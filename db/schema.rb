@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130711165237) do
+ActiveRecord::Schema.define(:version => 20130721163753) do
 
   create_table "lines", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20130711165237) do
     t.integer  "sale_id"
     t.integer  "product_id"
     t.integer  "amount",                                   :default => 1
+    t.string   "discount"
   end
 
   add_index "lines", ["product_id"], :name => "index_lines_on_product_id"
@@ -77,10 +78,11 @@ ActiveRecord::Schema.define(:version => 20130711165237) do
   end
 
   create_table "sales", :force => true do |t|
-    t.boolean  "complete",     :default => false
+    t.boolean  "complete",       :default => false
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "total_discount"
   end
 
   create_table "users", :force => true do |t|
