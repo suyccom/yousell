@@ -63,19 +63,19 @@
           &nbsp;
           <formlet ajax with="&this_parent" class="pull-left span4">
             <input type="text" name="discount" placeholder="#{I18n.t 'placeholder.discount'}" value="#{this.discount}"/>
-            <input type="submit" class="btn" value="+"/>
+            <input type="submit" class="btn" value="#{I18n.t 'adddiscount'}"/>
           </formlet>
         </div>
       </actions-view:>
       <price-view:><currency/></price-view:>
     </table>
-    <h4>
+    <h4 id="total-product">
     Total: <currency:total/>
     <formlet ajax with="&this" class="pull-right span4">
       <div style="font-size:10px;">
         Total Discount&nbsp;
         <input type="text" name="total_discount" placeholder="#{I18n.t 'placeholder.discount'}" value="#{this.total_discount}"/>
-        <input type="submit" class="btn" value="+"/>
+        <input type="submit" class="btn" value="#{I18n.t 'adddiscount'}"/>
       </div>
     </formlet>
 </h4>

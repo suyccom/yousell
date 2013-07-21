@@ -2,6 +2,7 @@
 # e.g.
 
 en:
+  adddiscount: Apply
   placeholder:
     discount: Discount in $ or %
   menu:
