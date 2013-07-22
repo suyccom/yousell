@@ -28,7 +28,10 @@ en:
 
 
   sale:
+    cancel: Cancel
+    are_you_sure: Are you sure?
     nav_item: Sales
+    refund: Refund
     actions:
       new: Sell
       save: Complete Sale

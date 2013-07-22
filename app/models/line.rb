@@ -24,6 +24,7 @@ class Line < ActiveRecord::Base
   before_save :update_price
   def update_price
     self.price = product.price * amount
+    self.price = self.price * -1 if self.sale.refunded_ticket
   end
 
   # --- Permissions --- #

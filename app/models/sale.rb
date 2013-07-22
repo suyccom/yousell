@@ -11,6 +11,8 @@ class Sale < ActiveRecord::Base
   
   has_many :lines
   children :lines
+  belongs_to :refunded_ticket, :class_name => 'Sale'
+  has_one :refund, :class_name => 'Sale', :foreign_key => 'refunded_ticket_id'
   
   
   # --- Validations --- #
@@ -24,6 +26,14 @@ class Sale < ActiveRecord::Base
   # --- Custom methods --- #
   def total
     lines.sum(:price)
+  end
+  
+  def name
+    if refunded_ticket
+      "#{I18n.t('sale.refund')} ticket #{refunded_ticket_id}"
+    else
+      "Ticket #{id}"
+    end
   end
   
   # --- Hooks --- #
