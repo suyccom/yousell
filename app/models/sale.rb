@@ -24,13 +24,18 @@ class Sale < ActiveRecord::Base
   
   # --- Custom methods --- #
   def total
-    return lines.sum(:price) if !self.total_discount
+    lines.sum(:price) - discount
+  end
+
+  def discount
     if self.total_discount && !self.total_discount.empty?
       if self.total_discount.include?("%")
-        return lines.sum(:price) - ((lines.sum(:price) * self.total_discount.to_i)/100)
+        (lines.sum(:price) * self.total_discount.to_i)/100
       else
-        return lines.sum(:price) - self.total_discount.to_i
+        self.total_discount.to_i
       end
+    else
+      0
     end
   end
   
