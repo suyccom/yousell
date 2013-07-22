@@ -78,12 +78,12 @@ ActiveRecord::Schema.define(:version => 20130721163753) do
   end
 
   create_table "sales", :force => true do |t|
-    t.boolean  "complete",       :default => false
+    t.boolean  "complete",           :default => false
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "total_discount"
- 	t.integer  "refunded_ticket_id"
+    t.integer  "refunded_ticket_id"
   end
 
   add_index "sales", ["refunded_ticket_id"], :name => "index_sales_on_refunded_ticket_id"

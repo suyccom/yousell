@@ -1,4 +1,4 @@
-class HoboMigration15 < ActiveRecord::Migration
+class HoboMigration15Discounts < ActiveRecord::Migration
   def self.up
     add_column :lines, :discount, :string
 
