@@ -55,13 +55,18 @@
             <input type="hidden" name="minus" value="true"/>
             <input type="submit" class="btn" value="-"/>
           </formlet>
-          &nbsp;
+          &nbsp;&nbsp;
           <formlet ajax with="&this_parent" class="pull-left ">
             <input type="hidden" name="sum" value="true"/>
             <input type="submit" class="btn" value="+"/>
+            &nbsp;
           </formlet>
-          &nbsp;
-          <formlet ajax with="&this_parent" class="pull-left span4">
+          <formlet ajax with="&this_parent" class="pull-left ">
+            <input type="text" style="width:25px" name="amount" value="&params[:amount]"/>
+            <input type="submit" class="btn" value="#{I18n.t 'addamount'}"/>
+          </formlet>
+          <div style="font-size:22px;" class="pull-left">&nbsp;|&nbsp;</div>
+          <formlet ajax with="&this_parent" class="pull-left">
             <input type="text" name="discount" placeholder="#{I18n.t 'placeholder.discount'}" value="#{this.discount}"/>
             <input type="submit" class="btn" value="#{I18n.t 'adddiscount'}"/>
           </formlet>

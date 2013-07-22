@@ -2,7 +2,8 @@
 # e.g.
 
 en:
-  adddiscount: Apply
+  adddiscount: apply
+  addamount: add
   placeholder:
     discount: Discount in $ or %
   menu:

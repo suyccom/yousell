@@ -9,7 +9,8 @@
 # please post it to http://hobousers.googlegroups.com. Thank you!
 
 es:
-  adddiscount: Aplicar
+  adddiscount: aplicar
+  addamount: añadir
   product_not_found: No se ha encontrado el producto
 
   placeholder:

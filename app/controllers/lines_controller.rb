@@ -33,6 +33,8 @@ class LinesController < ApplicationController
       end
     elsif params[:sum]
       line.update_attributes(:amount => line.amount + 1)
+    elsif params[:amount]
+      line.update_attributes(:amount => line.amount + params[:amount].to_i)
     end
     if params[:discount]
       line.update_attributes(:discount => params[:discount])
