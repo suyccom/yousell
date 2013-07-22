@@ -4,10 +4,11 @@ class Sale < ActiveRecord::Base
 
   fields do
     complete :boolean, :default => false
+    total_discount :string
     completed_at :datetime
     timestamps
   end
-  attr_accessible :lines, :complete
+  attr_accessible :lines, :complete, :total_discount
   
   has_many :lines
   children :lines
@@ -25,7 +26,19 @@ class Sale < ActiveRecord::Base
   
   # --- Custom methods --- #
   def total
-    lines.sum(:price)
+    lines.sum(:price) - discount
+  end
+
+  def discount
+    if self.total_discount && !self.total_discount.empty?
+      if self.total_discount.include?("%")
+        (lines.sum(:price) * self.total_discount.to_i)/100
+      else
+        self.total_discount.to_i
+      end
+    else
+      0
+    end
   end
   
   def name

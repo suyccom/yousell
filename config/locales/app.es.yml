@@ -9,7 +9,11 @@
 # please post it to http://hobousers.googlegroups.com. Thank you!
 
 es:
+  adddiscount: Aplicar
   product_not_found: No se ha encontrado el producto
+
+  placeholder:
+    discount: Descuento en € o %
 
   attributes:
     created_at: Creado el

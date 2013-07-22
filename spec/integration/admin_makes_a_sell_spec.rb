@@ -53,6 +53,21 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     end
     page.should have_content 'Total: $47.00'
     
+    # Adds a discount to Shoes 35 black
+    within 'tr.line:nth-child(1)' do
+      fill_in 'discount', :with => '10'
+      click_on 'Apply'
+    end
+    page.find('tr.line:nth-child(1)').should have_content '$5.00'
+    page.should have_content 'Total: $37.00'
+
+    # Adds a total discount
+    within '#total-product' do
+      fill_in 'total_discount', :with => '7'
+      click_on 'Apply'
+      page.should have_content 'Total: $30.00'
+    end
+
     # Adds an incorrect barcode
     fill_in 'search', :with => ''
     fill_in 'barcode', :with => '11GREEN'
