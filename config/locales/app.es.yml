@@ -107,6 +107,9 @@ es:
       heading: Almacén
       title: Almacén
   sale:
+    cancel: Cancelar
+    are_you_sure: ¿Estás seguro de querer cancelar esta venta?
+    refund: Abono
     nav_item: Ventas
     barcode: Código de barras
     search: Buscar

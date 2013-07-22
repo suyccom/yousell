@@ -83,7 +83,10 @@ ActiveRecord::Schema.define(:version => 20130721163753) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "total_discount"
+ 	t.integer  "refunded_ticket_id"
   end
+
+  add_index "sales", ["refunded_ticket_id"], :name => "index_sales_on_refunded_ticket_id"
 
   create_table "users", :force => true do |t|
     t.string   "crypted_password",          :limit => 40
