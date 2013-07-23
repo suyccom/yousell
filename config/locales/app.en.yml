@@ -11,6 +11,9 @@ en:
 #    updated_at: Updated at
 #
   activerecord:
+    attributes:
+      sale:
+        day_sale: Day sale
     attribute_help:
       variation:
         value: Use comma separated values
@@ -29,6 +32,9 @@ en:
 
   sale:
     nav_item: Sales
+    pending_day_sales_title: Pending day sales
+    pending_day_sales: "There are pending day sales: %{count}"
+    no_pending_day_sales: No pending day sales
     actions:
       new: Sell
       save: Complete Sale

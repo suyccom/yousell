@@ -72,6 +72,7 @@ es:
       sale:
         Sale: Venta
         completed_at: Fecha de venta
+        day_sale: Venta del día
         actions: Acciones
         lines: Líneas
       provider:
@@ -104,6 +105,9 @@ es:
       title: Almacén
   sale:
     nav_item: Ventas
+    pending_day_sales_title: Ventas del día pendientes
+    pending_day_sales: "Hay ventas del día pendientes: %{count}"
+    no_pending_day_sales: No hay ventas del día pendientes
     barcode: Código de barras
     search: Buscar
     actions:

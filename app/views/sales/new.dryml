@@ -6,7 +6,6 @@
   </form:>
 </new-page>
 
-
 <def tag="add-line-form">
   <form with="&this.lines.new" updates="#lines" refocus-form reset-form>
     <div id="add-product-form" part="add-product-form">
@@ -26,11 +25,12 @@
   </form>
 </def>
 
-
 <def tag="complete-sale-form">
   <form without-cancel>
     <field-list: replace>
       <lines/>
+      <input id='day_sale' type='checkbox' name='sale[day_sale]' value='true'/>
+      <t key='activerecord.attributes.sale.day_sale'/>
       <input type="hidden" name="sale[complete]" value="true"/>
     </field-list:>
     <submit: replace>
@@ -42,7 +42,6 @@
     </submit:>
   </form>
 </def>
-
 
 <def tag="lines">
   <div id="lines" part="lines">

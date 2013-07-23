@@ -1,0 +1,22 @@
+<page title="#{I18n.t('sale.pending_day_sales_title')}">
+  <content-header: class='well'>
+    <h2 part='day-sales-heading'>
+      <t key='sale.pending_day_sales' count='&@day_sales_count.to_s'/>
+    </h2>
+  </content-header:>
+  <content-body:>
+    <table-plus part='day-sales-table' with='&@day_sales' fields='completed_at_date,sale_total_sum'>
+      <controls:>
+        <a href="/pending_day_sales/#{this.completed_at_date}"
+           params="&{:page_path => '/pending_day_sales'}" 
+           updates="#day-sales-heading,#day-sales-table"
+           onclick="return confirm('Destroy?')">
+          <i class="icon-trash"></i>
+        </a>
+      </controls:>
+      <search-filter: replace/>
+      <empty-message:><t key='sale.no_pending_day_sales'/></empty-message:>
+    </table-plus>
+  </content-body:>
+
+</page>

@@ -22,11 +22,52 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     white_shoes.save
   end
 
-  scenario 'Admin makes a sell' do
+#  scenario 'Admin makes a sell' do
+#    login
+#    click_on 'Sell'
+#    page.should_not have_css('tr.line')
+
+#    # Adds a product
+#    within '#add-product-form' do
+#      fill_in 'barcode', :with => '11BLACK'
+#      click_on '+'
+#    end
+#    page.should have_css 'tr.line:nth-child(1)'
+#    page.find('tr.line:nth-child(1)').should have_content 'Shoes 35 black'
+#    page.should have_content 'Total: $15.00'
+
+#    # Adds another product
+#    within '#add-product-form' do
+#      fill_in 'barcode', :with => ''
+#      fill_in 'search', :with => 'Shoes'
+#      click_on 'Shoes 35 white'
+#      click_on '+'
+#    end
+#    #page.should have_css 'tr.line:nth-child(2)'
+#    page.find('tr.line:nth-child(2)').should have_content 'Shoes 35 white'
+#    page.should have_content 'Total: $31.00'
+
+#    # Adds another pair of white shoes
+#    within 'tr.line:nth-child(2)' do
+#      click_on '+'
+#    end
+#    page.should have_content 'Total: $47.00'
+
+#    # Adds an incorrect barcode
+#    fill_in 'search', :with => ''
+#    fill_in 'barcode', :with => '11GREEN'
+#    click_on '+'
+#    page.driver.browser.switch_to.alert.accept # Accept the error dialog
+
+#    click_on 'Complete Sale'
+#    page.should have_content 'The sale has been completed successfully'
+#  end
+
+  scenario 'Admin makes a day sale' do
     login
     click_on 'Sell'
     page.should_not have_css('tr.line')
-    
+
     # Adds a product
     within '#add-product-form' do
       fill_in 'barcode', :with => '11BLACK'
@@ -35,32 +76,12 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     page.should have_css 'tr.line:nth-child(1)'
     page.find('tr.line:nth-child(1)').should have_content 'Shoes 35 black'
     page.should have_content 'Total: $15.00'
-    
-    # Adds another product
-    within '#add-product-form' do
-      fill_in 'barcode', :with => ''
-      fill_in 'search', :with => 'Shoes'
-      click_on 'Shoes 35 white'
-      click_on '+'
-    end
-    #page.should have_css 'tr.line:nth-child(2)'
-    page.find('tr.line:nth-child(2)').should have_content 'Shoes 35 white'
-    page.should have_content 'Total: $31.00'
-    
-    # Adds another pair of white shoes
-    within 'tr.line:nth-child(2)' do
-      click_on '+'
-    end
-    page.should have_content 'Total: $47.00'
-    
-    # Adds an incorrect barcode
-    fill_in 'search', :with => ''
-    fill_in 'barcode', :with => '11GREEN'
-    click_on '+'
-    page.driver.browser.switch_to.alert.accept # Accept the error dialog
-    
+
+    # Clicks on 'day sale' and completes the sale
+    find(:css, "#day_sale").set(true)
     click_on 'Complete Sale'
     page.should have_content 'The sale has been completed successfully'
+
   end
 
 end
