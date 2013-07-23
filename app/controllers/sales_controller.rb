@@ -31,7 +31,7 @@ class SalesController < ApplicationController
     if params[:sales_date]
       Sale.where(:completed_at => params[:sales_date].to_date.beginning_of_day..params[:sales_date].to_date.end_of_day).complete.day_sale.destroy_all
       @day_sales,@day_sales_count = calculate_day_sales_and_count
-      hobo_ajax_response if request.xhr?
+      redirect_to('/pending_day_sales')
     end
   end
 

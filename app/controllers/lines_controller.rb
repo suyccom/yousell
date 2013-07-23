@@ -5,7 +5,6 @@ class LinesController < ApplicationController
   auto_actions :all
   
   def create
-    
     if params[:barcode] && !params[:barcode].blank?
       product = Product.find_by_barcode(params[:barcode])
     elsif params[:search] && !params[:search].blank?

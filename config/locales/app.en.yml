@@ -2,6 +2,7 @@
 # e.g.
 
 en:
+  date: Date
   menu:
     administration: Administration
   user:
@@ -32,6 +33,7 @@ en:
 
   sale:
     nav_item: Sales
+    confirm_delete_day_sales: "%{date} day sales will be deleted, ok?"
     pending_day_sales_title: Pending day sales
     pending_day_sales: "There are pending day sales: %{count}"
     no_pending_day_sales: No pending day sales
