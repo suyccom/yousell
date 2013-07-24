@@ -9,11 +9,13 @@
 # please post it to http://hobousers.googlegroups.com. Thank you!
 
 es:
-  adddiscount: Aplicar
+  adddiscount: aplicar
+  addamount: añadir
+  typediscountsymbol: €
   product_not_found: No se ha encontrado el producto
 
   placeholder:
-    discount: Descuento en € o %
+    discounts: Descuentos
 
   attributes:
     created_at: Creado el
