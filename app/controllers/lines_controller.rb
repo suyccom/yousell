@@ -34,10 +34,13 @@ class LinesController < ApplicationController
     elsif params[:sum]
       line.update_attributes(:amount => line.amount + 1)
     elsif params[:amount]
-      line.update_attributes(:amount => line.amount + params[:amount].to_i)
+      line.update_attributes(:amount => params[:amount].to_i)
     end
     if params[:discount]
-      line.update_attributes(:discount => params[:discount])
+      line.update_attributes(:discount => "#{params[:discount]}")
+    end
+    if params[:type_discount]
+      line.update_attributes(:type_discount => "#{params[:type_discount]}")
     end
     hobo_ajax_response
   end

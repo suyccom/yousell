@@ -11,10 +11,11 @@
 es:
   adddiscount: aplicar
   addamount: añadir
+  typediscountsymbol: €
   product_not_found: No se ha encontrado el producto
 
   placeholder:
-    discount: Descuento en € o %
+    discounts: Descuentos
 
   attributes:
     created_at: Creado el

@@ -14,6 +14,7 @@ class SalesController < ApplicationController
     if params[:total_discount] && request.xhr?
       sale = Sale.find(params[:id])
       sale.update_attributes(:total_discount => params[:total_discount])
+      sale.update_attributes(:type_discount => params[:type_discount])
       hobo_ajax_response
     else
       hobo_update do

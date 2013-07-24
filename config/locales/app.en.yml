@@ -4,8 +4,9 @@
 en:
   adddiscount: apply
   addamount: add
+  typediscountsymbol: $
   placeholder:
-    discount: Discount in $ or %
+    discounts: Discounts
   menu:
     administration: Administration
   user:

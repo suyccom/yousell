@@ -64,7 +64,9 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     # Adds a total discount
     within '#total-product' do
       fill_in 'total_discount', :with => '7'
+      select '$', :from => 'type_discount'
       click_on 'apply'
+      sleep 1
       page.should have_content 'Total: $30.00'
     end
 
@@ -73,7 +75,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
       fill_in 'amount', :with => '5'
       click_on 'add'
     end
-    page.should have_content 'Total: $110.00'
+    page.should have_content 'Total: $78.00'
 
     # Adds an incorrect barcode
     fill_in 'search', :with => ''
