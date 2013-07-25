@@ -25,14 +25,14 @@ class ProductsController < ApplicationController
     require 'barby/barcode/code_128'
     require 'barby/outputter/png_outputter'
     
-    barcode = Barby::Code128B.new('The patata')
+    barcode = Barby::Code128B.new('4561231')
     png = Barby::PngOutputter.new(barcode).to_png(:height => 20, :margin => 5)
     File.open('tmp/barcode.png', 'w'){|f| f.write png }
 
-    names = ["Jordan", "Chris", "Jon", "Mike", "Kelly", "Bob", "Greg"]
+    names = ["", "Jordan", "Chris", "Jon", "Mike", "Kelly", "Bob", "Greg"]
     labels = Prawn::Labels.render(names, :type => "Avery5160") do |pdf, name|
       pdf.text name
-      pdf.image "#{Rails.root}/tmp/barcode.png"
+      pdf.image "#{Rails.root}/tmp/barcode.png" unless name.blank?
     end
     send_data labels, :filename => "names.pdf", :type => "application/pdf", :disposition => "inline"
   end
