@@ -25,6 +25,8 @@ en:
     index:
       heading: Stock
       title: Stock
+    show:
+      variations_list_message: "Besides, on the label for this product will appear these characteristics:"
 
 
   sale:

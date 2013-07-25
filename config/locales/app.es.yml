@@ -102,6 +102,8 @@ es:
     index:
       heading: Almacén
       title: Almacén
+    show:
+      variations_list_message: "Además, en la etiqueta de este producto aparecerán las siguientes características:"
   sale:
     nav_item: Ventas
     barcode: Código de barras
@@ -112,8 +114,7 @@ es:
     messages:
       create:
         success: La venta se ha efectuado con éxito
-      
-      
+
 #    attribute_help:
 #      user:
 #        email_address:
