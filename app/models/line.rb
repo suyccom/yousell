@@ -5,11 +5,12 @@ class Line < ActiveRecord::Base
   fields do
     name  :string
     price :decimal, :precision => 8, :scale => 2, :default => 0
-    discount :string
+    discount :integer
+    type_discount :string
     amount :integer, :default => 1
     timestamps
   end
-  attr_accessible :name, :price, :discount, :product, :sale, :product_id, :sale_id, :amount
+  attr_accessible :name, :price, :discount, :type_discount, :product, :sale, :product_id, :sale_id, :amount
   
   belongs_to :sale
   belongs_to :product
@@ -25,12 +26,12 @@ class Line < ActiveRecord::Base
   before_save :update_price
   def update_price
     self.price = product.price * amount
-	self.price = self.price * -1 if self.sale.refunded_ticket
-    if self.discount && !self.discount.empty?
-      if self.discount.include?("%")
-        self.price = self.price - ((self.price * self.discount.to_i)/100)
+    self.price = self.price * -1 if self.sale.refunded_ticket
+    if self.discount && self.discount > 0
+      if self.type_discount == "%"
+        self.price = self.price - ((self.price * self.discount)/100)
       else
-        self.price = self.price - self.discount.to_i
+        self.price = self.price - self.discount
       end
     end
   end

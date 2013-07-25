@@ -11,17 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130721163753) do
+ActiveRecord::Schema.define(:version => 20130724110555) do
 
   create_table "lines", :force => true do |t|
     t.string   "name"
-    t.decimal  "price",      :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "price",         :precision => 8, :scale => 2, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sale_id"
     t.integer  "product_id"
-    t.integer  "amount",                                   :default => 1
-    t.string   "discount"
+    t.integer  "amount",                                      :default => 1
+    t.integer  "discount"
+    t.string   "type_discount"
   end
 
   add_index "lines", ["product_id"], :name => "index_lines_on_product_id"
@@ -82,8 +83,9 @@ ActiveRecord::Schema.define(:version => 20130721163753) do
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "total_discount"
+    t.integer  "total_discount"
     t.integer  "refunded_ticket_id"
+    t.string   "type_discount"
   end
 
   add_index "sales", ["refunded_ticket_id"], :name => "index_sales_on_refunded_ticket_id"
