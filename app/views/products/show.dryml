@@ -1,0 +1,6 @@
+<show-page>
+  <after-heading:>
+    <a class="btn" href="/products/#{this.id}/print_labels">Imprimir etiquetas</a>
+  </after-heading:>
+
+</show-page>
