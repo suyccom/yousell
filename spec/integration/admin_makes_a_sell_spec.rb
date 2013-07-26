@@ -85,6 +85,10 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     
     click_on 'Complete Sale'
     page.should have_content 'The sale has been completed successfully'
+    
+    # Check that the amount in stock has been reduced
+    Product.find_by_barcode('11BLACK').amount.should eq 9
+    Product.find_by_barcode('11WHITE').amount.should eq 5
   end
 
 end

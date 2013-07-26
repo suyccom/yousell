@@ -54,8 +54,12 @@ class Sale < ActiveRecord::Base
   include ActiveModel::Dirty  # http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
   before_save :set_completed_time
   def set_completed_time
-    if complete && complete_changed?
+    # Only run if the sale has just been marked as completed
+    if complete && complete_changed? && !completed_at
       self.completed_at = Time.now
+      for line in lines
+        line.product.update_attribute(:amount, line.product.amount - line.amount)
+      end
     end
   end
   
