@@ -5,13 +5,14 @@ require 'spec_helper'
 feature 'The admin wants to manage products', :driver => :selenium do
 
   before do
-    # Create a product type, a couple of variations and a provider
+    # Create a product type, a couple of variations, a warehouse and a provider
     size = Variation.create(:name => "Size", :value => "35,36,37")
     color = Variation.create(:name => "Color", :value => "red,blue,green")
     pt = ProductType.new(:name => "Shoes", :default_price => 10)
     pt.variations << size
     pt.variations << color
     pt.save
+    Warehouse.create(:name => 'The big one')
     provider = Provider.create(:name => 'SuperZapas', :code => 'SZ')
   end
 
@@ -30,11 +31,13 @@ feature 'The admin wants to manage products', :driver => :selenium do
     select 'green'
     fill_in 'product[amount]', :with => '10'
     fill_in 'product[barcode]', :with => '123456789'
+    select 'The big one'
     click_on 'Create Product'
     # Checks that the product has been successfully created
     click_on 'Stock'
     page.find('tr.product:nth-child(1) .amount-view').should have_content '10'
     page.find('tr.product:nth-child(1) .this-view').should have_content 'Shoes 36 green'
+    page.find('tr.product:nth-child(1) .warehouse-view').should have_content 'The big one'
     # Edits the product and changes the amount to 12
     page.find('tr.product:nth-child(1) .icon-edit').click
     fill_in 'product[amount]', :with => '12'
