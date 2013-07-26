@@ -35,7 +35,8 @@ en:
     messages:
       create:
         success: The sale has been completed successfully
-
+  warehouse:
+    filter_all: All the Warehouses
 #    models:
 #      user:
 #        one: User

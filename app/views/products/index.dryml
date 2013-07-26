@@ -1,3 +1,6 @@
 <index-page>
+  <prepend-content-body:>
+    <filter-menu no-filter="#{I18n.t('warehouse.filter_all')}" param-name="warehouse" options="&Warehouse.all" />
+  </prepend-content-body:> 
   <collection: fields="this, amount, price, barcode, warehouse,actions"/>
 </index-page>

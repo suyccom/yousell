@@ -112,8 +112,8 @@ es:
     messages:
       create:
         success: La venta se ha efectuado con éxito
-      
-      
+  warehouse:
+    filter_all: Todos los Almacenes
 #    attribute_help:
 #      user:
 #        email_address:
