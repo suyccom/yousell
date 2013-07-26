@@ -58,7 +58,7 @@
             <input type="hidden" name="sum" value="true"/>
             <input type="submit" class="btn" value="+"/>
           </formlet>
-          <formlet ajax with="&this_parent" class="pull-left span">
+          <formlet ajax with="&this_parent" updates='#lines, #total' class="pull-left span">
             <input type="text" class="span1" name="amount" value="&params[:amount]"/>
             <input type="submit" class="btn span1" value="#{I18n.t 'addamount'}"/>
           </formlet>
@@ -66,7 +66,7 @@
       </actions-view:>
       <controls-heading: class="span5"> <t key="placeholder.discounts"/></controls-heading:>
       <controls-view:>
-          <formlet ajax with="&this_parent">
+          <formlet ajax updates='#lines, #total' with="&this_parent">
             <input type="text" class="span1" name="discount" value="#{this.discount}"/>
             <% @symbol = I18n.t 'typediscountsymbol' %>
             <select-menu class="span1"
@@ -78,22 +78,22 @@
       </controls-view>
       <price-view:><currency/></price-view:>
     </table>
-    <h4 id="total-product">
-      <button id='day_sale_button' type='button' class='btn btn-large btn-info' 
-        value='true'>
-        <strong>Total: <span part='total'><currency:total/></span></strong>
-      </button>
-      <formlet ajax with="&this" class="pull-right span">
-        <div style="font-size:10px;">
-          Total Discount
-          <input type="text" class="span1" name="total_discount" value="#{this.total_discount}"/>
-          <select-menu class="span1"
-            name="type_discount"
-            selected="&this.type_discount"
-            options="&[@symbol,'%']"/>
-          <input type="submit" class="btn span1" value="#{I18n.t 'adddiscount'}"/>
-        </div>
-      </formlet>
-    </h4>
   </div>
+  <h4 id="total-product">
+    <button id='day_sale_button' type='button' class='btn btn-large btn-info' 
+      value='true'>
+      <strong>Total: <span part='total'><currency:total/></span></strong>
+    </button>
+    <formlet ajax with="&this" updates='#lines, #total' class="pull-right span">
+      <div style="font-size:10px;">
+        Total Discount
+        <input type="text" class="span1" name="total_discount" value="#{this.total_discount}"/>
+        <select-menu class="span1"
+          name="type_discount"
+          selected="&this.type_discount"
+          options="&[@symbol,'%']"/>
+        <input type="submit" class="btn span1" value="#{I18n.t 'adddiscount'}"/>
+      </div>
+    </formlet>
+  </h4>
 </def>

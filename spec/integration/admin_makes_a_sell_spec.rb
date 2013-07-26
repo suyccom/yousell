@@ -60,7 +60,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     end
     page.find('tr.line:nth-child(1)').should have_content '$5.00'
     page.should have_content 'Total: $37.00'
-
+sleep 60
     # Adds a total discount
     within '#total-product' do
       fill_in 'total_discount', :with => '7'
@@ -101,11 +101,33 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     page.find('tr.line:nth-child(1)').should have_content('Shoes 35 black')
     page.should have_content('Total: $15.00')
 
-    # Clicks on 'day sale' and completes the sale
+    # Clicks on 'day sale', but after that adds more products and discounts
+    # and the button should remain pushed
     find(:css, '#day_sale_button').click
+    within '#add-product-form' do
+      fill_in('barcode', :with => '11WHITE')
+      click_on('+')
+    end
+    page.should have_css('tr.line:nth-child(2)')
+    page.should have_content('Total: $31.00')
+    page.should have_css('button.btn.btn-large.btn-info.active')
+    within 'tr.line:nth-child(1)' do
+      fill_in('discount', :with => '1')
+      click_on('apply')
+    end
+    page.should have_content('Total: $30.00')
+    page.should have_css('button.btn.btn-large.btn-info.active')
+    within 'div.sale.formlet' do
+      fill_in('total_discount', :with => '1')
+      click_on('apply')
+    end
+    page.should have_content('Total: $29.00')
+    page.should have_css('button.btn.btn-large.btn-info.active')
+
+    # ...and completes the sale
     click_on('Complete Sale')
     page.should have_content('The sale has been completed successfully')
-    
+
     # Can sees/deletes pending 'day sales'
     click_on('Administration')
     click_on('Sales')
@@ -113,11 +135,10 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     click_on('There are pending day sales: 1')
     page.should have_css('tr.sale:nth-child(1)')
     page.find('tr.sale:nth-child(1)').should have_content(Date.today.strftime('%Y-%m-%d'))
-    page.find('tr.sale:nth-child(1)').should have_content("15")
+    page.find('tr.sale:nth-child(1)').should have_content("29")
     page.find('td.controls a i.icon-trash').click
     page.driver.browser.switch_to.alert.accept
     page.should have_content('No pending day sales')
-
   end
 
 end
