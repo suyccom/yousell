@@ -6,7 +6,6 @@
   </form:>
 </new-page>
 
-
 <def tag="add-line-form">
   <form with="&this.lines.new" updates="#lines" refocus-form reset-form>
     <div id="add-product-form" part="add-product-form">
@@ -26,7 +25,6 @@
   </form>
 </def>
 
-
 <def tag="complete-sale-form">
   <form without-cancel>
     <field-list: replace>
@@ -43,42 +41,54 @@
   </form>
 </def>
 
-
 <def tag="lines">
   <div id="lines" part="lines">
     <!-- We use reload here in order to get the lines fresh from the DB. 
     If not, the new line form adds one additional empty line to the array -->
-    <table:lines.reload class="table table-striped table-bordered collection" fields="name, amount, price, actions">
-      <actions-view:>
+    <table:lines.reload class="table table-striped table-bordered collection" fields="name, amount, price, actions, controls">
+      <actions-view: class="span5">
         <div class="row">
           <formlet ajax with="&this_parent" class="span">
             <input type="hidden" name="minus" value="true"/>
             <input type="submit" class="btn" value="-"/>
           </formlet>
-          &nbsp;
-          <formlet ajax with="&this_parent" class="pull-left ">
+          <formlet ajax with="&this_parent" class="pull-left">
             <input type="hidden" name="sum" value="true"/>
             <input type="submit" class="btn" value="+"/>
           </formlet>
-          &nbsp;
-          <formlet ajax with="&this_parent" class="pull-left span4">
-            <input type="text" name="discount" placeholder="#{I18n.t 'placeholder.discount'}" value="#{this.discount}"/>
-            <input type="submit" class="btn" value="#{I18n.t 'adddiscount'}"/>
+          <formlet ajax with="&this_parent" class="pull-left span">
+            <input type="text" class="span1" name="amount" value="&params[:amount]"/>
+            <input type="submit" class="btn span1" value="#{I18n.t 'addamount'}"/>
           </formlet>
         </div>
       </actions-view:>
+      <controls-heading: class="span5"> <t key="placeholder.discounts"/></controls-heading:>
+      <controls-view:>
+          <formlet ajax with="&this_parent">
+            <input type="text" class="span1" name="discount" value="#{this.discount}"/>
+            <% @symbol = I18n.t 'typediscountsymbol' %>
+            <select-menu class="span1"
+                         name="type_discount"
+                         selected="&this.type_discount"
+                         options="&[@symbol,'%']"/>
+            <input type="submit" class="btn span1" value="#{I18n.t 'adddiscount'}"/>
+          </formlet>
+      </controls-view>
       <price-view:><currency/></price-view:>
     </table>
     <h4 id="total-product">
-    Total: <currency:total/>
-    <formlet ajax with="&this" class="pull-right span3">
-      <div style="font-size:10px;">
-        Total Discount&nbsp;
-        <input type="text" class="span1" style="width:20%" name="total_discount" placeholder="#{I18n.t 'placeholder.discount'}" value="#{this.total_discount}"/>
-        <input type="submit" class="btn" style="width:30%" value="#{I18n.t 'adddiscount'}"/>
-      </div>
-    </formlet>
-</h4>
-
+      Total: <currency:total/>
+      <formlet ajax with="&this" class="pull-right span">
+        <div style="font-size:10px;">
+          Total Discount
+          <input type="text" class="span1" name="total_discount" value="#{this.total_discount}"/>
+            <select-menu class="span1"
+                         name="type_discount"
+                         selected="&this.type_discount"
+                         options="&[@symbol,'%']"/>
+          <input type="submit" class="btn span1" value="#{I18n.t 'adddiscount'}"/>
+        </div>
+      </formlet>
+    </h4>
   </div>
 </def>
