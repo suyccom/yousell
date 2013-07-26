@@ -13,6 +13,7 @@ feature 'The admin wants to manage products', :driver => :selenium do
     pt.variations << color
     pt.save
     Warehouse.create(:name => 'The big one')
+    Warehouse.create(:name => 'The small one')
     provider = Provider.create(:name => 'SuperZapas', :code => 'SZ')
   end
 
@@ -37,6 +38,11 @@ feature 'The admin wants to manage products', :driver => :selenium do
     click_on 'Stock'
     page.find('tr.product:nth-child(1) .amount-view').should have_content '10'
     page.find('tr.product:nth-child(1) .this-view').should have_content 'Shoes 36 green'
+    page.find('tr.product:nth-child(1) .warehouse-view').should have_content 'The big one'
+    # Checks that Warehouse filter works well
+    select 'The small one'
+    page.should have_content 'No records to display'
+    select 'The big one'
     page.find('tr.product:nth-child(1) .warehouse-view').should have_content 'The big one'
     # Edits the product and changes the amount to 12
     page.find('tr.product:nth-child(1) .icon-edit').click
