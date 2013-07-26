@@ -11,16 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130721233228) do
+ActiveRecord::Schema.define(:version => 20130724110555) do
 
   create_table "lines", :force => true do |t|
     t.string   "name"
-    t.decimal  "price",      :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "price",         :precision => 8, :scale => 2, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sale_id"
     t.integer  "product_id"
-    t.integer  "amount",                                   :default => 1
+    t.integer  "amount",                                      :default => 1
+    t.integer  "discount"
+    t.string   "type_discount"
   end
 
   add_index "lines", ["product_id"], :name => "index_lines_on_product_id"
@@ -77,13 +79,18 @@ ActiveRecord::Schema.define(:version => 20130721233228) do
   end
 
   create_table "sales", :force => true do |t|
-    t.boolean  "complete",                                   :default => false
+    t.boolean  "complete",                                         :default => false
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "day_sale",                                   :default => false
-    t.decimal  "sale_total",   :precision => 8, :scale => 2, :default => 0.0
+    t.integer  "refunded_ticket_id"
+    t.integer  "total_discount"
+    t.boolean  "day_sale",                                         :default => false
+    t.decimal  "sale_total",         :precision => 8, :scale => 2, :default => 0.0
+    t.string   "type_discount"
   end
+
+  add_index "sales", ["refunded_ticket_id"], :name => "index_sales_on_refunded_ticket_id"
 
   create_table "users", :force => true do |t|
     t.string   "crypted_password",          :limit => 40

@@ -6,13 +6,17 @@ class Sale < ActiveRecord::Base
     complete :boolean, :default => false
     day_sale :boolean, :default => false
     sale_total :decimal, :precision => 8, :scale => 2, :default => 0
+    total_discount :integer
+    type_discount :string
     completed_at :datetime
     timestamps
   end
-  attr_accessible :lines, :complete, :day_sale
+  attr_accessible :lines, :complete, :day_sale, :total_discount, :type_discount
 
   has_many :lines
   children :lines
+  belongs_to :refunded_ticket, :class_name => 'Sale'
+  has_one :refund, :class_name => 'Sale', :foreign_key => 'refunded_ticket_id'
 
   # --- Validations --- #
   validate :lines_are_required_for_complete_sales
@@ -23,10 +27,30 @@ class Sale < ActiveRecord::Base
   end
 
   # --- Custom methods --- #
-  def total
-    lines.sum(:price)
+  def discount
+    if self.total_discount? && self.total_discount > 0
+      if self.type_discount == "%"
+        (lines.sum(:price) * self.total_discount)/100
+      else
+        self.total_discount
+      end
+    else
+      0
+    end
   end
 
+  def total
+    lines.sum(:price) - discount
+  end
+  
+  def name
+    if refunded_ticket
+      "#{I18n.t('sale.refund')} ticket #{refunded_ticket_id}"
+    else
+      "Ticket #{id}"
+    end
+  end
+  
   # --- Hooks --- #
   include ActiveModel::Dirty  # http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
   before_save :set_some_attributes
