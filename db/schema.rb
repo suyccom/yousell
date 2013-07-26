@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(:version => 20130724110555) do
   end
 
   create_table "sales", :force => true do |t|
-    t.boolean  "complete",                                         :default => false
+    t.boolean  "complete",           :default => false
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"

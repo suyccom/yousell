@@ -60,7 +60,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     end
     page.find('tr.line:nth-child(1)').should have_content '$5.00'
     page.should have_content 'Total: $37.00'
-sleep 60
+
     # Adds a total discount
     within '#total-product' do
       fill_in 'total_discount', :with => '7'
@@ -85,6 +85,10 @@ sleep 60
 
     click_on('Complete Sale')
     page.should have_content('The sale has been completed successfully')
+
+    # Check that the amount in stock has been reduced
+    Product.find_by_barcode('11BLACK').amount.should eq 9
+    Product.find_by_barcode('11WHITE').amount.should eq 5
   end
 
   scenario 'Admin makes a day sale' do
