@@ -108,6 +108,11 @@ es:
     index:
       heading: Almacén
       title: Almacén
+    show:
+      print_labels: Imprimir Etiquetas
+      number_of_labels: Número de etiquetas
+      empty_cells: Celdas vacías
+      labels_sent_to_printer: Las etiquetas han sido enviadas a la impresora
   sale:
     cancel: Cancelar
     are_you_sure: ¿Estás seguro de querer cancelar esta venta?
