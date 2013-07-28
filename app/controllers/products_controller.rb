@@ -20,4 +20,11 @@ class ProductsController < ApplicationController
     end
   end
 
+  def index  
+    hobo_index Product.apply_scopes(
+      :search => [params[:search],:name],
+      :warehouse_is => params[:warehouse],
+      :order_by => parse_sort_param(:name))
+  end
+
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130724110555) do
+ActiveRecord::Schema.define(:version => 20130728223934) do
 
   create_table "lines", :force => true do |t|
     t.string   "name"
@@ -66,10 +66,12 @@ ActiveRecord::Schema.define(:version => 20130724110555) do
     t.string   "name"
     t.string   "provider_code"
     t.integer  "provider_id"
+    t.integer  "warehouse_id"
   end
 
   add_index "products", ["product_type_id"], :name => "index_products_on_product_type_id"
   add_index "products", ["provider_id"], :name => "index_products_on_provider_id"
+  add_index "products", ["warehouse_id"], :name => "index_products_on_warehouse_id"
 
   create_table "providers", :force => true do |t|
     t.string   "name"
@@ -85,9 +87,9 @@ ActiveRecord::Schema.define(:version => 20130724110555) do
     t.datetime "updated_at"
     t.integer  "refunded_ticket_id"
     t.integer  "total_discount"
+    t.string   "type_discount"
     t.boolean  "day_sale",                                         :default => false
     t.decimal  "sale_total",         :precision => 8, :scale => 2, :default => 0.0
-    t.string   "type_discount"
   end
 
   add_index "sales", ["refunded_ticket_id"], :name => "index_sales_on_refunded_ticket_id"
