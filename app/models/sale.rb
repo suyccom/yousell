@@ -4,15 +4,20 @@ class Sale < ActiveRecord::Base
 
   fields do
     complete :boolean, :default => false
+    day_sale :boolean, :default => false
+    sale_total :decimal, :precision => 8, :scale => 2, :default => 0
+    total_discount :integer
+    type_discount :string
     completed_at :datetime
     timestamps
   end
-  attr_accessible :lines, :complete
-  
+  attr_accessible :lines, :complete, :day_sale, :total_discount, :type_discount
+
   has_many :lines
   children :lines
-  
-  
+  belongs_to :refunded_ticket, :class_name => 'Sale'
+  has_one :refund, :class_name => 'Sale', :foreign_key => 'refunded_ticket_id'
+
   # --- Validations --- #
   validate :lines_are_required_for_complete_sales
   def lines_are_required_for_complete_sales
@@ -20,23 +25,47 @@ class Sale < ActiveRecord::Base
       errors[:base] << "At least one line is required to complete a sale"
     end
   end
-  
+
   # --- Custom methods --- #
-  def total
-    lines.sum(:price)
-  end
-  
-  # --- Hooks --- #
-  include ActiveModel::Dirty  # http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
-  before_save :set_completed_time
-  def set_completed_time
-    if complete && complete_changed?
-      self.completed_at = Time.now
+  def discount
+    if self.total_discount? && self.total_discount > 0
+      if self.type_discount == "%"
+        (lines.sum(:price) * self.total_discount)/100
+      else
+        self.total_discount
+      end
+    else
+      0
     end
   end
-  
-  # --- Permissions --- #
 
+  def total
+    lines.sum(:price) - discount
+  end
+  
+  def name
+    if refunded_ticket
+      "#{I18n.t('sale.refund')} ticket #{refunded_ticket_id}"
+    else
+      "Ticket #{id}"
+    end
+  end
+
+  # --- Hooks --- #
+  include ActiveModel::Dirty  # http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
+  before_save :set_some_attributes
+  def set_some_attributes
+    # Only run if the sale has just been marked as completed
+    if complete && complete_changed? && !completed_at
+      self.completed_at = Time.now
+      self.sale_total = self.total
+      for line in lines
+        line.product.update_attribute(:amount, line.product.amount - line.amount)
+      end
+    end
+  end
+
+  # --- Permissions --- #
   def create_permitted?
     acting_user.administrator?
   end

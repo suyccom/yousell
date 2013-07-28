@@ -13,6 +13,7 @@
         </input-many>
       </product-variations-view:>
       <provider-view:><hot-input ajax/></provider-view:>
+      <barcode-view: replace><this/></barcode-view:>
     </field-list>
   </do>
 </def>

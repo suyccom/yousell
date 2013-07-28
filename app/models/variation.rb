@@ -9,6 +9,7 @@ class Variation < ActiveRecord::Base
   end
   attr_accessible :name, :value
 
+  # --- Relations --- #
   has_many :product_type_variations, :dependent => :destroy
   has_many :product_types, :through => :product_type_variations, :accessible => true
 
@@ -16,7 +17,6 @@ class Variation < ActiveRecord::Base
   has_many :products, :through => :product_variations, :accessible => true
 
   # --- Permissions --- #
-
   def create_permitted?
     acting_user.administrator?
   end
