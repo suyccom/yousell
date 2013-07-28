@@ -55,7 +55,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     
     # Adds a discount to Shoes 35 black
     within 'tr.line:nth-child(1)' do
-      fill_in 'discount', :with => '10'
+      fill_in 'line[discount]', :with => '10'
       click_on 'apply'
     end
     page.find('tr.line:nth-child(1)').should have_content '$5.00'
@@ -72,16 +72,17 @@ feature 'The admin wants to make a sell', :driver => :selenium do
 
     # Adds 5 shoes 35 White
     within 'tr.line:nth-child(2)' do
-      fill_in 'amount', :with => '5'
+      fill_in 'line[amount]', :with => '5'
       click_on 'add'
     end
     page.should have_content 'Total: $78.00'
 
     # Adds an incorrect barcode
+    page.should have_css('tr.line', :count => 2)
     fill_in 'search', :with => ''
     fill_in 'barcode', :with => '11GREEN'
     click_on '+'
-    page.driver.browser.switch_to.alert.accept # Accept the error dialog
+    page.should have_css('tr.line', :count => 2)
     
     click_on 'Complete Sale'
     page.should have_content 'The sale has been completed successfully'
