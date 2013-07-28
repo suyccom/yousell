@@ -1,3 +1,5 @@
+<% @symbol = I18n.t 'typediscountsymbol' %>
+
 <new-page title="&t('sale.nav_item', :default => 'Sale')" without-heading>
   <content: with-flash-messages="&false"/>
   <form: replace>
@@ -68,7 +70,6 @@
       <controls-view:>
           <formlet ajax updates='#lines, #total' with="&this_parent">
             <input type="text" class="span1" name="discount" value="#{this.discount}"/>
-            <% @symbol = I18n.t 'typediscountsymbol' %>
             <select-menu class="span1"
                          name="type_discount"
                          selected="&this.type_discount"
