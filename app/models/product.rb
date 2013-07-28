@@ -10,12 +10,12 @@ class Product < ActiveRecord::Base
     provider_code :string, :required
     timestamps
   end
-  attr_accessible :price, :amount, :barcode, :product_type, :product_type_id, :product_variations, :provider_code, :provider, :provider_id
+  attr_accessible :price, :amount, :barcode, :product_type, :product_type_id, :product_variations, :provider_code, :provider, :provider_id, :warehouse, :warehouse_id
 
   # --- Relations --- #
   belongs_to :product_type
   belongs_to :provider
-
+  belongs_to :warehouse
   has_many :product_variations, :accessible => true
   has_many :variations, :through => :product_variations
 

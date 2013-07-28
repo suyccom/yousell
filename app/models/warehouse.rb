@@ -8,8 +8,10 @@ class Warehouse < ActiveRecord::Base
   end
   attr_accessible :name
 
-  # --- Permissions --- #
+  # --- Relations --- #
+  has_many :products
 
+  # --- Permissions --- #
   def create_permitted?
     acting_user.administrator?
   end
