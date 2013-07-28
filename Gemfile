@@ -51,7 +51,7 @@ gem "hobo_bootstrap_ui", "2.0.0"
 gem "jquery-ui-themes", "~> 0.0.4"
 gem 'bootswatch-rails'
 gem 'hobo-metasearch', :git => "git://github.com/suyccom/hobo-metasearch"
-gem "factory_girl_rails", "4.2.0"
+gem "factory_girl_rails", "4.2.0", :require => false
 gem "faker", :git => 'git://github.com/jorgegorka/faker'
 gem "turbolinks"
 

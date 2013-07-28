@@ -2,6 +2,12 @@
 # e.g.
 
 en:
+  date: Date
+  adddiscount: apply
+  addamount: add
+  typediscountsymbol: $
+  placeholder:
+    discounts: Discounts
   menu:
     administration: Administration
   user:
@@ -11,6 +17,9 @@ en:
 #    updated_at: Updated at
 #
   activerecord:
+    attributes:
+      sale:
+        day_sale: Day sale
     attribute_help:
       variation:
         value: Use comma separated values
@@ -30,7 +39,14 @@ en:
 
 
   sale:
+    cancel: Cancel
+    are_you_sure: Are you sure?
     nav_item: Sales
+    refund: Refund
+    confirm_delete_day_sales: "%{date} day sales will be deleted, ok?"
+    pending_day_sales_title: Pending day sales
+    pending_day_sales: "There are pending day sales: %{count}"
+    no_pending_day_sales: No pending day sales
     actions:
       new: Sell
       save: Complete Sale

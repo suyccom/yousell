@@ -5,7 +5,6 @@ class LinesController < ApplicationController
   auto_actions :all
   
   def create
-    
     if params[:barcode] && !params[:barcode].blank?
       product = Product.find_by_barcode(params[:barcode])
     elsif params[:search] && !params[:search].blank?
@@ -34,6 +33,14 @@ class LinesController < ApplicationController
       end
     elsif params[:sum]
       line.update_attributes(:amount => line.amount + 1)
+    elsif params[:amount]
+      line.update_attributes(:amount => params[:amount].to_i)
+    end
+    if params[:discount]
+      line.update_attributes(:discount => "#{params[:discount]}")
+    end
+    if params[:type_discount]
+      line.update_attributes(:type_discount => "#{params[:type_discount]}")
     end
     hobo_ajax_response
   end

@@ -1,0 +1,17 @@
+<index-page:>
+  <heading: replace>
+    <h2>
+      <ht key='sale.index.heading'>
+        <model-name-human model='&model'/>
+      </ht>
+    </h2>
+    <a href='/pending_day_sales' class='success' if='&@day_sales_count > 0'>
+      <span class='label label-important'>
+        <t key='sale.pending_day_sales' count='&@day_sales_count.to_s'/>
+      </span>
+    </a>
+  </heading:>
+  <collection: fields="this, completed_at, total">
+    <total-view:><currency/></total-view:>
+  </collection:>
+</index-page:>
