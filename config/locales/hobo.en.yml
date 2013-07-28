@@ -1,5 +1,8 @@
 # Hobo internals translation file for English
 en:
+  errors:
+    messages:
+      blank: can not be blank
   hobo:
     # default hobo pages translations
     index:

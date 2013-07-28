@@ -12,11 +12,14 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     pt.variations << size
     pt.variations << color
     pt.save
-    black_shoes = Product.new(:price => 15, :amount => 10, :barcode => '11BLACK', :product_type => pt)
+    # Create a Provider
+    provider = Provider.new(:name => 'Good Provider', :code => 'GP')
+    # Create products
+    black_shoes = Product.new(:price => 15, :amount => 10, :provider => provider, :provider_code => 'BLACK', :product_type => pt)
     black_shoes.product_variations << ProductVariation.new(:variation => size, :value => 35)
     black_shoes.product_variations << ProductVariation.new(:variation => color, :value => 'black')
     black_shoes.save
-    white_shoes = Product.new(:price => 16, :amount => 10, :barcode => '11WHITE', :product_type => pt)
+    white_shoes = Product.new(:price => 16, :amount => 10, :provider => provider, :provider_code => 'WHITE', :product_type => pt)
     white_shoes.product_variations << ProductVariation.new(:variation => size, :value => 35)
     white_shoes.product_variations << ProductVariation.new(:variation => color, :value => 'white')
     white_shoes.save
@@ -29,7 +32,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
 
     # Adds a product
     within '#add-product-form' do
-      fill_in('barcode', :with => '11BLACK')
+      fill_in('barcode', :with => 'GPBLACK')
       click_on('+')
     end
     page.should have_css 'tr.line:nth-child(1)'
@@ -38,7 +41,6 @@ feature 'The admin wants to make a sell', :driver => :selenium do
 
     # Adds another product
     within '#add-product-form' do
-      fill_in('barcode', :with => '')
       fill_in('search', :with => 'Shoes')
       click_on('Shoes 35 white')
       click_on('+')
@@ -87,8 +89,8 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     page.should have_content('The sale has been completed successfully')
 
     # Check that the amount in stock has been reduced
-    Product.find_by_barcode('11BLACK').amount.should eq 9
-    Product.find_by_barcode('11WHITE').amount.should eq 5
+    Product.find_by_barcode('GPBLACK').amount.should eq 9
+    Product.find_by_barcode('GPWHITE').amount.should eq 5
   end
 
   scenario 'Admin makes a day sale' do
@@ -98,7 +100,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
 
     # Adds a product
     within '#add-product-form' do
-      fill_in('barcode', :with => '11BLACK')
+      fill_in('barcode', :with => 'GPBLACK')
       click_on('+')
     end
     page.should have_css('tr.line:nth-child(1)')
@@ -109,7 +111,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     # and the button should remain pushed
     find(:css, '#day_sale_button').click
     within '#add-product-form' do
-      fill_in('barcode', :with => '11WHITE')
+      fill_in('barcode', :with => 'GPWHITE')
       click_on('+')
     end
     page.should have_css('tr.line:nth-child(2)')

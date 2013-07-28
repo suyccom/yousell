@@ -50,7 +50,7 @@ class Sale < ActiveRecord::Base
       "Ticket #{id}"
     end
   end
-  
+
   # --- Hooks --- #
   include ActiveModel::Dirty  # http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
   before_save :set_some_attributes
