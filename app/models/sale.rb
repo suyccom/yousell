@@ -8,11 +8,10 @@ class Sale < ActiveRecord::Base
     timestamps
   end
   attr_accessible :lines, :complete
-  
+
   has_many :lines
   children :lines
-  
-  
+
   # --- Validations --- #
   validate :lines_are_required_for_complete_sales
   def lines_are_required_for_complete_sales
@@ -20,12 +19,12 @@ class Sale < ActiveRecord::Base
       errors[:base] << "At least one line is required to complete a sale"
     end
   end
-  
+
   # --- Custom methods --- #
   def total
     lines.sum(:price)
   end
-  
+
   # --- Hooks --- #
   include ActiveModel::Dirty  # http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
   before_save :set_completed_time
@@ -34,9 +33,8 @@ class Sale < ActiveRecord::Base
       self.completed_at = Time.now
     end
   end
-  
-  # --- Permissions --- #
 
+  # --- Permissions --- #
   def create_permitted?
     acting_user.administrator?
   end

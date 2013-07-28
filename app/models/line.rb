@@ -20,7 +20,7 @@ class Line < ActiveRecord::Base
   def copy_product_name
     self.name = product.name
   end
-  
+
   before_save :update_price
   def update_price
     self.price = product.price * amount
