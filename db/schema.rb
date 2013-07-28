@@ -79,12 +79,14 @@ ActiveRecord::Schema.define(:version => 20130724110555) do
   end
 
   create_table "sales", :force => true do |t|
-    t.boolean  "complete",           :default => false
+    t.boolean  "complete",                                         :default => false
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "total_discount"
     t.integer  "refunded_ticket_id"
+    t.integer  "total_discount"
+    t.boolean  "day_sale",                                         :default => false
+    t.decimal  "sale_total",         :precision => 8, :scale => 2, :default => 0.0
     t.string   "type_discount"
   end
 
