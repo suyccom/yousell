@@ -8,11 +8,11 @@ class Provider < ActiveRecord::Base
     timestamps
   end
   attr_accessible :name, :code
-  
+
+  # --- Relations --- #
   has_many :products
 
   # --- Permissions --- #
-
   def create_permitted?
     acting_user.administrator?
   end
