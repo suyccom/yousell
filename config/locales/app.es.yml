@@ -110,6 +110,8 @@ es:
     index:
       heading: Almacén
       title: Almacén
+    show:
+      variations_list_message: "Además, en la etiqueta de este producto aparecerán las siguientes características:"
   sale:
     cancel: Cancelar
     are_you_sure: ¿Estás seguro de querer cancelar esta venta?
@@ -127,8 +129,7 @@ es:
     messages:
       create:
         success: La venta se ha efectuado con éxito
-      
-      
+
 #    attribute_help:
 #      user:
 #        email_address:
