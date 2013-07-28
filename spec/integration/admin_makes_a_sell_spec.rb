@@ -100,7 +100,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
 
     # Adds a product
     within '#add-product-form' do
-      fill_in('barcode', :with => '11BLACK')
+      fill_in('barcode', :with => 'GPBLACK')
       click_on('+')
     end
     page.should have_css('tr.line:nth-child(1)')
@@ -111,7 +111,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     # and the button should remain pushed
     find(:css, '#day_sale_button').click
     within '#add-product-form' do
-      fill_in('barcode', :with => '11WHITE')
+      fill_in('barcode', :with => 'GPWHITE')
       click_on('+')
     end
     page.should have_css('tr.line:nth-child(2)')
