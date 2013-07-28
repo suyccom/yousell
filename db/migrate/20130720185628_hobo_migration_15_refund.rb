@@ -1,4 +1,4 @@
-class HoboMigration15 < ActiveRecord::Migration
+class HoboMigration15Refund < ActiveRecord::Migration
   def self.up
     add_column :sales, :refunded_ticket_id, :integer
 
