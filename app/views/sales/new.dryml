@@ -51,17 +51,17 @@
     <table:lines.reload class="table table-striped table-bordered collection" fields="name, amount, price, actions, controls">
       <actions-view: class="span5">
         <div class="row">
-          <formlet ajax with="&this_parent" updates='#lines, #total' class="span1">
+          <formlet ajax with="&this_parent" updates="#lines, #total" class="span1">
             <input type="hidden" name="minus" value="true"/>
             <input type="submit" class="btn" value="-"/>
           </formlet>
           &nbsp;
-          <formlet ajax with="&this_parent" updates='#lines, #total' class="pull-left">
+          <formlet ajax with="&this_parent" updates="#lines, #total" class="pull-left">
             <input type="hidden" name="sum" value="true"/>
             <input type="submit" class="btn" value="+"/>
           </formlet>
-          <formlet ajax with="&this_parent" updates='#lines, #total' class="pull-left span">
-            <input type="text" class="span1" name="amount" />
+          <formlet ajax with="&this_parent" updates="#lines, #total" class="pull-left span">
+            <input type="text" class="span1" name="line[amount]" />
             <input type="submit" class="btn span1" value="#{I18n.t 'addamount'}"/>
           </formlet>
         </div>
@@ -69,7 +69,7 @@
       <controls-heading: class="span5"> <t key="placeholder.discounts"/></controls-heading:>
       <controls-view:>
           <formlet ajax updates='#lines, #total' with="&this_parent">
-            <input type="text" class="span1" name="discount" value="#{this.discount}"/>
+            <input type="text" class="span1" name="line[discount]" value="#{this.discount}"/>
             <select-menu class="span1"
                          name="line[type_discount]"
                          selected="&this.type_discount"
