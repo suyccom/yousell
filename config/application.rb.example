@@ -80,3 +80,5 @@ module Yousell
     }
   end
 end
+
+PRINT_LABELS_COMMAND = "lp"

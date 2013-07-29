@@ -63,6 +63,12 @@ feature 'The admin wants to manage products', :driver => :selenium do
     page.should have_content 'Provider code has already been taken.'
     click_on 'Click here to go to the product with provider code SZ-1'
     page.should have_content 'Shoes 36 green'
+    # Prints some labels
+    click_on 'Print Labels'
+    fill_in 'number', :with => '2'
+    fill_in 'empty_cells', :with => '0'
+    click_on 'Print'
+    page.should have_content 'The labels have been sent to the printer'
     # Removes the product
     visit '/products'
     page.find('tr.product:nth-child(1) .icon-trash').click
