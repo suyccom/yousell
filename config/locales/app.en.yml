@@ -2,6 +2,7 @@
 # e.g.
 
 en:
+  date: Date
   adddiscount: apply
   addamount: add
   typediscountsymbol: $
@@ -12,6 +13,9 @@ en:
   user:
     change_language: Change language
   activerecord:
+    attributes:
+      sale:
+        day_sale: Day sale
     attribute_help:
       variation:
         value: Use comma separated values
@@ -31,20 +35,24 @@ en:
       number_of_labels: Number of Labels
       empty_cells: Empty cells
       labels_sent_to_printer: The labels have been sent to the printer
-
-
+      variations_list_message: "Besides, on the label for this product will appear these characteristics:"
   sale:
     cancel: Cancel
     are_you_sure: Are you sure?
     nav_item: Sales
     refund: Refund
+    confirm_delete_day_sales: "%{date} day sales will be deleted, ok?"
+    pending_day_sales_title: Pending day sales
+    pending_day_sales: "There are pending day sales: %{count}"
+    no_pending_day_sales: No pending day sales
     actions:
       new: Sell
       save: Complete Sale
     messages:
       create:
         success: The sale has been completed successfully
-
+  warehouse:
+    filter_all: All the Warehouses
 #    models:
 #      user:
 #        one: User

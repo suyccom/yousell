@@ -9,6 +9,7 @@
 # please post it to http://hobousers.googlegroups.com. Thank you!
 
 es:
+  date: Fecha
   adddiscount: aplicar
   addamount: añadir
   typediscountsymbol: €
@@ -78,6 +79,7 @@ es:
       sale:
         Sale: Venta
         completed_at: Fecha de venta
+        day_sale: Venta del día
         actions: Acciones
         lines: Líneas
       provider:
@@ -113,11 +115,16 @@ es:
       number_of_labels: Número de etiquetas
       empty_cells: Celdas vacías
       labels_sent_to_printer: Las etiquetas han sido enviadas a la impresora
+      variations_list_message: "Además, en la etiqueta de este producto aparecerán las siguientes características:"
   sale:
     cancel: Cancelar
     are_you_sure: ¿Estás seguro de querer cancelar esta venta?
     refund: Abono
     nav_item: Ventas
+    confirm_delete_day_sales: "Las ventas del día, del %{date} van a ser borradas, ¿de acuerdo?"
+    pending_day_sales_title: Ventas del día pendientes
+    pending_day_sales: "Hay ventas del día pendientes: %{count}"
+    no_pending_day_sales: No hay ventas del día pendientes
     barcode: Código de barras
     search: Buscar
     actions:
@@ -126,8 +133,8 @@ es:
     messages:
       create:
         success: La venta se ha efectuado con éxito
-      
-      
+  warehouse:
+    filter_all: Todos los Almacenes
 #    attribute_help:
 #      user:
 #        email_address:

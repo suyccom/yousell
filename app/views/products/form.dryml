@@ -1,6 +1,6 @@
 <def tag="product-form">
   <do part="product-form">
-    <field-list fields="product_type, provider, provider_code, amount, product_variations, price, barcode">
+    <field-list fields="product_type, provider, provider_code, amount, product_variations, price, barcode, warehouse">
       <product-type-view:><hot-input ajax /></product-type-view:>
       <product-variations-view:>
         <input-many if="&this_parent.product_type">
@@ -13,6 +13,7 @@
         </input-many>
       </product-variations-view:>
       <provider-view:><hot-input ajax/></provider-view:>
+      <barcode-view: replace><this/></barcode-view:>
     </field-list>
   </do>
 </def>

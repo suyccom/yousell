@@ -15,6 +15,10 @@ Yousell::Application.routes.draw do
   
   match 'products/:id/print_labels' => 'products#print_labels'
 
+  # Pending day sales routes
+  match 'pending_day_sales' => 'sales#pending_day_sales'
+  match 'pending_day_sales/:sales_date' => 'sales#destroy_pending_day_sales'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

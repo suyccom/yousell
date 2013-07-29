@@ -1,33 +1,50 @@
-<show-page>
+<show-page:>
   <before-heading:>
-    <modal id="print-label-modal">
-      <modal:>
-        <form action="/products/#{this.id}/print_labels">
-          <modal-header><t key="product.show.print_labels"/></modal-header>
-          <div class="modal-body">
-            <div class="form-horizontal">
-              <div class="control-group">
-                <label class="control-label" for="number"><t key="product.show.number_of_labels"/></label>
-                <div class="controls">
-                  <input class="input-mini" type="text" id="number" name="number" value="1"/>
-                </div>
+    <print-labels/>
+  </before-heading:>
+  <field-list: fields='product_type, provider, provider_code, amount, price, barcode'>
+    <barcode-view:>
+      <this/>
+      <span class='label label-info'>
+        <t key='product.show.variations_list_message'/>
+      </span>
+      <if test='&this_parent.product_variations.count > 0' >
+      <% for v in this_parent.product_variations %>
+        <%= v.value %>
+      <% end %>
+      </if>
+    </barcode-view:>
+  </field-list:>
+</show-page:>
+
+<def tag="print-labels">
+  <modal id="print-label-modal">
+    <modal:>
+      <form action="/products/#{this.id}/print_labels">
+        <modal-header><t key="product.show.print_labels"/></modal-header>
+        <div class="modal-body">
+          <div class="form-horizontal">
+            <div class="control-group">
+              <label class="control-label" for="number"><t key="product.show.number_of_labels"/></label>
+              <div class="controls">
+                <input class="input-mini" type="text" id="number" name="number" value="1"/>
               </div>
-              <div class="control-group">
-                <label class="control-label" for="empty-cells"><t key="product.show.empty_cells"/></label>
-                <div class="controls">
-                  <input class="input-mini" type="text" id="empty-cells" name="empty_cells" value="0"/>
-                </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="empty-cells"><t key="product.show.empty_cells"/></label>
+              <div class="controls">
+                <input class="input-mini" type="text" id="empty-cells" name="empty_cells" value="0"/>
               </div>
             </div>
           </div>
-          <modal-form-footer>
-            <submit: label="Print"/>
-          </modal-form-footer>
-        </form>
-      </modal:>
-    </modal>
-    <modal-open-button class="pull-right" modal="print-label-modal">
-      <i class="icon-print"></i> <t key="product.show.print_labels"/>
-    </modal-open-button>
-  </before-heading:>
-</show-page>
+        </div>
+        <modal-form-footer>
+          <submit: label="Print"/>
+        </modal-form-footer>
+      </form>
+    </modal:>
+  </modal>
+  <modal-open-button class="pull-right" modal="print-label-modal">
+    <i class="icon-print"></i> <t key="product.show.print_labels"/>
+  </modal-open-button>
+</def>
