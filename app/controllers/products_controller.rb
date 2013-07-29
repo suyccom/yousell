@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
     require 'barby/barcode/code_128'
     require 'barby/outputter/png_outputter'
     barby = Barby::Code128B.new(@product.barcode)
-    png = Barby::PngOutputter.new(barby).to_png(:height => 20, :margin => 5)
+    png = Barby::PngOutputter.new(barby).to_png(:height => 25, :margin => 5, :xdim => 1)
     File.open(temp_file, 'w'){|f| f.write png }
     
     # Create the array for the labels PDF
@@ -44,11 +44,23 @@ class ProductsController < ApplicationController
     end
     
     # Generate the PDF
-    labels = Prawn::Labels.generate(temp_pdf, barcodes, :type => "Avery5160") do |pdf, barcode|
+    
+    Prawn::Labels.types = {
+      "Apli1285" => {
+        "paper_size" => "A4",
+        "columns"    => 4,
+        "rows"       => 11,
+        "top_margin" => 18.0,
+        "bottom_margin" => 19.0,
+        "left_margin" => 28.5,
+        "right_margin" => 18.5
+    }}
+    
+    labels = Prawn::Labels.generate(temp_pdf, barcodes, :type => "Apli1285") do |pdf, barcode|
       unless barcode.blank?
         pdf.image barcode 
-        pdf.text @product.barcode
-        pdf.text @product.name
+        pdf.text @product.barcode, :size => 10
+        pdf.text @product.name, :size => 10
       end
     end
     

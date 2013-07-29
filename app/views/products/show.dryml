@@ -20,7 +20,7 @@
 <def tag="print-labels">
   <modal id="print-label-modal">
     <modal:>
-      <form action="/products/#{this.id}/print_labels">
+      <form method="GET" action="/products/#{this.id}/print_labels">
         <modal-header><t key="product.show.print_labels"/></modal-header>
         <div class="modal-body">
           <div class="form-horizontal">
