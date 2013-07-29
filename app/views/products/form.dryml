@@ -1,18 +1,18 @@
 <def tag="product-form">
   <do part="product-form">
-    <field-list fields="product_type, provider, provider_code, amount, product_variations, price, barcode, warehouse">
+    <field-list fields="product_type, provider, provider_code, amount, product_variations, price, warehouse">
       <product-type-view:><hot-input ajax /></product-type-view:>
       <product-variations-view:>
         <input-many if="&this_parent.product_type">
           <field-list fields="value, variation" size="4">
             <value-label:><%= this_parent.variation %></value-label:>
             <value-view:>
-              <select-menu name="&param_name_for_this" options="&this_parent.variation.value.split(',')" if="&this_parent.variation" selected="&this"/>
+              <select-menu name="&param_name_for_this" options="&this_parent.variation.value.split(',')" 
+                           if="&this_parent.variation" selected="&this"/>
             </value-view:>
           </field-list>
         </input-many>
       </product-variations-view:>
-      <provider-view:><hot-input ajax/></provider-view:>
       <barcode-view: replace><this/></barcode-view:>
     </field-list>
   </do>

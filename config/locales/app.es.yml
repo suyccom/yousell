@@ -75,7 +75,7 @@ es:
         product_type: Tipo de producto
         product_variations: Variaciones
         provider: Proveedor
-        provider_code: Código proveedor
+        provider_code: Código proveedor-producto
       sale:
         Sale: Venta
         completed_at: Fecha de venta
@@ -137,6 +137,3 @@ es:
         success: La venta se ha efectuado con éxito
   warehouse:
     filter_all: Todos los Almacenes
-#    attribute_help:
-#      user:
-#        email_address:

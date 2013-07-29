@@ -1,21 +1,86 @@
-# Even if you only support one language, you can use this file to customise the names that appear in the UI
-# e.g.
-
 en:
   date: Date
   adddiscount: apply
   addamount: add
   typediscountsymbol: $
+  product_not_found: No se ha encontrado el producto
+
   placeholder:
     discounts: Discounts
-  menu:
-    administration: Administration
-  user:
-    change_language: Change language
+
+  attributes:
+    created_at: Created at
+    updated_at: Updated at
+
   activerecord:
-    attributes:
+    models:
+      user:
+        one: User
+        other: Users
+      warehouse:
+        one: Warehouse
+        other: Warehouses
+      product_type:
+        one: Product type
+        other: Products type
+      variation:
+        one: Variation
+        other: Variations
+      product:
+        one: Product
+        other: Products
       sale:
+        one: Sale
+        other: Sales
+      provider:
+        one: Provider
+        other: Providers
+    attributes:
+      user:
+        name: Name
+        password: Password
+        current_password: Current password
+        password_confirmation: Confirm password
+        email_address: Email address
+      warehouse:
+        Warehouse: Warehouse
+        actions: Actions
+      product_type:
+        ProductType: Product type
+        actions: Actions
+        default_price: Default price
+        variations: Atrributes
+        name: Name
+      variation:
+        Variation: Atrribute
+        value: Value
+        actions: Actions
+        name: Name
+      product:
+        Product: Product
+        name: Product
+        price: Price
+        amount: Amount
+        barcode: Barcode
+        product_type: Product type
+        product_variations: Variations
+        provider: Provider
+        provider_code: Provider-Product code
+      sale:
+        Sale: Sale
+        completed_at: Date of sale
         day_sale: Day sale
+        actions: Actions
+        lines: Lines
+      provider:
+        Provider: Provider
+        code: Code
+        actions: Actions
+      line:
+        name: Name
+        amount: Amount
+        price: Price
+        actions: Actions
     attribute_help:
       variation:
         value: Use comma separated values
@@ -27,6 +92,13 @@ en:
               taken: 'has already been taken. <a href="%{link}">Click here to go to the product with provider code %{provider_code}</a>.'
             amount:
               stock: 'is bigger than the current stock of this product'
+
+  menu:
+    administration: Administration
+
+  user:
+    change_language: Change language
+
   product:
     nav_item: Stock
     index:
@@ -38,6 +110,7 @@ en:
       empty_cells: Empty cells
       labels_sent_to_printer: The labels have been sent to the printer
       variations_list_message: "Besides, on the label for this product will appear these characteristics:"
+
   sale:
     cancel: Cancel
     are_you_sure: Are you sure?
@@ -47,25 +120,14 @@ en:
     pending_day_sales_title: Pending day sales
     pending_day_sales: "There are pending day sales: %{count}"
     no_pending_day_sales: No pending day sales
+    barcode: Barcode
+    search: Search
     actions:
       new: Sell
       save: Complete Sale
     messages:
       create:
         success: The sale has been completed successfully
+
   warehouse:
     filter_all: All the Warehouses
-#    models:
-#      user:
-#        one: User
-#        other: Users
-#    attributes:
-#      user:
-#        name: Name
-#        password: Password
-#        current_password: Current Password
-#        password_confirmation: Password Confirmation
-#        email_address: Email Address
-#    attribute_help:
-#      user:
-#        email_address: We will never share your address with third parties
