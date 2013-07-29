@@ -35,3 +35,6 @@ Yousell::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 end
+
+# Empty printing labels command. This is used for automatic testing
+PRINT_LABELS_COMMAND = ""

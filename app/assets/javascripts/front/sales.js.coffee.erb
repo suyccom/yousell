@@ -1,0 +1,15 @@
+$ ->
+  day_sale_run_on_load()
+
+day_sale_run_on_load = ->
+  # Set sale[:day_sale] value (true or false)
+  $(document).on 'click', 'button#day_sale_button', ->
+    value = $('input#day_sale_hidden').val()
+    if value == 'false'
+      $('input#day_sale_hidden').val('true')
+      $(this).html('<i class="icon-white icon-ok"></i> ' + $(this).html())
+      $(this).addClass('active')
+    else
+      $('input#day_sale_hidden').val('false')
+      $(this).html($(this).html().replace('<i class="icon-white icon-ok"></i>',''))
+      $(this).removeClass('active')
