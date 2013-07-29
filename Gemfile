@@ -82,3 +82,7 @@ gem "rails-settings-cached", "0.2.4"
 gem "whisk_deploy"
 gem 'exception_notification'
 
+gem "barby" # Barcodes
+gem "chunky_png"
+gem "prawn-labels" # Labels
+

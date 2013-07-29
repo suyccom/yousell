@@ -12,10 +12,6 @@ en:
     administration: Administration
   user:
     change_language: Change language
-#  attributes:
-#    created_at: Created at
-#    updated_at: Updated at
-#
   activerecord:
     attributes:
       sale:
@@ -35,9 +31,11 @@ en:
       heading: Stock
       title: Stock
     show:
+      print_labels: Print Labels
+      number_of_labels: Number of Labels
+      empty_cells: Empty cells
+      labels_sent_to_printer: The labels have been sent to the printer
       variations_list_message: "Besides, on the label for this product will appear these characteristics:"
-
-
   sale:
     cancel: Cancel
     are_you_sure: Are you sure?
