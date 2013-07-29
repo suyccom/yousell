@@ -23,26 +23,20 @@ class LinesController < ApplicationController
   end
   
   def update
-    line = Line.find(params[:id])
+    @line = Line.find(params[:id])
+    # If there is only one unit, destroy the line!
+    params[:line] ||= {}
     if params[:minus]
-      # If there is only one unit, destroy the line!
-      if line.amount == 1
-        line.destroy
-      else
-        line.update_attributes(:amount => line.amount - 1)
-      end
+      @line.amount == 1 ? destroy = true : params[:line][:amount] = @line.amount - 1
     elsif params[:sum]
-      line.update_attributes(:amount => line.amount + 1)
-    elsif params[:amount]
-      line.update_attributes(:amount => params[:amount].to_i)
+      params[:line][:amount] = @line.amount + 1
     end
-    if params[:discount]
-      line.update_attributes(:discount => "#{params[:discount]}")
+    if destroy
+      @line.destroy
+      hobo_ajax_response
+    else
+      hobo_update
     end
-    if params[:type_discount]
-      line.update_attributes(:type_discount => "#{params[:type_discount]}")
-    end
-    hobo_ajax_response
   end
 
 end

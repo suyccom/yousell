@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-feature 'The admin wants to make a sell', :driver => :selenium do
+feature 'The admin wants to make a sale', :driver => :selenium do
 
   before do
     # Create a product type and a couple of variations
@@ -25,7 +25,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     white_shoes.save
   end
 
-  scenario 'Admin makes a sell' do
+  scenario 'Admin makes a sale' do
     login
     click_on('Sell')
     page.should_not have_css('tr.line')
@@ -35,6 +35,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
       fill_in('barcode', :with => 'GPBLACK')
       click_on('+')
     end
+    sleep 0.3
     page.should have_css 'tr.line:nth-child(1)'
     page.find('tr.line:nth-child(1)').should have_content 'Shoes 35 black'
     page.should have_content 'Total: $15.00'
@@ -57,7 +58,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     
     # Adds a discount to Shoes 35 black
     within 'tr.line:nth-child(1)' do
-      fill_in 'discount', :with => '10'
+      fill_in 'line[discount]', :with => '10'
       click_on 'apply'
     end
     page.find('tr.line:nth-child(1)').should have_content '$5.00'
@@ -74,7 +75,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
 
     # Adds 5 shoes 35 White
     within 'tr.line:nth-child(2)' do
-      fill_in 'amount', :with => '5'
+      fill_in 'line[amount]', :with => '5'
       click_on 'add'
     end
     page.should have_content 'Total: $78.00'
@@ -83,7 +84,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     fill_in('search', :with => '')
     fill_in('barcode', :with => '11GREEN')
     click_on('+')
-    page.driver.browser.switch_to.alert.accept # Accept the error dialog
+    page.should have_css 'tr.line', :count => 2
 
     click_on('Complete Sale')
     page.should have_content('The sale has been completed successfully')
@@ -118,7 +119,7 @@ feature 'The admin wants to make a sell', :driver => :selenium do
     page.should have_content('Total: $31.00')
     page.should have_css('button.btn.btn-large.btn-info.active')
     within 'tr.line:nth-child(1)' do
-      fill_in('discount', :with => '1')
+      fill_in('line[discount]', :with => '1')
       click_on('apply')
     end
     page.should have_content('Total: $30.00')
