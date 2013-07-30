@@ -1,4 +1,4 @@
-<% @symbol = I18n.t 'typediscountsymbol' %>
+
 
 <new-page title="&t('sale.nav_item', :default => 'Sale')" without-heading>
   <content: with-flash-messages="&false"/>
@@ -44,6 +44,11 @@
   </form>
 </def>
 
+<def tag="discount-box" attrs="name">
+  <select-menu class="span1" name="&name" selected="&this.type_discount" options="&[I18n.t('typediscountsymbol'),'%']"/>
+  <input type="submit" class="btn span1" value="#{I18n.t 'adddiscount'}"/>
+</def>
+
 <def tag="lines">
   <div part="lines">
     <!-- We use reload here in order to get the lines fresh from the DB. 
@@ -68,13 +73,9 @@
       </actions-view:>
       <controls-heading: class="span5"> <t key="placeholder.discounts"/></controls-heading:>
       <controls-view:>
-          <formlet ajax updates='#lines, #total' with="&this_parent">
+          <formlet ajax updates="#lines, #total" with="&this_parent">
             <input type="text" class="span1" name="line[discount]" value="#{this.discount}"/>
-            <select-menu class="span1"
-                         name="line[type_discount]"
-                         selected="&this.type_discount"
-                         options="&[@symbol,'%']"/>
-            <input type="submit" class="btn span1" value="#{I18n.t 'adddiscount'}"/>
+            <discount-box name="line[type_discount]"/>
           </formlet>
       </controls-view>
       <price-view:><currency/></price-view:>
@@ -85,15 +86,11 @@
       value='true'>
       <strong>Total: <span part='total'><currency:total/></span></strong>
     </button>
-    <formlet ajax with="&this" updates='#lines, #total' class="pull-right span">
+    <formlet ajax with="&this" updates="#lines, #total" class="pull-right span">
       <div style="font-size:10px;">
         Total Discount
         <input type="text" class="span1" name="total_discount" value="#{this.total_discount}"/>
-        <select-menu class="span1"
-          name="type_discount"
-          selected="&this.type_discount"
-          options="&[@symbol,'%']"/>
-        <input type="submit" class="btn span1" value="#{I18n.t 'adddiscount'}"/>
+        <discount-box name="type_discount"/>
       </div>
     </formlet>
   </h4>
