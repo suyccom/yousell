@@ -19,7 +19,7 @@ class SalesController < ApplicationController
 
   def index
     # Get 'day sales' grouped by completed_at date: 2 columns, date and money amount
-    @day_sales_count = Sale.complete.day_sale.select("sum(sale_total) as sale_total_sum, date(completed_at) as completed_at_date").group("date(completed_at)").to_a.count
+    @day_sales_count = Sale.complete.day_sale.count
     hobo_index Sale.complete.not_day_sale
   end
 
@@ -52,8 +52,8 @@ class SalesController < ApplicationController
   private
 
   def calculate_day_sales_and_count
-    day_sales = Sale.complete.day_sale.select("sum(sale_total) as sale_total_sum, date(completed_at) as completed_at_date").group("date(completed_at)")
-    day_sales_count = day_sales.to_a.count
+    day_sales = Sale.complete.day_sale.select("sum(sale_total) as sale_total_sum, count(*) as sale_number, date(completed_at) as completed_at_date").group("date(completed_at)")
+    day_sales_count = Sale.complete.day_sale.count
     return day_sales,day_sales_count
   end
 

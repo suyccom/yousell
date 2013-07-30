@@ -6,9 +6,10 @@
     </h2>
   </content-header:>
   <content-body:>
-    <table class='table table-condensed' with='&@day_sales' fields='completed_at_date,sale_total_sum'>
-      <completed-at-date-heading:><t key='date'/></completed-at-date-heading:>
+    <table class='table table-condensed' with='&@day_sales' fields='completed_at_date,sale_number,sale_total_sum'>
+      <completed-at-date-heading:>Fecha</completed-at-date-heading:>
       <sale-total-sum-heading:>Total</sale-total-sum-heading:>
+      <sale-number-heading:>Número de ventas</sale-number-heading:>
       <sale-total-sum-view:><currency/></sale-total-sum-view:>
       <controls:>
         <a href="/pending_day_sales/#{this.completed_at_date}"
