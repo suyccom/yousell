@@ -4,6 +4,13 @@
 .product .form-horizontal .input-many-item .control-group {
   margin-bottom: 6px;
 }
+
+#product-form .control-group label {
+  width:17%;
+  margin-right:5px;
+  text-align: left;
+  
+}
 .product ul.input-many > li > div.input-many-item {
   border: 0;
   padding-top: 5px;
@@ -29,4 +36,12 @@
 
 .new-page.sale .form-horizontal .actions {
   padding-left: 0px;
+}
+
+
+#products .control-group label {
+  width:17%;
+  margin-right:5px;
+  text-align: left;
+  
 }

@@ -2,7 +2,7 @@
   <before-heading:>
     <print-labels/>
   </before-heading:>
-  <field-list: fields='product_type, provider, provider_code, amount, price, barcode'>
+  <field-list: fields='product_type, provider, provider_code, amount, price, barcode' id='products'>
     <barcode-view:>
       <this/>
       <span class='label label-info'>
