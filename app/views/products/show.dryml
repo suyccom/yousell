@@ -2,19 +2,7 @@
   <before-heading:>
     <print-labels/>
   </before-heading:>
-  <field-list: fields='product_type, provider, provider_code, amount, price, barcode'>
-    <barcode-view:>
-      <this/>
-      <span class='label label-info'>
-        <t key='product.show.variations_list_message'/>
-      </span>
-      <if test='&this_parent.product_variations.count > 0' >
-      <% for v in this_parent.product_variations %>
-        <%= v.value %>
-      <% end %>
-      </if>
-    </barcode-view:>
-  </field-list:>
+  <field-list: fields='product_type, provider, provider_code, amount, price, barcode'/>
 </show-page:>
 
 <def tag="print-labels">

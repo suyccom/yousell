@@ -91,6 +91,7 @@ es:
         amount: Cantidad
         price: Precio
         actions: Acciones
+        discount: Descuento
     attribute_help:
       variation:
         value: Utiliza valores separados por comas
@@ -117,7 +118,6 @@ es:
       number_of_labels: Número de etiquetas
       empty_cells: Celdas vacías
       labels_sent_to_printer: Las etiquetas han sido enviadas a la impresora
-      variations_list_message: "Además, en la etiqueta de este producto aparecerán las siguientes características:"
   sale:
     cancel: Cancelar
     are_you_sure: ¿Estás seguro de querer cancelar esta venta?
