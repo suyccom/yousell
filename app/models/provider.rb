@@ -4,7 +4,7 @@ class Provider < ActiveRecord::Base
 
   fields do
     name :string
-    code :string
+    code :string, :unique
     timestamps
   end
   attr_accessible :name, :code
