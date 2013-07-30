@@ -6,8 +6,8 @@ class Sale < ActiveRecord::Base
     complete :boolean, :default => false
     day_sale :boolean, :default => false
     sale_total :decimal, :precision => 8, :scale => 2, :default => 0
-    total_discount :integer
-    type_discount :string
+    total_discount :integer, :default => 0
+    type_discount :string, :default => '%'
     completed_at :datetime
     timestamps
   end

@@ -16,15 +16,15 @@ es:
       heading: "Índice %{model}"
 
     new:
-      title: "Nuevo Registro de %{model}"
-      heading: "Nuevo Registro de %{model}"
+      title: "Nuevo %{model}"
+      heading: "Nuevo %{model}"
 
     show:
       title: "%{model}"
       heading: "%{model} %{name}"
       back_link: "Atrás"
       edit_link: "Actualizar %{model}"
-      new_link: "Nuevo registro %{model}"
+      new_link: "Nuevo %{model}"
       add_form_heading: "Añadir %{model}"
 
     edit:
@@ -41,8 +41,8 @@ es:
       subheading: "Para:"
 
     new_for_owner:
-      title: "Nuevo registro de %{model} para"
-      heading: "Nuevo registro de %{model}"
+      title: "Nuevo %{model} para"
+      heading: "Nuevo %{model}"
       subheading: "Para:"
 
     login:
@@ -88,7 +88,7 @@ es:
 
     # default hobo action translation
     actions:
-      new: "Nuevo registro de %{model}"
+      new: "Nuevo %{model}"
       create: "Crear %{model}"
       previous: "Anterior"
       next: "Siguiente"
@@ -140,7 +140,7 @@ es:
       current_password_is_not_correct: "no está correcta"
       you_are_site_admin: "Ahora usted es el administrador del sitio."
       you_signed_up: "Usted se registró."
-      none: "No hay %{model} disponibles."
+      none: "--"
       confirm: "¿Está seguro?"
 
     # default hobo collection translation
@@ -160,7 +160,7 @@ es:
     # default hobo form translation
     form:
       new:
-        heading: "Nuevo registro de %{model}"
+        heading: "Nuevo %{model}"
       error:
         heading: "Ocurrió el siguiente error:"
       select_many:

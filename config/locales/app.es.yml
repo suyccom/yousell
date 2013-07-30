@@ -55,6 +55,7 @@ es:
       warehouse:
         Warehouse: Almacén
         actions: Acciones
+        name: Nombre
       product_type:
         ProductType: Tipo de producto
         actions: Acciones
@@ -76,6 +77,8 @@ es:
         product_variations: Variaciones
         provider: Proveedor
         provider_code: Código proveedor-producto
+        warehouse: Almacén
+        actions: Acciones
       sale:
         Sale: Venta
         completed_at: Fecha de venta
@@ -91,6 +94,7 @@ es:
         amount: Cantidad
         price: Precio
         actions: Acciones
+        discount: Descuento
     attribute_help:
       variation:
         value: Utiliza valores separados por comas
@@ -113,11 +117,11 @@ es:
       heading: Almacén
       title: Almacén
     show:
+      print: Imprimir
       print_labels: Imprimir Etiquetas
       number_of_labels: Número de etiquetas
       empty_cells: Celdas vacías
       labels_sent_to_printer: Las etiquetas han sido enviadas a la impresora
-      variations_list_message: "Además, en la etiqueta de este producto aparecerán las siguientes características:"
   sale:
     cancel: Cancelar
     are_you_sure: ¿Estás seguro de querer cancelar esta venta?

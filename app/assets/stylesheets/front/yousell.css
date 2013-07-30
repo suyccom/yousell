@@ -38,10 +38,52 @@
   padding-left: 0px;
 }
 
-
-#products .control-group label {
+.form-horizontal .control-group label {
   width:17%;
   margin-right:5px;
   text-align: left;
   
 }
+.new-page.sale .table th,.new-page.sale .table td {
+  line-height: 33px;
+}
+.new-page.sale input.line-amount, .new-page.sale input.line-discount, .new-page.sale input.sale-total-discount{
+  width:20px;
+}
+.new-page.sale .amount-button{
+  margin:0 6px;
+  font-weight: bold;
+}
+.new-page.sale .ajax-button{
+  margin-top:0;
+  margin-left:2px;
+  height:30px"
+}
+
+.new-page.sale .name-heading{
+  width:55%;
+}
+
+.new-page.sale .discount-button{
+  margin:0;
+}
+.new-page.sale .discount-button .btn{
+  border-radius: 4px 0 0 4px;
+}
+.new-page.sale .discount-group .dropdown-toggle{
+    box-shadow: 1px 0 0 rgba(255, 255, 255, 0.125) inset, 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+
+#complete-sale-button{
+  font-weight: bold;
+}
+
+
+
+
+
+
+>>>>>>> improve_sale_screen

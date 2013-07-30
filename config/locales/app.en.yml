@@ -105,11 +105,11 @@ en:
       heading: Stock
       title: Stock
     show:
+      print: Print
       print_labels: Print Labels
       number_of_labels: Number of Labels
       empty_cells: Empty cells
       labels_sent_to_printer: The labels have been sent to the printer
-      variations_list_message: "Besides, on the label for this product will appear these characteristics:"
 
   sale:
     cancel: Cancel

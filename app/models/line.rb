@@ -5,8 +5,8 @@ class Line < ActiveRecord::Base
   fields do
     name  :string
     price :decimal, :precision => 8, :scale => 2, :default => 0
-    discount :integer
-    type_discount :string
+    discount :integer, :default => 0
+    type_discount :string, :default => '%'
     amount :integer, :default => 1
     timestamps
   end
