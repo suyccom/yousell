@@ -57,7 +57,7 @@
 .new-page.sale .ajax-button{
   margin-top:0;
   margin-left:2px;
-  height:30px"
+  height:30px;
 }
 
 .new-page.sale .name-heading{
@@ -76,14 +76,7 @@
     padding-right: 8px;
 }
 
-
 #complete-sale-button{
   font-weight: bold;
 }
 
-
-
-
-
-
->>>>>>> improve_sale_screen
