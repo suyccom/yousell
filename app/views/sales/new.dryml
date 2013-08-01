@@ -1,5 +1,3 @@
-
-
 <new-page title="&t('sale.nav_item', :default => 'Sale')" without-heading>
   <content: with-flash-messages="&false"/>
   <form: replace>
@@ -71,8 +69,6 @@
 </def>
 
 <def tag="total-discount">
-
-  
   <div class="btn-group discount-group">
     <div part="total-discount-part" class="pull-left discount-button">
       <click-editor-innards:total-discount updates="#lines">
@@ -105,30 +101,24 @@
       </li>
     </ul>
   </div>
-  
-  
-  
-  
-  
-  
 </def>
 
 
 <def tag="line-amount-controls">
-  <ajax-button name="minus" icon="minus"/>
+  <ajax-button name="minus" icon="minus" id="&this_parent.id"/>
   <div part="amount-part" class="pull-left amount-button">
     <click-editor-innards>
       <view: class="btn" />
     </click-editor-innards>
   </div>
-  <ajax-button name="sum" icon="plus"/>
+  <ajax-button name="sum" icon="plus" id="&this_parent.id"/>
 </def>
 
-<def tag="ajax-button" attrs="name, icon">
+<def tag="ajax-button" attrs="id, name, icon">
   <formlet with="&this_parent" updates="#lines" class="pull-left">
     <input type="hidden" name="#{name}" value="true"/>
-    <label for="input-#{name}" class="btn"><i class="icon-#{icon}"></i></label>
-    <input id="input-#{name}" type="submit" value="Go" class="hide" />
+    <label for="input-#{name}-#{id}" class="btn"><i class="icon-#{icon}"></i></label>
+    <input id="input-#{name}-#{id}" type="submit" value="Go" class="hide" />
   </formlet>
 </def>
 
@@ -152,16 +142,16 @@
       <li>
         <formlet with="&this_parent" updates="#lines" class="pull-left">
           <input type="hidden" name="line[type_discount]" value="%"/>
-          <input id="submit_percentage" type="submit" value="%" class="hide"/>
+          <input id="submit_percentage-#{this.id}" type="submit" value="%" class="hide"/>
         </formlet>
-        <a href="#" onclick="$('#submit_percentage').click(); return false;">%</a>
+        <a href="#" onclick="$('#submit_percentage-#{this_parent.id}').click(); return false;">%</a>
       </li>
       <li>
         <formlet with="&this_parent" updates="#lines" class="pull-left">
           <input type="hidden" name="line[type_discount]" value="€"/>
-          <input id="submit_euro" type="submit" value="€" class="hide"/>
+          <input id="submit_euro-#{this.id}" type="submit" value="€" class="hide"/>
         </formlet>
-        <a href="#" onclick="$('#submit_euro').click(); return false;">€</a>
+        <a href="#" onclick="$('#submit_euro-#{this_parent.id}').click(); return false;">€</a>
       </li>
     </ul>
   </div>

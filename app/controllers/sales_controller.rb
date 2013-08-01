@@ -13,7 +13,6 @@ class SalesController < ApplicationController
   def update
     hobo_update do
       flash[:notice] = I18n.t("sale.messages.create.success")
-      redirect_to '/'
     end
   end
 
