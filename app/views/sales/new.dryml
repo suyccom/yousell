@@ -71,8 +71,6 @@
 </def>
 
 <def tag="total-discount">
-
-  
   <div class="btn-group discount-group">
     <div part="total-discount-part" class="pull-left discount-button">
       <click-editor-innards:total-discount updates="#lines">
@@ -105,30 +103,24 @@
       </li>
     </ul>
   </div>
-  
-  
-  
-  
-  
-  
 </def>
 
 
 <def tag="line-amount-controls">
-  <ajax-button name="minus" icon="minus"/>
+  <ajax-button name="minus" icon="minus" lineid="#{this_parent.id}"/>
   <div part="amount-part" class="pull-left amount-button">
     <click-editor-innards>
       <view: class="btn" />
     </click-editor-innards>
   </div>
-  <ajax-button name="sum" icon="plus"/>
+  <ajax-button name="sum" icon="plus" lineid="#{this_parent.id}"/>
 </def>
 
-<def tag="ajax-button" attrs="name, icon">
+<def tag="ajax-button" attrs="name, icon, lineid">
   <formlet with="&this_parent" updates="#lines" class="pull-left">
     <input type="hidden" name="#{name}" value="true"/>
-    <label for="input-#{name}" class="btn"><i class="icon-#{icon}"></i></label>
-    <input id="input-#{name}" type="submit" value="Go" class="hide" />
+    <label for="input-#{name}-#{lineid}" class="btn"><i class="icon-#{icon}"></i></label>
+    <input id="input-#{name}-#{lineid}" type="submit" value="Go" class="hide" />
   </formlet>
 </def>
 
