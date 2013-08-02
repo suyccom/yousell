@@ -63,7 +63,7 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     page.should have_css 'tr.line', :count => 2
 
     click_on('Complete Sale')
-    page.should have_content('Changes to the Sale were saved')
+    page.should have_content('The sale has been completed successfully')
     # Check that the amount in stock has been reduced
     Product.find_by_barcode('GPBLACK').amount.should eq 9
     Product.find_by_barcode('GPWHITE').amount.should eq 8
@@ -95,7 +95,7 @@ feature 'The admin wants to make a sale', :driver => :selenium do
 
     # ...and completes the sale
     click_on('Complete Sale')
-    page.should have_content('Changes to the Sale were saved')
+    page.should have_content('The sale has been completed successfully')
 
     # Can sees/deletes pending 'day sales'
     click_on('Administration')
