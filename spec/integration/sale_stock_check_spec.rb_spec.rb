@@ -28,19 +28,19 @@ feature 'Sale stock checks', :driver => :selenium do
       fill_in 'barcode', :with => @product.barcode
       click_on '+'
     end
-    page.should have_content 'Total: $10.00'
+    page.should have_content '$10.00'
     within 'tr.line:nth-child(1)' do
-      click_on '+'
+      page.find(".icon-plus").click
     end
-    page.should have_content 'Total: $20.00'
+    page.should have_content '$20.00'
     within 'tr.line:nth-child(1)' do
-      click_on '+'
+      page.find(".icon-plus").click
     end
     # Accept the error alert
     page.driver.browser.switch_to.alert.accept
     
     # The total remains the same
-    page.should have_content 'Total: $20.00'
+    page.should have_content '$20.00'
   end
   
 end
