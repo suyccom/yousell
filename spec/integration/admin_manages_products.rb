@@ -12,9 +12,9 @@ feature 'The admin wants to manage products', :driver => :selenium do
     pt.variations << size
     pt.variations << color
     pt.save
-    Warehouse.create(:name => 'The big one')
-    Warehouse.create(:name => 'The small one')
-    provider = Provider.create(:name => 'SuperZapas', :code => 'SZ')
+    Warehouse.create!(:name => 'The big one')
+    Warehouse.create!(:name => 'The small one')
+    provider = Provider.create!(:name => 'SuperZapas', :code => 'SZ')
   end
 
   scenario 'Admin adds, removes and edits products' do
@@ -25,8 +25,8 @@ feature 'The admin wants to manage products', :driver => :selenium do
     # Adds a product
     click_on 'New Product'
     select 'Shoes'
-    select 'SuperZapas'
     sleep 0.5
+    select 'SuperZapas'
     fill_in 'product[provider_code]', :with => 'SZ-1'
     select '36'
     select 'green'
@@ -60,7 +60,7 @@ feature 'The admin wants to manage products', :driver => :selenium do
     select 'blue'
     fill_in 'product[amount]', :with => '5'
     click_on 'Create Product'
-    page.should have_content 'Provider code has already been taken.'
+    page.should have_content 'code has already been taken.'
     click_on 'Click here to go to the product with provider code SZ-1'
     page.should have_content 'Shoes 36 green'
     # Prints some labels
