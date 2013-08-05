@@ -1,6 +1,6 @@
 <def tag="product-form">
   <do part="product-form">
-    <field-list fields="product_type, provider, provider_code, amount, product_variations, price, warehouse">
+    <field-list fields="product_type, provider, amount, product_variations, price, product_warehouses">
       <product-type-view:><hot-input ajax /></product-type-view:>
       <product-variations-view:>
         <input-many if="&this_parent.product_type">

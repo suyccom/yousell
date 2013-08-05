@@ -1,0 +1,43 @@
+<include src="linea_producto"/>
+
+<new-page>
+  <form:>
+    <field-list: fields="products">
+      <products-view:>
+        <products-table/>
+      </products-view:>
+    </field-list>
+    <submit: class="btn-large" value="&I18n.t 'product_type.actions.create'"/>
+    <cancel: replace/>
+  </form:>
+</new-page>
+
+
+<def tag="products-table">
+   <table id="products-table" class="table table-striped table-bordered collection">
+    <thead>
+      <tr class="field-heading-row">
+        <th style="width:15%">Proveedor</th>
+        <th style="width:13%">Modelo</th>
+        <th style="width:8%">Cantidad</th>
+        <repeat with="&Variation.all">
+          <th style="width:13%"><this/></th>
+        </repeat>
+        <th style="width:15%">Almacén</th>
+        <th style="width:8%">Precio</th>
+        <th style="width:2%"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <linea-producto with="&Product.new"/>
+    </tbody>
+  </table>
+  
+  <input id="barcode" type="text" placeholder="Optional: barcode"/>
+  <a class="add-product-button btn" href="#"><i class="icon-plus"></i></a>
+</def>
+
+
+
+

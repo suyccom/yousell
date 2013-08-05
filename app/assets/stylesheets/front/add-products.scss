@@ -1,0 +1,22 @@
+.new.product-type{
+  .control-group label {
+    display:none;
+  }
+  .controls {
+    margin-left: 0px;
+  }
+  .products-field{
+    input, textarea, select{
+      margin-top: 0;
+    }
+    table input{
+      box-sizing: border-box;
+      -webkit-box-sizing:border-box;
+      -moz-box-sizing: border-box;
+      height:30px;
+    }
+    table input, table select{
+      width: 100%;
+    }
+  }
+}

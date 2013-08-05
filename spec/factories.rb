@@ -13,29 +13,34 @@ FactoryGirl.define do
   end
 
   factory :product_type, class: ProductType do
-    name 'Zapatillas Lewis'
+    name '300'
   end
 
   factory :provider, class: Provider do
     name 'Bad Provider'
-    code 'BP'
+    code {"BP#{(rand(99-11) + 11)}"}
   end
 
   factory :product, class: Product do
     price 10
-    amount 5
-    provider_code 'ZZ11'
     association :product_type
     association :provider
+    after(:create) do |product, evaluator|
+      FactoryGirl.create(:product_warehouse, :product => product, :warehouse => User.current_user.current_warehouse)
+    end
+  end
+  
+  factory :product_warehouse, class: ProductWarehouse do
+    amount 10
   end
 
   factory :line, class: Line do
-    association :product
   end
 
   factory :sale, class: Sale do
     after(:create) do |sale, evaluator|
-      FactoryGirl.create(:line, :sale => sale)
+      product = FactoryGirl.create(:product)
+      FactoryGirl.create(:line, :sale => sale, :product => product)
       sale.update_attribute(:complete, true)
     end
   end

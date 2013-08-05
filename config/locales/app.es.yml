@@ -45,6 +45,9 @@ es:
       provider:
         one: Proveedor
         other: Proveedores
+      variation_values:
+        one: Valor
+        other: Valores
     attributes:
       user:
         name: Nombre
@@ -52,6 +55,7 @@ es:
         current_password: Contraseña Actual
         password_confirmation: Confirmación Contraseña
         email_address: Correo Electrónico
+        current_warehouse: Almacén de venta
       warehouse:
         Warehouse: Almacén
         actions: Acciones
@@ -67,6 +71,10 @@ es:
         value: Valor
         actions: Acciones
         name: Nombre
+        variation_values: Valores
+      variation_value:
+        name: Nombre
+        code: Código
       product:
         Product: Producto
         name: Producto
@@ -79,6 +87,10 @@ es:
         provider_code: Código proveedor-producto
         warehouse: Almacén
         actions: Acciones
+        product_warehouses: Unidades
+      product_warehouse:
+        amount: Unidades
+        warehouse: Almacén
       sale:
         Sale: Venta
         completed_at: Fecha de venta
@@ -115,6 +127,7 @@ es:
     nav_item: Almacén
     index:
       heading: Almacén
+      last_added_products: Últimos productos añadidos
       title: Almacén
     show:
       print: Imprimir
@@ -122,6 +135,12 @@ es:
       number_of_labels: Número de etiquetas
       empty_cells: Celdas vacías
       labels_sent_to_printer: Las etiquetas han sido enviadas a la impresora
+  product_type:
+    actions:
+      new: Añadir productos
+      create: Guardar
+    new:
+      heading: Añadir productos
   sale:
     cancel: Cancelar
     are_you_sure: ¿Estás seguro de querer cancelar esta venta?

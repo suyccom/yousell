@@ -15,5 +15,16 @@ class ApplicationController < ActionController::Base
   before_filter :except => [:login, :forgot_password, :reset_password, :do_reset_password] do
    login_required unless User.count == 0
   end
+  
+  # Accessing current_user within the models is necessary for validations depending on current user and current shop
+  around_filter :set_current_user
+
+  def set_current_user
+    User.current_user = current_user
+    yield
+  ensure
+    # to address the thread variable leak issues in Puma/Thin webserver
+    User.current_user = nil
+  end  
 
 end

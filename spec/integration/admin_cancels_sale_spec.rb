@@ -5,9 +5,10 @@ require 'spec_helper'
 feature 'The admin wants to cancel a sale', :driver => :selenium do
 
   before do
+    User.current_user = User.last
     @sale = FactoryGirl.create(:sale)
-    # FactoryGirl creates 6 units. After selling one, we have 4 left
-    Product.last.amount.should eq 4
+    # FactoryGirl creates 10 units. After selling one, we have 9 left
+    Product.last.amount.should eq 9
     login
   end
 
@@ -23,7 +24,7 @@ feature 'The admin wants to cancel a sale', :driver => :selenium do
     page.find('tr.sale:nth-child(2) .total-view').text.should eq '-$10.00'
 
     # Check that stock has been increased again to 5 units
-    Product.last.amount.should eq 5
+    Product.last.amount.should eq 10
   end
 
 end

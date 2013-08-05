@@ -1,6 +1,8 @@
 $ ->
   day_sale_run_on_load()
-
+$(window).bind 'page:change', ->
+  day_sale_run_on_load()
+  
 day_sale_run_on_load = ->
   # Set sale[:day_sale] value (true or false)
   $(document).on 'click', 'button#day_sale_button', ->

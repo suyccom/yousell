@@ -4,15 +4,11 @@ class ProductType < ActiveRecord::Base
 
   fields do
     name          :string
-    default_price :decimal, :precision => 8, :scale => 2, :default => 0
     timestamps
   end
-  attr_accessible :name, :default_price, :variations
+  attr_accessible :name, :products
 
-  has_many :variations, :through => :product_type_variations, :accessible => true
-  has_many :product_type_variations, :dependent => :destroy
-
-  has_many :products
+  has_many :products, :accessible => true
 
   # --- Permissions --- #
 

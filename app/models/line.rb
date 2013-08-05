@@ -19,7 +19,7 @@ class Line < ActiveRecord::Base
   
   validate :check_stock
   def check_stock
-    if product.amount < amount
+    if product.available_amount < amount
       errors.add(:amount, I18n.t('activerecord.errors.models.product.attributes.amount.stock'))
     end
   end

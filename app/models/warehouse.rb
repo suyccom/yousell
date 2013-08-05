@@ -9,7 +9,10 @@ class Warehouse < ActiveRecord::Base
   attr_accessible :name
 
   # --- Relations --- #
-  has_many :products
+  has_many :users, :foreign_key => 'current_warehouse_id'
+  
+  has_many :product_warehouses
+  has_many :products, :through => :product_warehouses
 
   # --- Permissions --- #
   def create_permitted?
