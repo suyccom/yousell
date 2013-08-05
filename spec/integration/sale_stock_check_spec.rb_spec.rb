@@ -5,12 +5,13 @@ require 'spec_helper'
 feature 'Sale stock checks', :driver => :selenium do
 
   before do
+    User.current_user = User.last
     @product = FactoryGirl.create(:product)
     login
   end
 
   scenario 'The admin can not add a product without stock' do
-    @product.update_attribute(:amount, 0)
+    @product.current_product_warehouse.update_attribute(:amount, 0)
     visit '/'
     within '#add-product-form' do
       fill_in 'barcode', :with => @product.barcode
@@ -22,7 +23,7 @@ feature 'Sale stock checks', :driver => :selenium do
   end
   
   scenario 'The admin can not increase the units of a product if there is not enough stock' do
-    @product.update_attribute(:amount, 2)
+    @product.current_product_warehouse.update_attribute(:amount, 2)
     visit '/'
     within '#add-product-form' do
       fill_in 'barcode', :with => @product.barcode

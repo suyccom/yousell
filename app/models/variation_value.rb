@@ -1,13 +1,14 @@
-class ProductTypeVariation < ActiveRecord::Base
+class VariationValue < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
 
   fields do
+    name :string
+    code :string
     timestamps
   end
-  attr_accessible
-
-  belongs_to :product_type
+  attr_accessible :name, :code
+  
   belongs_to :variation
 
   # --- Permissions --- #

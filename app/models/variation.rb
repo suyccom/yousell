@@ -4,17 +4,19 @@ class Variation < ActiveRecord::Base
 
   fields do
     name  :string
-    value :string
     timestamps
   end
-  attr_accessible :name, :value
+  attr_accessible :name, :variation_values
 
   # --- Relations --- #
-  has_many :product_type_variations, :dependent => :destroy
-  has_many :product_types, :through => :product_type_variations, :accessible => true
-
   has_many :product_variations, :dependent => :destroy
   has_many :products, :through => :product_variations, :accessible => true
+  
+  has_many :variation_values, :accessible => true
+  
+  def value
+    variation_values.*.name.join(',')
+  end
 
   # --- Permissions --- #
   def create_permitted?

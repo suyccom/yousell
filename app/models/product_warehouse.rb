@@ -1,24 +1,19 @@
-class ProductVariation < ActiveRecord::Base
+class ProductWarehouse < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
 
   fields do
-    value :string
-    code :string
+    amount :integer
     timestamps
   end
-  attr_accessible :value, :variation, :variation_id, :product, :product_id
-
-  belongs_to :variation
+  
+  belongs_to :warehouse
   belongs_to :product
   
-  before_save :save_code
-  def save_code
-    self.code = variation.variation_values.name_is(value).first.code
-  end
+  attr_accessible :amount, :warehouse, :product, :warehouse_id, :product_id
   
-  def to_s
-    code
+  def name
+    "#{warehouse} #{amount}"
   end
 
   # --- Permissions --- #

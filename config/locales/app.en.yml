@@ -103,13 +103,23 @@ en:
     nav_item: Stock
     index:
       heading: Stock
+      last_added_products: Últimos productos añadidos
       title: Stock
+
     show:
       print: Print
       print_labels: Print Labels
       number_of_labels: Number of Labels
       empty_cells: Empty cells
       labels_sent_to_printer: The labels have been sent to the printer
+  
+  product_type:
+    optional_barcode: Barcode (optional)
+    actions:
+      new: Add products
+      create: Save
+    new:
+      heading: Add products
 
   sale:
     cancel: Cancel

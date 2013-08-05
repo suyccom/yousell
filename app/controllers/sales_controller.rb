@@ -13,7 +13,7 @@ class SalesController < ApplicationController
   def update
     hobo_update do
       flash[:notice] = I18n.t("sale.messages.create.success")
-      redirect_to '/'
+      request.xhr? ? hobo_ajax_response : (redirect_to '/')
     end
   end
 
@@ -43,7 +43,8 @@ class SalesController < ApplicationController
     @new_sale.save
     for line in @sale.lines
       Line.create(:sale => @new_sale, :product => line.product, :amount => line.amount)
-      line.product.update_attribute(:amount, line.product.amount + line.amount)
+      pw = line.product.current_product_warehouse
+      pw.update_attribute(:amount, pw.amount + line.amount)
     end
     @new_sale.update_attribute(:complete, true) # Now we "complete" it again :)
     redirect_to @new_sale

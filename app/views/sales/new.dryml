@@ -2,9 +2,20 @@
   <content: with-flash-messages="&false"/>
   <form: replace>
     <add-line-form/>
+    <day-sale-formlet/>
     <complete-sale-form/>
   </form:>
 </new-page>
+
+<def tag="day-sale-formlet">
+  <div part="day-sale-formlet">
+    <formlet updates="#lines, #day-sale-formlet" class="pull-left">
+      <% value = this.day_sale ? false : true %>
+      <input id='day_sale_hidden' type="hidden" name='sale[day_sale]' value="#{value}"/>
+      <input id="submit_day_sale" type="submit" class="hide"/>
+    </formlet>
+  </div>
+</def>
 
 <def tag="add-line-form">
   <form with="&this.lines.new" updates="#lines,#total" refocus-form reset-form>
@@ -60,10 +71,10 @@
     <th></th>
     <th><total-discount/></th>
     <th>
-      <input id='day_sale_hidden' type="hidden" name='sale[day_sale]' value="false"/>
-      <button id='day_sale_button' type='button' class='btn btn-large btn-info' value='true'>
-        <strong><currency:total/></strong>
-      </button>    
+      <a href="#" onclick="$('#submit_day_sale').click(); return false;" 
+         id='day_sale_button' type='button' class="btn btn-large btn-info #{'active' if this.day_sale}">
+         <i if="&this.day_sale" class="icon-white icon-ok"></i><strong><currency:total/></strong>
+      </a>
     </th>
   </tr>
 </def>
