@@ -49,6 +49,7 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     fill_in('barcode', :with => '11GREEN')
     click_on('+')
     page.should have_css 'tr.line', :count => 2
+    page.driver.browser.switch_to.alert.accept
 
     click_on('Complete Sale')
     page.should have_content('The sale has been completed successfully')
@@ -60,45 +61,45 @@ feature 'The admin wants to make a sale', :driver => :selenium do
 
 
 
-#  scenario 'Admin makes a day sale' do
-#    login
-#    click_on('Sell')
-#    page.should_not have_css('tr.line')
+  scenario 'Admin makes a day sale' do
+    login
+    click_on('Sell')
+    page.should_not have_css('tr.line')
 
-#    # Adds a product
-#    within '#add-product-form' do
-#      fill_in('barcode', :with => @product1.barcode)
-#      click_on('+')
-#    end
-#    page.should have_css('tr.line:nth-child(1)')
-#    page.find('tr.line:nth-child(1)').should have_content(@product1.name)
-#    page.should have_content('$15.00')
+    # Adds a product
+    within '#add-product-form' do
+      fill_in('barcode', :with => @product1.barcode)
+      click_on('+')
+    end
+    page.should have_css('tr.line:nth-child(1)')
+    page.find('tr.line:nth-child(1)').should have_content(@product1.name)
+    page.should have_content('$15.00')
 
-#    # Clicks on 'day sale', but after that adds more products and discounts and the button should remain pushed
+    # Clicks on 'day sale', but after that adds more products and discounts and the button should remain pushed
 
-#    within '#add-product-form' do
-#      fill_in('barcode', :with => @product2.barcode)
-#      click_on('+')
-#    end
-#    page.should have_css('tr.line:nth-child(2)')
-#    page.should have_content('$31.00')
-#    page.find('#day_sale_button').click
+    within '#add-product-form' do
+      fill_in('barcode', :with => @product2.barcode)
+      click_on('+')
+    end
+    page.should have_css('tr.line:nth-child(2)')
+    page.should have_content('$31.00')
+    page.find('#day_sale_button').click
 
-#    # ...and completes the sale
-#    click_on('Complete Sale')
-#    page.should have_content('The sale has been completed successfully')
+    # ...and completes the sale
+    click_on('Complete Sale')
+    page.should have_content('The sale has been completed successfully')
 
-#    # Can sees/deletes pending 'day sales'
-#    click_on('Administration')
-#    click_on('Sales')
-#    page.should have_css('.label.label-important')
-#    click_on('There are pending day sales: 1')
-#    page.should have_css('tr.sale:nth-child(1)')
-#    page.find('tr.sale:nth-child(1)').should have_content(Date.today.strftime('%Y-%m-%d'))
-#    page.find('tr.sale:nth-child(1)').should have_content("31")
-#    page.find('td.controls a i.icon-trash').click
-#    page.driver.browser.switch_to.alert.accept
-#    page.should have_content('No pending day sales')
-#  end
+    # Can sees/deletes pending 'day sales'
+    click_on('Administration')
+    click_on('Sales')
+    page.should have_css('.label.label-important')
+    click_on('There are pending day sales: 1')
+    page.should have_css('tr.sale:nth-child(1)')
+    page.find('tr.sale:nth-child(1)').should have_content(Date.today.strftime('%Y-%m-%d'))
+    page.find('tr.sale:nth-child(1)').should have_content("31")
+    page.find('td.controls a i.icon-trash').click
+    page.driver.browser.switch_to.alert.accept
+    page.should have_content('No pending day sales')
+  end
 
 end
