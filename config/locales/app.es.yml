@@ -136,6 +136,7 @@ es:
       empty_cells: Celdas vacías
       labels_sent_to_printer: Las etiquetas han sido enviadas a la impresora
   product_type:
+    optional_barcode: Código de barras (opcional)
     actions:
       new: Añadir productos
       create: Guardar

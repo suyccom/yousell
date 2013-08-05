@@ -34,7 +34,7 @@
     </tbody>
   </table>
   
-  <input id="barcode" type="text" placeholder="Optional: barcode"/>
+  <input id="barcode" type="text" placeholder="&I18n.t 'product_type.optional_barcode'"/>
   <a class="add-product-button btn" href="#"><i class="icon-plus"></i></a>
 </def>
 
