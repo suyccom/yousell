@@ -14,7 +14,7 @@ Yousell::Application.routes.draw do
   match 'sales/:id/cancel' => 'sales#cancel'
 
   # Products routes
-  match 'products/:id/print_labels' => 'products#print_labels'
+  match 'products/:id/product_labels' => 'products#product_labels'
   match 'products/last_products_labels' => 'products#last_products_labels'
   match 'product_types/new_from_barcode' => 'product_types#new_from_barcode'
 
