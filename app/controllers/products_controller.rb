@@ -6,20 +6,35 @@ class ProductsController < ApplicationController
   
   autocomplete
   
+  def labels
+    require 'barby'
+    require 'barby/barcode/code_128'
+    require 'barby/outputter/png_outputter'
+
+    Prawn::Labels.types = {
+      "Apli1285" => {
+        "paper_size" => "A4",
+        "columns"    => 4,
+        "rows"       => 11,
+        "top_margin" => 18.0,
+        "bottom_margin" => 19.0,
+        "left_margin" => 15.5,
+        "right_margin" => 35.5
+    }}
+  end
+
   def print_labels
+    labels
     @product = Product.find(params[:id])
 
     temp_file = "#{Rails.root}/tmp/barcode.png"
     temp_pdf = "#{Rails.root}/tmp/labels.pdf"
    
     # Create the barcode PNG
-    require 'barby'
-    require 'barby/barcode/code_128'
-    require 'barby/outputter/png_outputter'
     barby = Barby::Code128B.new(@product.barcode)
     png = Barby::PngOutputter.new(barby).to_png(:height => 25, :margin => 5, :xdim => 1)
     File.open(temp_file, 'w'){|f| f.write png }
-    
+
     # Create the array for the labels PDF
     barcodes = []
     params[:empty_cells].to_i.times do
@@ -28,20 +43,8 @@ class ProductsController < ApplicationController
     params[:number].to_i.times do
       barcodes << temp_file
     end
-    
+
     # Generate the PDF
-    
-    Prawn::Labels.types = {
-      "Apli1285" => {
-        "paper_size" => "A4",
-        "columns"    => 4,
-        "rows"       => 11,
-        "top_margin" => 18.0,
-        "bottom_margin" => 19.0,
-        "left_margin" => 28.5,
-        "right_margin" => 18.5
-    }}
-    
     labels = Prawn::Labels.generate(temp_pdf, barcodes, :type => "Apli1285") do |pdf, barcode|
       unless barcode.blank?
         pdf.image barcode 
@@ -49,7 +52,6 @@ class ProductsController < ApplicationController
         pdf.text @product.name, :size => 10
       end
     end
-    
     # Print or send the PDF back to the browser
     if defined? PRINT_LABELS_COMMAND
       system("#{PRINT_LABELS_COMMAND} #{temp_pdf}")
@@ -61,15 +63,12 @@ class ProductsController < ApplicationController
   end
 
   def last_products_labels
+    labels
     @products = Product.where(:id => User.current_user.last_added_products.map{|p| p[0]})
 
     temp_pdf = "#{Rails.root}/tmp/labels.pdf"
     barcodes = []
     i = 1
-    require 'barby'
-    require 'barby/barcode/code_128'
-    require 'barby/outputter/png_outputter'
-
 
     params[:empty_cells].to_i.times do
       barcodes << ""
@@ -84,21 +83,10 @@ class ProductsController < ApplicationController
       File.open(temp_file, 'w'){|f| f.write png }
       # Create the array for the labels PDF
       p.product_warehouses.first.amount.times do
-        barcodes << [temp_file, p.name, p.barcode]
+        barcodes << [temp_file, p.barcode, p.name]
       end
       i = i + 1
     end
-
-    Prawn::Labels.types = {
-      "Apli1285" => {
-        "paper_size" => "A4",
-        "columns"    => 4,
-        "rows"       => 11,
-        "top_margin" => 18.0,
-        "bottom_margin" => 19.0,
-        "left_margin" => 15.5,
-        "right_margin" => 35
-    }}
 
     labels = Prawn::Labels.generate(temp_pdf, barcodes, :type => "Apli1285") do |pdf, barcode|
       unless barcode.blank?
@@ -111,7 +99,7 @@ class ProductsController < ApplicationController
     if defined? PRINT_LABELS_COMMAND
       system("#{PRINT_LABELS_COMMAND} #{temp_pdf}")
       flash[:info] = I18n.t("product.show.labels_sent_to_printer")
-      redirect_to "/products"
+      redirect_to @product
     else
       send_file temp_pdf, :type => "application/pdf", :disposition => "inline"
     end
