@@ -7,13 +7,14 @@
       <span if="&params[:last_added]"><t key="product.index.last_added_products"/></span>
     </h2>
   </heading:>
-  <collection: fields="this, barcode, amount, price, actions">
-    <amount-view:><this/> (<%= this_parent.product_warehouses.*.name.join(', ') %>)</amount-view:>
-    <price-view:><currency/></price-view:>
+  <collection: replace>
+    <table-plus without-page-nav without-header fields="this, barcode, amount, price, actions">
+      <amount-view:><this/> (<%= this_parent.product_warehouses.*.name.join(', ') %>)</amount-view:>
+      <price-view:><currency/></price-view:>
+      <actions-view:><bootstrap-table-actions/></actions-view:>
+    </table-plus>
+    <print-labels if="&params[:last_added]"/>    
   </collection:>
-  <after-collection:>
-    <print-labels if="&params[:last_added]"/>
-  </after-collection:>
 </index-page>
 
 
