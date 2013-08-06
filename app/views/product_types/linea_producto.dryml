@@ -1,0 +1,18 @@
+<def tag="linea-producto">
+  <tr class="odd product">
+    <td><select-menu name="product_type[products][][provider_id]" options="&Provider.all.map{|p|[p.name,p.id]}" selected="&@provider"/></td>
+    <td><input type="text" name="product_type[products][][code]" value="&@code" /></td>
+    <td><input type="text" name="product_type[products][][product_warehouses][][amount]" value="1"/></td>
+    <repeat with="&Variation.all">
+      <td>
+        <input type="hidden" name="product_type[products][]product_variations[][variation_id]" value="&this.id"/>
+        <% @variations ||= {} %>
+        <select-menu name="product_type[products][]product_variations[][value]" options="&this.value.split(',')" selected="&@variations[this.name]"/>
+      </td>
+    </repeat>
+    <td><select-menu name="product_type[products][][product_warehouses][][warehouse_id]" options="&Warehouse.all.map{|w|[w.name,w.id]}"/></td>
+    <td><input type="text" name="product_type[products][][price]"/></td>
+    <td><a class="btn remove-product-button" href="#"><i class="icon-minus"></i></a></td>
+  </tr>
+</def>
+

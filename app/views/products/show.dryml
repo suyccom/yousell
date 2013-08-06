@@ -2,7 +2,7 @@
   <before-heading:>
     <print-labels/>
   </before-heading:>
-  <field-list: fields='product_type, provider, provider_code, amount, price, barcode' id='products'/>
+  <field-list: fields='product_type, provider, amount, price, barcode' id='products'/>
 </show-page:>
 
 <def tag="print-labels">
@@ -36,3 +36,4 @@
     <i class="icon-print"></i> <t key="product.show.print_labels"/>
   </modal-open-button>
 </def>
+

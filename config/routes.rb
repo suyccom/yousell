@@ -14,6 +14,8 @@ Yousell::Application.routes.draw do
   match 'sales/:id/cancel' => 'sales#cancel'
   
   match 'products/:id/print_labels' => 'products#print_labels'
+  
+  match 'product_types/new_from_barcode' => 'product_types#new_from_barcode'
 
   # Pending day sales routes
   match 'pending_day_sales' => 'sales#pending_day_sales'

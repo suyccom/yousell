@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130730103103) do
+ActiveRecord::Schema.define(:version => 20130805081547) do
 
   create_table "lines", :force => true do |t|
     t.string   "name"
@@ -28,19 +28,8 @@ ActiveRecord::Schema.define(:version => 20130730103103) do
   add_index "lines", ["product_id"], :name => "index_lines_on_product_id"
   add_index "lines", ["sale_id"], :name => "index_lines_on_sale_id"
 
-  create_table "product_type_variations", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "product_type_id"
-    t.integer  "variation_id"
-  end
-
-  add_index "product_type_variations", ["product_type_id"], :name => "index_product_type_variations_on_product_type_id"
-  add_index "product_type_variations", ["variation_id"], :name => "index_product_type_variations_on_variation_id"
-
   create_table "product_types", :force => true do |t|
     t.string   "name"
-    t.decimal  "default_price", :precision => 8, :scale => 2, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -51,27 +40,35 @@ ActiveRecord::Schema.define(:version => 20130730103103) do
     t.datetime "updated_at"
     t.integer  "variation_id"
     t.integer  "product_id"
+    t.string   "code"
   end
 
   add_index "product_variations", ["product_id"], :name => "index_product_variations_on_product_id"
   add_index "product_variations", ["variation_id"], :name => "index_product_variations_on_variation_id"
 
+  create_table "product_warehouses", :force => true do |t|
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "warehouse_id"
+    t.integer  "product_id"
+  end
+
+  add_index "product_warehouses", ["product_id"], :name => "index_product_warehouses_on_product_id"
+  add_index "product_warehouses", ["warehouse_id"], :name => "index_product_warehouses_on_warehouse_id"
+
   create_table "products", :force => true do |t|
     t.decimal  "price",           :precision => 8, :scale => 2, :default => 0.0
-    t.integer  "amount"
     t.string   "barcode"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_type_id"
     t.string   "name"
-    t.string   "provider_code"
     t.integer  "provider_id"
-    t.integer  "warehouse_id"
   end
 
   add_index "products", ["product_type_id"], :name => "index_products_on_product_type_id"
   add_index "products", ["provider_id"], :name => "index_products_on_provider_id"
-  add_index "products", ["warehouse_id"], :name => "index_products_on_warehouse_id"
 
   create_table "providers", :force => true do |t|
     t.string   "name"
@@ -107,13 +104,25 @@ ActiveRecord::Schema.define(:version => 20130730103103) do
     t.string   "state",                                   :default => "active"
     t.datetime "key_timestamp"
     t.string   "language",                                :default => "en"
+    t.integer  "current_warehouse_id"
+    t.string   "last_added_products"
   end
 
+  add_index "users", ["current_warehouse_id"], :name => "index_users_on_current_warehouse_id"
   add_index "users", ["state"], :name => "index_users_on_state"
+
+  create_table "variation_values", :force => true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "variation_id"
+  end
+
+  add_index "variation_values", ["variation_id"], :name => "index_variation_values_on_variation_id"
 
   create_table "variations", :force => true do |t|
     t.string   "name"
-    t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

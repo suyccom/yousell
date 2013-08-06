@@ -1,6 +1,19 @@
 <index-page>
-  <prepend-content-body:>
-    <filter-menu no-filter="#{I18n.t('warehouse.filter_all')}" param-name="warehouse" options="&Warehouse.all" />
-  </prepend-content-body:> 
-  <collection: fields="this, amount, price, barcode, warehouse,actions"/>
+  <collection: fields="this, barcode, amount, price, actions">
+    <amount-view:><this/> (<%= this_parent.product_warehouses.*.name.join(', ') %>)</amount-view:>
+    <price-view:><currency/></price-view:>
+  </collection:>
+  <heading: replace>
+    <a action="new" to="&ProductType" class="new-link btn btn-primary pull-right span2"><ht key="product_type.actions.new">Add products</ht></a>
+    <a href="?last_added=true" class="btn pull-right span2"><t key="product.index.last_added_products"/></a>
+    <h2 class="heading">
+      <a href="/products"><t key="product.index.heading"/></a>
+      <span if="&params[:last_added]"><t key="product.index.last_added_products"/></span>
+    </h2>
+  </heading:>
 </index-page>
+
+
+
+
+

@@ -60,7 +60,8 @@ class Sale < ActiveRecord::Base
       self.completed_at = Time.now
       self.sale_total = self.total
       for line in lines
-        line.product.update_attribute(:amount, line.product.amount - line.amount)
+        pw = line.product.current_product_warehouse
+        pw.update_attribute(:amount, pw.amount - line.amount)
       end
     end
   end
