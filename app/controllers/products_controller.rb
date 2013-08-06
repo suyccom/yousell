@@ -70,6 +70,11 @@ class ProductsController < ApplicationController
     require 'barby/barcode/code_128'
     require 'barby/outputter/png_outputter'
 
+
+    params[:empty_cells].to_i.times do
+      barcodes << ""
+    end
+
     for p in @products
       # Create the barcode PNG
       temp_file = "#{Rails.root}/tmp/barcode#{i}.png"
@@ -78,20 +83,28 @@ class ProductsController < ApplicationController
       png = Barby::PngOutputter.new(barby).to_png(:height => 25, :margin => 5, :xdim => 1)
       File.open(temp_file, 'w'){|f| f.write png }
       # Create the array for the labels PDF
-      params[:empty_cells].to_i.times do
-        barcodes << ""
-      end
       p.product_warehouses.first.amount.times do
-        barcodes << temp_file
+        barcodes << [temp_file, p.name, p.barcode]
       end
       i = i + 1
     end
 
+    Prawn::Labels.types = {
+      "Apli1285" => {
+        "paper_size" => "A4",
+        "columns"    => 4,
+        "rows"       => 11,
+        "top_margin" => 18.0,
+        "bottom_margin" => 19.0,
+        "left_margin" => 15.5,
+        "right_margin" => 35
+    }}
+
     labels = Prawn::Labels.generate(temp_pdf, barcodes, :type => "Apli1285") do |pdf, barcode|
       unless barcode.blank?
-        pdf.image barcode
-        pdf.text p.name, :size => 10
-        pdf.text p.barcode, :size => 10
+        pdf.image barcode[0]
+        pdf.text barcode[1], :size => 10
+        pdf.text barcode[2], :size => 10
       end
     end
     # Print or send the PDF back to the browser
