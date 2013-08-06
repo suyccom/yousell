@@ -1,4 +1,4 @@
-<new-page title="&t('sale.nav_item', :default => 'Sale')" without-heading>
+<new-page title="&t('sale.actions.new', :default => 'Sale')" without-heading>
   <content: with-flash-messages="&false"/>
   <form: replace>
     <add-line-form/>
