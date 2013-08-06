@@ -109,6 +109,7 @@ en:
     show:
       print: Print
       print_labels: Print Labels
+      print_labels_last_added_products: Print Labels of last added products
       number_of_labels: Number of Labels
       empty_cells: Empty cells
       labels_sent_to_printer: The labels have been sent to the printer

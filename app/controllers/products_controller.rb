@@ -60,6 +60,52 @@ class ProductsController < ApplicationController
     end
   end
 
+  def last_products_labels
+    @products = Product.where(:id => User.current_user.last_added_products.map{|p| p[0]})
+
+    temp_pdf = "#{Rails.root}/tmp/labels.pdf"
+    barcodes = []
+    i = 1
+    require 'barby'
+    require 'barby/barcode/code_128'
+    require 'barby/outputter/png_outputter'
+
+    for p in @products
+      # Create the barcode PNG
+      temp_file = "#{Rails.root}/tmp/barcode#{i}.png"
+
+      barby = Barby::Code128B.new(p.barcode)
+      png = Barby::PngOutputter.new(barby).to_png(:height => 25, :margin => 5, :xdim => 1)
+      File.open(temp_file, 'w'){|f| f.write png }
+      # Create the array for the labels PDF
+      params[:empty_cells].to_i.times do
+        barcodes << ""
+      end
+      p.product_warehouses.first.amount.times do
+        barcodes << temp_file
+      end
+      i = i + 1
+    end
+
+    labels = Prawn::Labels.generate(temp_pdf, barcodes, :type => "Apli1285") do |pdf, barcode|
+      unless barcode.blank?
+        pdf.image barcode
+        pdf.text p.name, :size => 10
+        pdf.text p.barcode, :size => 10
+      end
+    end
+    # Print or send the PDF back to the browser
+    if defined? PRINT_LABELS_COMMAND
+      system("#{PRINT_LABELS_COMMAND} #{temp_pdf}")
+      flash[:info] = I18n.t("product.show.labels_sent_to_printer")
+      redirect_to "/products"
+    else
+      send_file temp_pdf, :type => "application/pdf", :disposition => "inline"
+    end
+  end
+
+
+
   def index
     if params[:last_added]
       products = Product.where(:id => User.current_user.last_added_products.map{|p| p[0]})

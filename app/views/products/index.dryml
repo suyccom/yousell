@@ -1,8 +1,4 @@
 <index-page>
-  <collection: fields="this, barcode, amount, price, actions">
-    <amount-view:><this/> (<%= this_parent.product_warehouses.*.name.join(', ') %>)</amount-view:>
-    <price-view:><currency/></price-view:>
-  </collection:>
   <heading: replace>
     <a action="new" to="&ProductType" class="new-link btn btn-primary pull-right span2"><ht key="product_type.actions.new">Add products</ht></a>
     <a href="?last_added=true" class="btn pull-right span2"><t key="product.index.last_added_products"/></a>
@@ -11,9 +7,38 @@
       <span if="&params[:last_added]"><t key="product.index.last_added_products"/></span>
     </h2>
   </heading:>
+  <collection: fields="this, barcode, amount, price, actions">
+    <amount-view:><this/> (<%= this_parent.product_warehouses.*.name.join(', ') %>)</amount-view:>
+    <price-view:><currency/></price-view:>
+  </collection:>
+  <after-collection:>
+    <print-labels if="&params[:last_added]"/>
+  </after-collection:>
 </index-page>
 
 
-
-
-
+<def tag="print-labels">
+  <modal id="print-label-modal">
+    <modal:>
+      <form method="GET" action="products/last_products_labels">
+        <modal-header><t key="product.show.print_labels"/></modal-header>
+        <div class="modal-body">
+          <div class="form-horizontal">
+            <div class="control-group">
+              <label class="control-label" for="empty-cells"><t key="product.show.empty_cells"/></label>
+              <div class="controls">
+                <input class="input-mini" type="text" id="empty-cells" name="empty_cells" value="0"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <modal-form-footer>
+          <submit: label="#{I18n.t 'product.show.print'}"/>
+        </modal-form-footer>
+      </form>
+    </modal:>
+  </modal>
+  <modal-open-button class="pull-right" modal="print-label-modal">
+    <i class="icon-print"></i> <t key="product.show.print_labels_last_added_products"/>
+  </modal-open-button>
+</def>
