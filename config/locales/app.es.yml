@@ -127,7 +127,7 @@ es:
     nav_item: Almacén
     index:
       heading: Almacén
-      last_added_products: Últimos productos añadidos
+      last_added_products: Últimos productos
       title: Almacén
     show:
       print: Imprimir
