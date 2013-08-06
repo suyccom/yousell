@@ -22,19 +22,20 @@ class ProductsController < ApplicationController
         "right_margin" => 15.5
     }}
     
+    # Create the array for the labels PDF
+    barcodes = []
+    params[:empty_cells].to_i.times do
+      barcodes << {}
+    end
+    
     for product in products
       # Create the barcode PNGs
       temp_png = "#{Rails.root}/tmp/barcode-#{product[0].id}.png"
       barby = Barby::Code93.new(product[0].barcode)
       png = Barby::PngOutputter.new(barby).to_png(:height => 35, :margin => 5, :xdim => 1)
       File.open(temp_png, 'w'){|f| f.write png }
-      
-      # Create the array for the labels PDF
-      barcodes = []
-      params[:empty_cells].to_i.times do
-        barcodes << {}
-      end
-      (product[1].to_i*3).times do
+      # Add the label to the barcodes array
+      product[1].to_i.times do
         barcodes << {:png => temp_png, :barcode => product[0].barcode, :name => product[0].name}
       end
     end
@@ -68,6 +69,7 @@ class ProductsController < ApplicationController
   
   def last_products_labels
     products = User.current_user.last_added_products.map{|p| [Product.find(p[0]), p[1]] }
+    logger.ap products
     generate_labels(params[:empty_cells], products)
   end
 
