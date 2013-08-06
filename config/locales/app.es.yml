@@ -132,6 +132,7 @@ es:
     show:
       print: Imprimir
       print_labels: Imprimir Etiquetas
+      print_labels_last_added_products: Imprimir Etiquetas de los últimos productos añadidos
       number_of_labels: Número de etiquetas
       empty_cells: Celdas vacías
       labels_sent_to_printer: Las etiquetas han sido enviadas a la impresora
