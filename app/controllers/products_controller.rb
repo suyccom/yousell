@@ -69,7 +69,6 @@ class ProductsController < ApplicationController
   
   def last_products_labels
     products = User.current_user.last_added_products.map{|p| [Product.find(p[0]), p[1]] }
-    logger.ap products
     generate_labels(params[:empty_cells], products)
   end
 
