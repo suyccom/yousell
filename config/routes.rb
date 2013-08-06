@@ -12,9 +12,10 @@ Yousell::Application.routes.draw do
   match 'search' => 'front#search', :as => 'site_search'
   
   match 'sales/:id/cancel' => 'sales#cancel'
-  
+
+  # Products routes
   match 'products/:id/print_labels' => 'products#print_labels'
-  
+  match 'products/last_products_labels' => 'products#last_products_labels'
   match 'product_types/new_from_barcode' => 'product_types#new_from_barcode'
 
   # Pending day sales routes
