@@ -3,9 +3,9 @@ class ProductsController < ApplicationController
   hobo_model_controller
 
   auto_actions :all, :except => [:new, :create]
-  
+
   autocomplete
-  
+
   def generate_labels(empty_cells, products)
     require 'barby'
     require 'barby/barcode/code_93'
@@ -20,14 +20,15 @@ class ProductsController < ApplicationController
         "bottom_margin" => 55.0,
         "left_margin" => 40.5,
         "right_margin" => 15.5
-    }}
-    
+      }
+    }
+
     # Create the array for the labels PDF
     barcodes = []
     params[:empty_cells].to_i.times do
       barcodes << {}
     end
-    
+
     for product in products
       # Create the barcode PNGs
       temp_png = "#{Rails.root}/tmp/barcode-#{product[0].id}.png"
@@ -49,7 +50,7 @@ class ProductsController < ApplicationController
         pdf.text  barcode[:name], :indent_paragraphs => 5, :size => 9
       end
     end
-    
+
     # Print or send the PDF back to the browser
     if defined? PRINT_LABELS_COMMAND
       system("#{PRINT_LABELS_COMMAND} #{temp_pdf}")
@@ -66,7 +67,7 @@ class ProductsController < ApplicationController
     products = [[ product, params[:number] ]]
     generate_labels(params[:empty_cells], products)
   end
-  
+
   def last_products_labels
     products = User.current_user.last_added_products.map{|p| [Product.find(p[0]), p[1]] }
     generate_labels(params[:empty_cells], products)

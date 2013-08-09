@@ -75,6 +75,11 @@ feature 'The admin wants to manage products', :driver => :selenium do
     # Prints some labels
     click_on 'SuperZapas 300 35 red woman'
     click_on 'Print Labels'
+    # a message with no labelsheet defined should appear
+    page.should have_content('Please add your labelsheets first. Go to Administration, Labelsheets to add some.')
+    # adds a labelsheet
+    
+    # finally can print labels
     fill_in 'number', :with => '2'
     fill_in 'empty_cells', :with => '0'
     click_on 'Print'
