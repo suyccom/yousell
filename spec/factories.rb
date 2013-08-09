@@ -26,7 +26,7 @@ FactoryGirl.define do
     association :product_type
     association :provider
     after(:create) do |product, evaluator|
-      FactoryGirl.create(:product_warehouse, :product => product, :warehouse => User.current_user.current_warehouse)
+      product.product_warehouses.first.update_attribute(:amount, 10)
     end
   end
   

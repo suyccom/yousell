@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130805081547) do
+ActiveRecord::Schema.define(:version => 20130809095822) do
 
   create_table "lines", :force => true do |t|
     t.string   "name"
