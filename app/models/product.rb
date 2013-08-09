@@ -30,7 +30,7 @@ class Product < ActiveRecord::Base
     self.name = "#{provider} #{product_type.name} #{product_variations.*.value.join(' ')}"
   end
   
-  after_create :set_barcode
+  after_create :set_barcode, :create_product_warehouses
   def set_barcode
     barcode = calculate_barcode
     product = Product.find_by_barcode(barcode)
@@ -53,6 +53,14 @@ class Product < ActiveRecord::Base
       self.update_attribute(:barcode, calculate_barcode)
     end
     User.current_user.save
+  end
+  
+  def create_product_warehouses
+    # Make sure there is a product warehouse record for every existing warehouse
+    for warehouse in (Warehouse.all - self.warehouses)
+      self.product_warehouses << ProductWarehouse.new(:warehouse => warehouse, :amount => 0)
+    end
+    self.save
   end
   
   def amount
