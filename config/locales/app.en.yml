@@ -103,7 +103,8 @@ en:
     nav_item: Stock
     index:
       heading: Stock
-      last_added_products: Últimos productos añadidos
+      last_added_products: Last added products
+      advanced_search: Advanced search
       title: Stock
 
     show:

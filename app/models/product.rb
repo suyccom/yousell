@@ -21,8 +21,31 @@ class Product < ActiveRecord::Base
   has_many :warehouses, :through => :product_warehouses
   children :product_warehouses
 
+
+
+
+
+
   # --- Validations --- #
   validates_presence_of :provider
+
+  # --- Scopes --- #
+    scope :variaciones, lambda { |values|
+#      raise
+      if !values.blank?
+        clauses = []
+        args = []
+        for value in values.split(",")
+          clauses << 'product_variations.value = ?'
+          args.push value
+        end
+      clause = clauses.join(' OR '), *args
+      end
+      joins(:product_variations).
+      where(clause).
+      group("name")
+    }
+
 
   # --- Callbacks --- #
   before_save :set_name
