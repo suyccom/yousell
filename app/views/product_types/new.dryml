@@ -19,6 +19,7 @@
       <tr class="field-heading-row">
         <th style="width:15%">Proveedor</th>
         <th style="width:13%">Modelo</th>
+        <th style="width:13%">Descripción</th>
         <th style="width:8%">Cantidad</th>
         <repeat with="&Variation.all">
           <th style="width:13%"><this/></th>

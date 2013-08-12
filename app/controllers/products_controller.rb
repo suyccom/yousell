@@ -36,7 +36,7 @@ class ProductsController < ApplicationController
       File.open(temp_png, 'w'){|f| f.write png }
       # Add the label to the barcodes array
       product[1].to_i.times do
-        barcodes << {:png => temp_png, :barcode => product[0].barcode, :name => product[0].name}
+        barcodes << {:png => temp_png, :barcode => product[0].barcode, :name => product[0].name, :description => product[0].description }
       end
     end
 
@@ -46,7 +46,8 @@ class ProductsController < ApplicationController
       unless barcode.blank?
         pdf.image barcode[:png], :scale => 0.72
         pdf.text  barcode[:barcode], :indent_paragraphs => 23, :size => 9
-        pdf.text  barcode[:name], :indent_paragraphs => 5, :size => 9
+        pdf.text  barcode[:name], :indent_paragraphs => 5, :size => 8
+        pdf.text  barcode[:description], :indent_paragraphs => 23, :size => 9
       end
     end
     
