@@ -9,11 +9,21 @@
   </heading:>
   <collection: replace>
     <table-plus without-page-nav without-header fields="this, barcode, amount, price, actions">
-      <amount-view:><this/> (<%= this_parent.product_warehouses.*.name.join(', ') %>)</amount-view:>
+      <tr: replace>
+        <hobo-cache expediente="&this.id" updated-at="&this.updated_at.to_i">
+          <tr restore/>
+        </hobo-cache>
+      </tr:>
+      <amount-view:>
+        <div part="part-w">
+          <this/>: <repeat with="&this_parent.product_warehouses" join=", "><this.warehouse/>
+            <click-editor-innards:amount updates="#part-w"/></repeat>
+        </div>
+      </amount-view:>
       <price-view:><currency/></price-view:>
       <actions-view:><bootstrap-table-actions/></actions-view:>
     </table-plus>
-    <print-labels if="&params[:last_added]"/>    
+    <print-labels if="&params[:last_added]"/>
   </collection:>
 </index-page>
 
