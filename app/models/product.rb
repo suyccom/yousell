@@ -31,7 +31,6 @@ class Product < ActiveRecord::Base
 
   # --- Scopes --- #
     scope :variaciones, lambda { |values|
-#      raise
       if !values.blank?
         clauses = []
         args = []
