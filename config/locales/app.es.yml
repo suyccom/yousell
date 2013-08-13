@@ -78,6 +78,8 @@ es:
       product:
         Product: Producto
         name: Producto
+        description: Descripción
+        model: Modelo
         price: Precio
         amount: Cantidad
         barcode: Código de barras
