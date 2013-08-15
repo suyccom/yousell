@@ -2,7 +2,7 @@ class SalesController < ApplicationController
 
   hobo_model_controller
 
-  auto_actions :all, :except => :edit
+  auto_actions :all
 
   def new
     # If there's an incomplete sale in the DB, load it. Else, create a new one
@@ -12,8 +12,14 @@ class SalesController < ApplicationController
 
   def update
     hobo_update do
-      flash[:notice] = I18n.t("sale.messages.create.success")
-      request.xhr? ? hobo_ajax_response : (redirect_to '/')
+      if params[:sale][:day_sale] && params[:sale][:day_sale].to_i > 0
+        redirect_to('/pending_day_sales')
+      elsif params[:page_path] == "/sales/#{Sale.find(params[:id]).id}/edit"
+        redirect_to('/sales')
+      else
+        flash[:notice] = I18n.t("sale.messages.create.success")
+        request.xhr? ? hobo_ajax_response : (redirect_to '/')
+      end
     end
   end
 
@@ -28,11 +34,10 @@ class SalesController < ApplicationController
   end
 
   def destroy_pending_day_sales
-    if params[:sales_date]
-      Sale.where(:completed_at => params[:sales_date].to_date.beginning_of_day..params[:sales_date].to_date.end_of_day).complete.day_sale.destroy_all
-      @day_sales,@day_sales_count = calculate_day_sales_and_count
-      redirect_to('/pending_day_sales')
-    end
+    sale = Sale.find(params[:sales_date])
+    sale.destroy
+    @day_sales,@day_sales_count = calculate_day_sales_and_count
+    redirect_to('/pending_day_sales')
   end
 
   def cancel
@@ -53,7 +58,9 @@ class SalesController < ApplicationController
   private
 
   def calculate_day_sales_and_count
-    day_sales = Sale.complete.day_sale.select("sum(sale_total) as sale_total_sum, count(*) as sale_number, date(completed_at) as completed_at_date").group("date(completed_at)")
+    day_sales = Sale.complete.day_sale
+#    day_sales = Sale.complete.day_sale
+
     day_sales_count = Sale.complete.day_sale.count
     return day_sales,day_sales_count
   end
