@@ -35,6 +35,9 @@ en:
       provider:
         one: Provider
         other: Providers
+      labelsheet:
+        one: Labelsheet
+        other: Labelsheets
     attributes:
       user:
         name: Name
@@ -105,7 +108,7 @@ en:
     nav_item: Stock
     index:
       heading: Stock
-      last_added_products: Últimos productos añadidos
+      last_added_products: Last added products
       title: Stock
 
     show:
@@ -115,6 +118,7 @@ en:
       number_of_labels: Number of Labels
       empty_cells: Empty cells
       labels_sent_to_printer: The labels have been sent to the printer
+      no_labelsheet_error: Please add your labelsheets first. Go to Administration, Labelsheets to add some.
   
   product_type:
     optional_barcode: Barcode (optional)

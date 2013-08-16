@@ -48,6 +48,9 @@ es:
       variation_values:
         one: Valor
         other: Valores
+      labelsheet:
+        one: Plantilla
+        other: Plantillas
     attributes:
       user:
         name: Nombre
@@ -109,6 +112,15 @@ es:
         price: Precio
         actions: Acciones
         discount: Descuento
+      labelsheet:
+        name_printer: Nombre impresora
+        name_label: Nombre etiqueta
+        rows: Filas
+        columns: Columnas
+        top_margin: Margen superior
+        bottom_margin: Margen inferior
+        left_margin: Margen izquierdo
+        right_margin: Margen derecho
     attribute_help:
       variation:
         value: Utiliza valores separados por comas
@@ -125,6 +137,8 @@ es:
     administration: Administración
   user:
     change_language: Cambiar idioma
+  labelsheet:
+    nav_item: Plantillas
   product:
     nav_item: Almacén
     index:
@@ -138,6 +152,7 @@ es:
       number_of_labels: Número de etiquetas
       empty_cells: Celdas vacías
       labels_sent_to_printer: Las etiquetas han sido enviadas a la impresora
+      no_labelsheet_error: Por favor añade tus plantillas primero. Ve a Administración > Plantillas para añadir una plantilla.
   product_type:
     optional_barcode: Código de barras (opcional)
     actions:

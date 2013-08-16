@@ -13,6 +13,19 @@
 
 ActiveRecord::Schema.define(:version => 20130812093826) do
 
+  create_table "labelsheets", :force => true do |t|
+    t.string   "name_printer"
+    t.string   "name_labelsheet"
+    t.integer  "rows"
+    t.integer  "columns"
+    t.float    "top_margin"
+    t.float    "bottom_margin"
+    t.float    "left_margin"
+    t.float    "right_margin"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "lines", :force => true do |t|
     t.string   "name"
     t.decimal  "price",         :precision => 8, :scale => 2, :default => 0.0

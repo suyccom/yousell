@@ -75,8 +75,27 @@ feature 'The admin wants to manage products', :driver => :selenium do
     # Prints some labels
     click_on 'SuperZapas 300 35 red woman'
     click_on 'Print Labels'
-    fill_in 'number', :with => '2'
+    # a message with no labelsheet defined should appear
+    page.should have_content('Please add your labelsheets first. Go to Administration, Labelsheets to add some.')
+    # adds a labelsheet
+    click_on 'Administration'
+    click_on 'Labelsheets'
+    click_on 'New Labelsheet'
+    fill_in 'labelsheet[name_printer]', :with => 'Brother'
+    fill_in 'labelsheet[name_labelsheet]', :with => 'Apli1285'
+    fill_in 'labelsheet[rows]', :with => '10'
+    fill_in 'labelsheet[columns]', :with => '4'
+    fill_in 'labelsheet[top_margin]', :with => '65.0'
+    fill_in 'labelsheet[bottom_margin]', :with => '55.0'
+    fill_in 'labelsheet[left_margin]', :with => '40.5'
+    fill_in 'labelsheet[right_margin]', :with => '15.5'
+    click_on 'Create Labelsheet'
+    # finally can print labels
+    click_on 'Stock'
+    click_on 'SuperZapas 300 35 red woman'
+    click_on 'Print Labels'
     fill_in 'empty_cells', :with => '0'
+    select 'Brother Apli1285'
     click_on 'Print'
     page.should have_content 'The labels have been sent to the printer'
   end

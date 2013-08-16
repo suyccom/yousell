@@ -9,6 +9,7 @@ def clear_tables_and_create_admin
   Line.delete_all
   Provider.delete_all
   VariationValue.delete_all
+  Labelsheet.delete_all
   warehouse = Warehouse.create(:name => 'SuperShop')
   User.create(:email_address => 'tecnicos@unoycero.com', :name => 'Tecnicos UnoyCero', :password => 'RobotRobot', :administrator => true, :last_added_products => [], :current_warehouse => warehouse)
 
