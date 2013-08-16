@@ -59,8 +59,6 @@ class SalesController < ApplicationController
 
   def calculate_day_sales_and_count
     day_sales = Sale.complete.day_sale
-#    day_sales = Sale.complete.day_sale
-
     day_sales_count = Sale.complete.day_sale.count
     return day_sales,day_sales_count
   end
