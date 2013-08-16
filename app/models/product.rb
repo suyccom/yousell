@@ -6,11 +6,12 @@ class Product < ActiveRecord::Base
     name    :string
     price   :decimal, :precision => 8, :scale => 2, :default => 0
     barcode :string, :unique
+    description :string
     timestamps
   end
   attr_accessible :price, :amount, :barcode, :product_type, :product_type_id, :product_variations, 
     :provider_code, :provider, :provider_id, :warehouse, :warehouse_id, :code,
-    :product_warehouses
+    :product_warehouses, :description
   
   # --- Relations --- #
   belongs_to :product_type
@@ -23,6 +24,7 @@ class Product < ActiveRecord::Base
 
   # --- Validations --- #
   validates_presence_of :provider
+  validates :description, :length => { :maximum => 8 }
 
   # --- Callbacks --- #
   before_save :set_name
@@ -85,7 +87,8 @@ class Product < ActiveRecord::Base
         product_variation = eval("self.#{piece[:name]}")
         string += product_variation ? product_variation.code : ('X' * piece[:chars])
       when :code
-        string += "%0#{piece[:chars]}d" % product_type.name unless product_type.name.blank?
+        # What format have this? If it can be F000, 1000, 100, 300Z, 6000X, etc... Why dont have this field as wildcard and all that user puts here save it in our database 
+        string += "%0#{piece[:chars]}d" % product_type.name.to_i unless product_type.name.blank?
       end
     end
     return string
