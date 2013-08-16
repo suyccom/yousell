@@ -3,31 +3,32 @@ class ProductsController < ApplicationController
   hobo_model_controller
 
   auto_actions :all, :except => [:new, :create]
-  
+
   autocomplete
-  
-  def generate_labels(empty_cells, products)
+
+  def generate_labels(empty_cells, products, labelsheet)
     require 'barby'
     require 'barby/barcode/code_93'
     require 'barby/outputter/png_outputter'
 
     Prawn::Labels.types = {
-      "Apli1285" => {
-        "paper_size" => "A4",
-        "columns"    => 4,
-        "rows"       => 10,
-        "top_margin" => 65.0,
-        "bottom_margin" => 55.0,
-        "left_margin" => 40.5,
-        "right_margin" => 15.5
-    }}
-    
+      labelsheet.name => {
+        "paper_size"    => "A4",
+        "columns"       => labelsheet.columns,
+        "rows"          => labelsheet.rows,
+        "top_margin"    => labelsheet.top_margin,
+        "bottom_margin" => labelsheet.bottom_margin,
+        "left_margin"   => labelsheet.left_margin,
+        "right_margin"  => labelsheet.right_margin
+      }
+    }
+
     # Create the array for the labels PDF
     barcodes = []
     params[:empty_cells].to_i.times do
       barcodes << {}
     end
-    
+
     for product in products
       # Create the barcode PNGs
       temp_png = "#{Rails.root}/tmp/barcode-#{product[0].id}.png"
@@ -42,19 +43,19 @@ class ProductsController < ApplicationController
 
     # Generate the PDF
     temp_pdf = "#{Rails.root}/tmp/labels.pdf"
-    labels = Prawn::Labels.generate(temp_pdf, barcodes, :type => "Apli1285") do |pdf, barcode|
+    labels = Prawn::Labels.generate(temp_pdf, barcodes, :type => labelsheet.name) do |pdf, barcode|
       unless barcode.blank?
         pdf.image barcode[:png], :scale => 0.72
         pdf.text  barcode[:barcode], :indent_paragraphs => 23, :size => 9
         pdf.text  barcode[:name], :indent_paragraphs => 5, :size => 9
       end
     end
-    
+
     # Print or send the PDF back to the browser
     if defined? PRINT_LABELS_COMMAND
       system("#{PRINT_LABELS_COMMAND} #{temp_pdf}")
       flash[:info] = I18n.t("product.show.labels_sent_to_printer")
-      redirect_to @product
+      redirect_to '/products'
     else
       send_file temp_pdf, :type => "application/pdf", :disposition => "inline"
     end
@@ -64,12 +65,14 @@ class ProductsController < ApplicationController
   def product_labels
     product = Product.find(params[:id])
     products = [[ product, params[:number] ]]
-    generate_labels(params[:empty_cells], products)
+    labelsheet = Labelsheet.find(params[:labelsheet_id])
+    generate_labels(params[:empty_cells], products, labelsheet)
   end
-  
+
   def last_products_labels
     products = User.current_user.last_added_products.map{|p| [Product.find(p[0]), p[1]] }
-    generate_labels(params[:empty_cells], products)
+    labelsheet = Labelsheet.find(params[:labelsheet_id])
+    generate_labels(params[:empty_cells], products, labelsheet)
   end
 
   def index
