@@ -32,7 +32,7 @@ class Line < ActiveRecord::Base
 
   before_save :update_price
   def update_price
-    self.price = product.price * amount
+    self.price = product.price * amount if product.price
     self.price = self.price * -1 if self.sale.refunded_ticket
     if self.discount && self.discount > 0
       if self.type_discount == "%"
