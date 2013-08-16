@@ -45,6 +45,7 @@ class SalesController < ApplicationController
     @sale = Sale.find(params[:id])
     @new_sale = @sale.dup
     @new_sale.refunded_ticket = @sale
+    @new_sale.sale_total = @sale.sale_total * -1
     @new_sale.complete = false # Sales cannot be saved if they are complete and have no lines
     @new_sale.save
     for line in @sale.lines
