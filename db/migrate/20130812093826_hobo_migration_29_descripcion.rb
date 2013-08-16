@@ -1,4 +1,4 @@
-class HoboMigration29 < ActiveRecord::Migration
+class HoboMigration29Descripcion < ActiveRecord::Migration
   def self.up
     add_column :products, :description, :string
   end
