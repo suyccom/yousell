@@ -62,6 +62,8 @@ en:
       product:
         Product: Product
         name: Product
+        description: Description
+        model: Model
         price: Price
         amount: Amount
         barcode: Barcode
