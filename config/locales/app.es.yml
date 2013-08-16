@@ -176,6 +176,6 @@ es:
       save: Efectuar Venta
     messages:
       create:
-        success: La venta se ha efectuado con éxito
+        success: "La venta %{href} se ha efectuado con éxito"
   warehouse:
     filter_all: Todos los Almacenes

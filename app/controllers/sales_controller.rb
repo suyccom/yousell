@@ -1,3 +1,4 @@
+
 class SalesController < ApplicationController
 
   hobo_model_controller
@@ -12,7 +13,9 @@ class SalesController < ApplicationController
 
   def update
     hobo_update do
-      flash[:notice] = I18n.t("sale.messages.create.success")
+      sale = Sale.find(params[:id])
+      flash[:notice] = I18n.t("sale.messages.create.success", :href => ActionController::Base.helpers.link_to("#{sale.id}", "/sales/#{sale.id}")).html_safe
+
       request.xhr? ? hobo_ajax_response : (redirect_to '/')
     end
   end
