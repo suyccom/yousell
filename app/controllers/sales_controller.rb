@@ -18,7 +18,9 @@ class SalesController < ApplicationController
       elsif params[:page_path] == "/sales/#{Sale.find(params[:id]).id}/edit"
         redirect_to('/sales')
       else
-      flash[:notice] = I18n.t("sale.messages.create.success", :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}", "/sales/#{Sale.find(params[:id]).id}")).html_safe
+        flash[:notice] = I18n.t("sale.messages.create.success", 
+        :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
+                 "/sales/#{Sale.find(params[:id]).id}")).html_safe
         request.xhr? ? hobo_ajax_response : (redirect_to '/')
       end
     end
