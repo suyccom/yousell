@@ -70,6 +70,7 @@ en:
         product_type: Product type
         product_variations: Variations
         provider: Provider
+        warehouse: Warehouse
         provider_code: Provider-Product code
       sale:
         Sale: Sale

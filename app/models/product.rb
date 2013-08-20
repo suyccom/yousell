@@ -12,7 +12,7 @@ class Product < ActiveRecord::Base
   attr_accessible :price, :amount, :barcode, :product_type, :product_type_id, :product_variations, 
     :provider_code, :provider, :provider_id, :warehouse, :warehouse_id, :code,
     :product_warehouses, :description
-  
+
   # --- Relations --- #
   belongs_to :product_type
   belongs_to :provider
@@ -31,7 +31,7 @@ class Product < ActiveRecord::Base
   def set_name
     self.name = "#{provider} #{product_type.name} #{product_variations.*.value.join(' ')}"
   end
-  
+
   after_create :set_barcode, :create_product_warehouses
   def set_barcode
     barcode = calculate_barcode
@@ -56,7 +56,7 @@ class Product < ActiveRecord::Base
     end
     User.current_user.save
   end
-  
+
   def create_product_warehouses
     # Make sure there is a product warehouse record for every existing warehouse
     for warehouse in (Warehouse.all - self.warehouses)
@@ -64,19 +64,19 @@ class Product < ActiveRecord::Base
     end
     self.save
   end
-  
+
   def amount
     product_warehouses.sum(:amount)
   end
-  
+
   def available_amount
     current_product_warehouse ? current_product_warehouse.amount : 1
   end
-  
+
   def current_product_warehouse
     product_warehouses.warehouse_is(User.current_user.current_warehouse).first
   end
-  
+
   def calculate_barcode
     string = ''
     for piece in BARCODE_FORMAT
@@ -93,7 +93,7 @@ class Product < ActiveRecord::Base
     end
     return string
   end
-  
+
   # This hack allows us to call "Product.last.Size". This is useful to write custom barcode formats :)
   def method_missing(meth, *args)
     v = Variation.find_by_name meth.to_s
@@ -104,10 +104,6 @@ class Product < ActiveRecord::Base
     end
   end
 
-  
-  
-  
-  
   # We save temporatily the product code from the add products form
   def code=(v)
     @code = v

@@ -42,7 +42,7 @@ class Sale < ActiveRecord::Base
   def total
     lines.sum(:price) - discount
   end
-  
+
   def name
     if refunded_ticket
       "#{I18n.t('sale.refund')} ticket #{refunded_ticket_id}"
