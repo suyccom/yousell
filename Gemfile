@@ -69,8 +69,6 @@ end
 group :test do
   gem "rspec-rails", ">= 2.5.0"
   gem "spork", ">= 1.0.0rc3"
-  gem "autotest"
-  gem "autotest-growl"
   gem "capybara"
   gem "capybara-webkit", "0.12.1"
   gem "timecop"
