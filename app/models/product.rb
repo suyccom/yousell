@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Product < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
@@ -29,7 +30,12 @@ class Product < ActiveRecord::Base
   # --- Callbacks --- #
   before_save :set_name
   def set_name
-    self.name = "#{provider} #{product_type.name} #{product_variations.*.value.join(' ')}"
+    for p in self.product_variations
+      if p.value != "SIN VARIACIÓN"
+        variations = "#{variations} #{p.value}"
+      end
+    end
+    self.name = "#{provider} #{product_type.name} #{variations}"
   end
   
   after_create :set_barcode, :create_product_warehouses

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Variation < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
@@ -17,6 +18,12 @@ class Variation < ActiveRecord::Base
   def value
     variation_values.*.name.join(',')
   end
+
+  before_save :add_null_value
+  def add_null_value
+     self.variation_values.create(:name => "SIN VARIACIÓN", :code => "XX")
+  end
+
 
   # --- Permissions --- #
   def create_permitted?
