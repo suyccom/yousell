@@ -32,7 +32,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     Ascii85 (1.0.2)
-    ZenTest (4.8.3)
+    ZenTest (4.9.3)
     actionmailer (3.2.12)
       actionpack (= 3.2.12)
       mail (~> 2.4.4)
@@ -281,7 +281,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ZenTest (= 4.8.3)
+  ZenTest (= 4.9.3)
   autotest
   autotest-growl
   awesome_print
