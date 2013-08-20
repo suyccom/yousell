@@ -1,0 +1,24 @@
+<page title="&t('front.transfer', :default => 'Transfer')" without-heading>
+  <content:>
+    <transfers/>
+  </content:>
+</page>
+
+<def tag="transfers">
+  <form action="transfer">
+    <div class="span4">
+      <t key='front.from'/> <select-menu name="from" options="&@warehouse"/>
+    </div>
+    <div class="span4">
+      <t key='front.to'/> <select-menu name="to" options="&@warehouse"/>
+    </div>
+    <div class="span12">
+      <b><t key='front.scan'/></b>
+      <textarea class="span12" style="height:200px;margin-top:5px;" name="products_transfer"></textarea>
+    </div>
+    <div class="span12" style="margin-top:10px;">
+      <input type="submit" class="btn btn-large btn-block" value="Trasladar"/>
+    </div>
+  </form>
+</def>
+

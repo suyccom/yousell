@@ -9,6 +9,13 @@
 # please post it to http://hobousers.googlegroups.com. Thank you!
 
 es:
+  front:
+    transfer: Traslado
+    from: "DESDE:"
+    to: "HASTA:"
+    scan: Escanea los productos que quieras trasladar
+
+
   date: Fecha
   adddiscount: aplicar
   addamount: añadir
