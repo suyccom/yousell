@@ -60,9 +60,8 @@ class Product < ActiveRecord::Base
   def create_product_warehouses
     # Make sure there is a product warehouse record for every existing warehouse
     for warehouse in (Warehouse.all - self.warehouses)
-      self.product_warehouses << ProductWarehouse.new(:warehouse => warehouse, :amount => 0)
+      ProductWarehouse.create(:warehouse => warehouse, :product_id => self.id, :amount => 0)
     end
-    self.save
   end
 
   def amount

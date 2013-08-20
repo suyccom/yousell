@@ -28,7 +28,7 @@ class Variation < ActiveRecord::Base
   end
 
   def destroy_permitted?
-    acting_user.administrator?
+    acting_user.administrator? && products.count == 0
   end
 
   def view_permitted?(field)
