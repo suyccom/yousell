@@ -61,7 +61,6 @@ group :development do
   gem 'hirb'
   gem "better_errors"
   gem "binding_of_caller"
-  gem "ZenTest", '4.9.3'
   gem "awesome_print"
   gem "debugger"
 end

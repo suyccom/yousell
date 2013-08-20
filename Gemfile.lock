@@ -281,7 +281,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ZenTest (= 4.9.3)
   autotest
   autotest-growl
   awesome_print
