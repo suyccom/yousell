@@ -106,6 +106,7 @@ en:
     change_language: Change language
 
   product:
+    without_variation: Without variation
     nav_item: Stock
     index:
       heading: Stock
