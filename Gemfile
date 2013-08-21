@@ -61,7 +61,6 @@ group :development do
   gem 'hirb'
   gem "better_errors"
   gem "binding_of_caller"
-  gem "ZenTest", '4.8.3'
   gem "awesome_print"
   gem "debugger"
 end
@@ -70,8 +69,6 @@ end
 group :test do
   gem "rspec-rails", ">= 2.5.0"
   gem "spork", ">= 1.0.0rc3"
-  gem "autotest"
-  gem "autotest-growl"
   gem "capybara"
   gem "capybara-webkit", "0.12.1"
   gem "timecop"
