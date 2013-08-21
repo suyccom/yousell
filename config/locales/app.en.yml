@@ -1,4 +1,10 @@
 en:
+  front:
+    transfer: Transfer
+    from: "FROM:"
+    to: "TO:"
+    scan: Scan the products you want to move
+
   date: Date
   adddiscount: apply
   addamount: add
