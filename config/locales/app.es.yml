@@ -162,6 +162,9 @@ es:
       empty_cells: Celdas vacías
       labels_sent_to_printer: Las etiquetas han sido enviadas a la impresora
       no_labelsheet_error: Por favor añade tus plantillas primero. Ve a Administración > Plantillas para añadir una plantilla.
+      change_price_button: Cambiar el precio a los productos seleccionados
+      change_price: Cambiar el precio
+      prices_changed: Los precios han sido actualizados
   product_type:
     optional_barcode: Código de barras (opcional)
     actions:
