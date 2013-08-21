@@ -41,6 +41,17 @@ class ProductTypesController < ApplicationController
     end
   end
   
+
+  def update
+    @pr = ProductType.find(params[:id])
+    if @pr.products.size != 0
+      flash[:message] = "No se puede actualizar"
+      redirect_to "/product_types/#{@pr.id}/edit"
+    else
+      hobo_update
+    end
+  end
+
   def destroy
     if ProductType.find(params[:id]).products
       redirect_to "/product_types"
