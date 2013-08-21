@@ -41,6 +41,16 @@ class ProductTypesController < ApplicationController
     end
   end
   
+  def destroy
+    if ProductType.find(params[:id]).products
+      redirect_to "/product_types"
+      flash[:alert] = I18n.t cant_delete "No se puede borrar un tipo de producto que tiene productos"
+    else
+      hobo_destroy
+    end
+  end
+
+
   def new_from_barcode
     @variations = {}
     @position = 0
