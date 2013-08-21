@@ -31,7 +31,7 @@ class Product < ActiveRecord::Base
   before_save :set_name
   def set_name
     for p in self.product_variations
-      if p.value != "SIN VARIACIÓN"
+      if p.value != I18n.t('product.wihout_variation')
         variations = "#{variations} #{p.value}"
       end
     end
