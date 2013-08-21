@@ -23,9 +23,29 @@ class Product < ActiveRecord::Base
   has_many :warehouses, :through => :product_warehouses
   children :product_warehouses
 
+
+
+
+
+
   # --- Validations --- #
   validates_presence_of :provider
   validates :description, :length => { :maximum => 8 }
+
+  # --- Scopes --- #
+  scope :variaciones, lambda { |values|
+    if !values.blank?
+      clauses = []
+      args = []
+      for value in values.split(",")
+        clauses << "products.name LIKE ?"
+        args << "%#{value}%"
+      end
+    clause = clauses.join(' AND '), *args
+    end
+    where(clause).
+    group("products.id")
+  }
 
   # --- Callbacks --- #
   before_save :set_name
