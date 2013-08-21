@@ -1,7 +1,12 @@
 <show-page:>
+  <heading:>
+    <h2><ht key="product.show.heading" name="#{name(:no_wrapper => true)}">Product <name/></ht></h2>
+    <view:description/>
+  </heading:>
   <before-heading:>
     <print-labels/>
   </before-heading:>
+  <description: replace/>
   <field-list: fields='product_type, provider, amount, price, barcode' id='products'/>
 </show-page:>
 
