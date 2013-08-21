@@ -23,3 +23,7 @@
 lib/attachments
 lib/logos
 config/application.rb
+
+# Ignore zeus config files
+custom_plan.rb
+zeus.json

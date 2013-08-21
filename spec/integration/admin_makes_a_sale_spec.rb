@@ -7,10 +7,12 @@ feature 'The admin wants to make a sale', :driver => :selenium do
   before do
     # Create a product type and a couple of variations
     User.current_user = User.last
+    @provider1 = FactoryGirl.create(:provider, :name => 'Proveedor1')
+    @provider2 = FactoryGirl.create(:provider, :name => 'Proveedor2')
     @pt1 = FactoryGirl.create(:product_type, :name => '300')
     @pt2 = FactoryGirl.create(:product_type, :name => '400')
-    @product1 = FactoryGirl.create(:product, :product_type => @pt1, :price => 15)
-    @product2 = FactoryGirl.create(:product, :product_type => @pt2, :price => 16)
+    @product1 = FactoryGirl.create(:product, :product_type => @pt1, :price => 15, :provider_id => @provider1.id)
+    @product2 = FactoryGirl.create(:product, :product_type => @pt2, :price => 16, :provider_id => @provider2.id)
   end
 
   scenario 'Admin makes a sale' do
@@ -52,7 +54,7 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     page.driver.browser.switch_to.alert.accept
 
     click_on('Complete Sale')
-    page.should have_content('The sale has been completed successfully')
+    page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
     # Check that the amount in stock has been reduced
     @product1.amount.should eq 9
     @product2.amount.should eq 8
@@ -87,7 +89,7 @@ feature 'The admin wants to make a sale', :driver => :selenium do
 
     # ...and completes the sale
     click_on('Complete Sale')
-    page.should have_content('The sale has been completed successfully')
+    page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
 
     # Can sees/deletes pending 'day sales'
     click_on('Administration')
@@ -95,7 +97,7 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     page.should have_css('.label.label-important')
     click_on('There are pending day sales: 1')
     page.should have_css('tr.sale:nth-child(1)')
-    page.find('tr.sale:nth-child(1)').should have_content(Date.today.strftime('%Y-%m-%d'))
+    page.find('tr.sale:nth-child(1)').should have_content(Sale.last.created_at.strftime('%d-%m-%Y %H:%M'))
     page.find('tr.sale:nth-child(1)').should have_content("31")
     page.find('td.controls a i.icon-trash').click
     page.driver.browser.switch_to.alert.accept

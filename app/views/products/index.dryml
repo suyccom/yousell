@@ -10,9 +10,19 @@
   <after-content-header:>
     <search-products if="&!params[:last_added]"/>
   </after-content-header:>
- <collection: replace>
-    <table-plus without-page-nav without-header fields="name, barcode, amount, price, actions">
-      <amount-view:><this/> (<%= this_parent.product_warehouses.*.name.join(', ') %>)</amount-view:>
+  <collection: replace>
+    <table-plus without-page-nav without-header fields="this, barcode, amount, price, actions">
+      <tr: replace>
+        <hobo-cache expediente="&this.id" updated-at="&this.updated_at.to_i">
+          <tr restore/>
+        </hobo-cache>
+      </tr:>
+      <amount-view:>
+        <div part="part-w">
+          <this/>: <repeat with="&this_parent.product_warehouses" join=", "><this.warehouse/>
+            <click-editor-innards:amount updates="#part-w"/></repeat>
+        </div>
+      </amount-view:>
       <price-view:><currency/></price-view:>
       <actions-view:><bootstrap-table-actions/></actions-view:>
     </table-plus>
@@ -54,16 +64,25 @@
       <form method="GET" action="products/last_products_labels">
         <modal-header><t key="product.show.print_labels"/></modal-header>
         <div class="modal-body">
-          <div class="form-horizontal">
+          <div class="form-horizontal" if="&Labelsheet.count > 0">
             <div class="control-group">
               <label class="control-label" for="empty-cells"><t key="product.show.empty_cells"/></label>
               <div class="controls">
                 <input class="input-mini" type="text" id="empty-cells" name="empty_cells" value="0"/>
               </div>
             </div>
+            <div class="control-group">
+              <label class="control-label" for="empty-cells"><t key="activerecord.models.labelsheet.one"/></label>
+              <div class="controls">
+                <select-menu name="labelsheet_id" options="&Labelsheet.all.map{|l| [l.name, l.id]}"/>
+              </div>
+            </div>
           </div>
+          <p unless="&Labelsheet.count > 0">
+            <t key="product.show.no_labelsheet_error"/>
+          </p>
         </div>
-        <modal-form-footer>
+        <modal-form-footer if="&Labelsheet.count > 0">
           <submit: label="#{I18n.t 'product.show.print'}"/>
         </modal-form-footer>
       </form>

@@ -11,7 +11,7 @@ class Sale < ActiveRecord::Base
     completed_at :datetime
     timestamps
   end
-  attr_accessible :lines, :complete, :day_sale, :total_discount, :type_discount
+  attr_accessible :lines, :complete, :day_sale, :total_discount, :type_discount, :sale_total
 
   has_many :lines
   children :lines
@@ -42,7 +42,7 @@ class Sale < ActiveRecord::Base
   def total
     lines.sum(:price) - discount
   end
-  
+
   def name
     if refunded_ticket
       "#{I18n.t('sale.refund')} ticket #{refunded_ticket_id}"

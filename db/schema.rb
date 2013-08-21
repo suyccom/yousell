@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130805081547) do
+ActiveRecord::Schema.define(:version => 20130812093826) do
+
+  create_table "labelsheets", :force => true do |t|
+    t.string   "name_printer"
+    t.string   "name_labelsheet"
+    t.integer  "rows"
+    t.integer  "columns"
+    t.float    "top_margin"
+    t.float    "bottom_margin"
+    t.float    "left_margin"
+    t.float    "right_margin"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "lines", :force => true do |t|
     t.string   "name"
@@ -65,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20130805081547) do
     t.integer  "product_type_id"
     t.string   "name"
     t.integer  "provider_id"
+    t.string   "description"
   end
 
   add_index "products", ["product_type_id"], :name => "index_products_on_product_type_id"

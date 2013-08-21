@@ -1,4 +1,10 @@
 en:
+  front:
+    transfer: Transfer
+    from: "FROM:"
+    to: "TO:"
+    scan: Scan the products you want to move
+
   date: Date
   adddiscount: apply
   addamount: add
@@ -35,6 +41,9 @@ en:
       provider:
         one: Provider
         other: Providers
+      labelsheet:
+        one: Labelsheet
+        other: Labelsheets
     attributes:
       user:
         name: Name
@@ -59,12 +68,15 @@ en:
       product:
         Product: Product
         name: Product
+        description: Description
+        model: Model
         price: Price
         amount: Amount
         barcode: Barcode
         product_type: Product type
         product_variations: Variations
         provider: Provider
+        warehouse: Warehouse
         provider_code: Provider-Product code
       sale:
         Sale: Sale
@@ -100,6 +112,7 @@ en:
     change_language: Change language
 
   product:
+    without_variation: Without variation
     nav_item: Stock
     index:
       heading: Stock
@@ -114,6 +127,7 @@ en:
       number_of_labels: Number of Labels
       empty_cells: Empty cells
       labels_sent_to_printer: The labels have been sent to the printer
+      no_labelsheet_error: Please add your labelsheets first. Go to Administration, Labelsheets to add some.
   
   product_type:
     optional_barcode: Barcode (optional)
@@ -139,7 +153,7 @@ en:
       save: Complete Sale
     messages:
       create:
-        success: The sale has been completed successfully
+        success: "The sale %{href} has been completed successfully"
 
   warehouse:
     filter_all: All the Warehouses

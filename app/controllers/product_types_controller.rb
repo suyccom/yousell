@@ -3,9 +3,9 @@ class ProductTypesController < ApplicationController
   hobo_model_controller
 
   auto_actions :all, :except => :show
-  
+
   include ActionView::Helpers::JavaScriptHelper
-  
+
   def create
     # First of all, clear the last_added_products field
     current_user.update_attribute(:last_added_products, [])
@@ -22,6 +22,24 @@ class ProductTypesController < ApplicationController
     end
     redirect_to '/products?last_added=true'
   end
+
+  def transfer
+    @warehouse = Warehouse.all
+    if params[:products_transfer] && !params[:products_transfer].empty?
+      from = Warehouse.find_by_name(params[:from]).id
+      to = Warehouse.find_by_name(params[:to]).id
+      for b in params[:products_transfer].gsub("\r\n", ",").split(',')
+        
+        # Rest one to the quantity of product in the warehouse indicated
+        init_pr = ProductWarehouse.where('warehouse_id = ?',from).where('product_id = ?', Product.find_by_barcode(b))
+        init_pr.first.update_attribute(:amount, init_pr.first.amount - 1)
+        # I'm adding to the amount of product in stock destination
+        end_pr = ProductWarehouse.where('warehouse_id = ?',to).where('product_id = ?', Product.find_by_barcode(b))
+        end_pr.first.update_attribute(:amount, end_pr.first.amount + 1)
+        flash[:message] = "Se han cambiado los productos de almacen"
+      end
+    end
+  end
   
   def new_from_barcode
     @variations = {}
@@ -29,13 +47,13 @@ class ProductTypesController < ApplicationController
     for piece in BARCODE_FORMAT
       parse_piece(params[:barcode], piece[:type], piece[:chars], piece[:name])
     end
-  
+
     linea = escape_javascript(render_to_string)
     render :js => "$('#{linea}').hide().appendTo('#products-table').fadeIn(250); $('#barcode').val('').focus()"
   end
-  
+
   private
-  
+
   def parse_piece(barcode, type, chars, name)
     string = barcode[@position, chars]
     case type

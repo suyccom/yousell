@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Product < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
@@ -6,12 +7,13 @@ class Product < ActiveRecord::Base
     name    :string
     price   :decimal, :precision => 8, :scale => 2, :default => 0
     barcode :string, :unique
+    description :string
     timestamps
   end
   attr_accessible :price, :amount, :barcode, :product_type, :product_type_id, :product_variations, 
     :provider_code, :provider, :provider_id, :warehouse, :warehouse_id, :code,
-    :product_warehouses
-  
+    :product_warehouses, :description
+
   # --- Relations --- #
   belongs_to :product_type
   belongs_to :provider
@@ -28,6 +30,7 @@ class Product < ActiveRecord::Base
 
   # --- Validations --- #
   validates_presence_of :provider
+  validates :description, :length => { :maximum => 8 }
 
   # --- Scopes --- #
   scope :variaciones, lambda { |values|
@@ -47,10 +50,15 @@ class Product < ActiveRecord::Base
   # --- Callbacks --- #
   before_save :set_name
   def set_name
-    self.name = "#{provider} #{product_type.name} #{product_variations.*.value.join(' ')}"
+    for p in self.product_variations
+      if p.value != I18n.t('product.wihout_variation')
+        variations = "#{variations} #{p.value}"
+      end
+    end
+    self.name = "#{provider} #{product_type.name} #{variations}"
   end
-  
-  after_create :set_barcode
+
+  after_create :set_barcode, :create_product_warehouses
   def set_barcode
     barcode = calculate_barcode
     product = Product.find_by_barcode(barcode)
@@ -74,19 +82,26 @@ class Product < ActiveRecord::Base
     end
     User.current_user.save
   end
-  
+
+  def create_product_warehouses
+    # Make sure there is a product warehouse record for every existing warehouse
+    for warehouse in (Warehouse.all - self.warehouses)
+      ProductWarehouse.create(:warehouse => warehouse, :product_id => self.id, :amount => 0)
+    end
+  end
+
   def amount
     product_warehouses.sum(:amount)
   end
-  
+
   def available_amount
     current_product_warehouse ? current_product_warehouse.amount : 1
   end
-  
+
   def current_product_warehouse
     product_warehouses.warehouse_is(User.current_user.current_warehouse).first
   end
-  
+
   def calculate_barcode
     string = ''
     for piece in BARCODE_FORMAT
@@ -97,12 +112,13 @@ class Product < ActiveRecord::Base
         product_variation = eval("self.#{piece[:name]}")
         string += product_variation ? product_variation.code : ('X' * piece[:chars])
       when :code
-        string += "%0#{piece[:chars]}d" % product_type.name unless product_type.name.blank?
+        # What format have this? If it can be F000, 1000, 100, 300Z, 6000X, etc... Why dont have this field as wildcard and all that user puts here save it in our database 
+        string += "%0#{piece[:chars]}d" % product_type.name.to_i unless product_type.name.blank?
       end
     end
     return string
   end
-  
+
   # This hack allows us to call "Product.last.Size". This is useful to write custom barcode formats :)
   def method_missing(meth, *args)
     v = Variation.find_by_name meth.to_s
@@ -113,10 +129,6 @@ class Product < ActiveRecord::Base
     end
   end
 
-  
-  
-  
-  
   # We save temporatily the product code from the add products form
   def code=(v)
     @code = v
