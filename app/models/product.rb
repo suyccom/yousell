@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Product < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
@@ -12,7 +13,7 @@ class Product < ActiveRecord::Base
   attr_accessible :price, :amount, :barcode, :product_type, :product_type_id, :product_variations, 
     :provider_code, :provider, :provider_id, :warehouse, :warehouse_id, :code,
     :product_warehouses, :description
-  
+
   # --- Relations --- #
   belongs_to :product_type
   belongs_to :provider
@@ -29,9 +30,14 @@ class Product < ActiveRecord::Base
   # --- Callbacks --- #
   before_save :set_name
   def set_name
-    self.name = "#{provider} #{product_type.name} #{product_variations.*.value.join(' ')}"
+    for p in self.product_variations
+      if p.value != I18n.t('product.wihout_variation')
+        variations = "#{variations} #{p.value}"
+      end
+    end
+    self.name = "#{provider} #{product_type.name} #{variations}"
   end
-  
+
   after_create :set_barcode, :create_product_warehouses
   def set_barcode
     barcode = calculate_barcode
@@ -56,27 +62,26 @@ class Product < ActiveRecord::Base
     end
     User.current_user.save
   end
-  
+
   def create_product_warehouses
     # Make sure there is a product warehouse record for every existing warehouse
     for warehouse in (Warehouse.all - self.warehouses)
-      self.product_warehouses << ProductWarehouse.new(:warehouse => warehouse, :amount => 0)
+      ProductWarehouse.create(:warehouse => warehouse, :product_id => self.id, :amount => 0)
     end
-    self.save
   end
-  
+
   def amount
     product_warehouses.sum(:amount)
   end
-  
+
   def available_amount
     current_product_warehouse ? current_product_warehouse.amount : 1
   end
-  
+
   def current_product_warehouse
     product_warehouses.warehouse_is(User.current_user.current_warehouse).first
   end
-  
+
   def calculate_barcode
     string = ''
     for piece in BARCODE_FORMAT
@@ -93,7 +98,7 @@ class Product < ActiveRecord::Base
     end
     return string
   end
-  
+
   # This hack allows us to call "Product.last.Size". This is useful to write custom barcode formats :)
   def method_missing(meth, *args)
     v = Variation.find_by_name meth.to_s
@@ -104,10 +109,6 @@ class Product < ActiveRecord::Base
     end
   end
 
-  
-  
-  
-  
   # We save temporatily the product code from the add products form
   def code=(v)
     @code = v

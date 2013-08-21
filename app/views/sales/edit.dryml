@@ -1,0 +1,6 @@
+<edit-page>
+  <form:>
+    <field-list: fields="day_sale, sale_total" />  
+    <submit: label="#{ht 'sale.actions.update', :default=>['Guardar']}" /><or-cancel: />
+  </form:>
+</edit-page>

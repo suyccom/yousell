@@ -10,6 +10,8 @@ class ProductsController < ApplicationController
     require 'barby'
     require 'barby/barcode/code_93'
     require 'barby/outputter/png_outputter'
+    require 'prawn'
+    require 'prawn/labels'
 
     Prawn::Labels.types = {
       labelsheet.name => {

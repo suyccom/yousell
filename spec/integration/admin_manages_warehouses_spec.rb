@@ -28,10 +28,14 @@ feature 'The admin wants to manage warehouses', :driver => :selenium do
     page.find('tr.warehouse:nth-child(3) .this-view').should have_content 'Elkano 3'
   end
 
-  scenario 'The user can delete warehouses only when they are empty' do
-    # The user can destroy a warehouse, and the system forces him to move the stock to another warehouse
-    # The user can't destroy the only remaining warehouse (he can only destroy if there is no product in it)
-    pending("We can't test this until the application has stock")
+  scenario 'The user can delete warehouses only when the product table is empty' do
+    login
+    User.current_user = User.last
+    visit '/warehouses'
+    page.should have_css 'tr.warehouse .icon-trash'
+    FactoryGirl.create(:product)
+    visit '/warehouses'
+    page.should_not have_css 'tr.warehouse .icon-trash'
   end
 
 end

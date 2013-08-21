@@ -17,15 +17,15 @@
    <table id="products-table" class="table table-striped table-bordered collection">
     <thead>
       <tr class="field-heading-row">
-        <th style="width:15%"><t key='product.provider'/></th>
-        <th style="width:13%"><t key='product.model'/></th>
-        <th style="width:13%"><t key='product.description'/></th>
-        <th style="width:8%"><t key='product.amount'/></th>
+        <th style="width:15%"><t key='activerecord.attributes.product.provider'/></th>
+        <th style="width:13%"><t key='activerecord.attributes.product.model'/></th>
+        <th style="width:13%"><t key='activerecord.attributes.product.description'/></th>
+        <th style="width:8%"><t key='activerecord.attributes.product.amount'/></th>
         <repeat with="&Variation.all">
           <th style="width:13%"><this/></th>
         </repeat>
-        <th style="width:15%"><t key='product.warehouse'/></th>
-        <th style="width:8%"><t key='product.price'/></th>
+        <th style="width:15%"><t key='activerecord.attributes.product.warehouse'/></th>
+        <th style="width:8%"><t key='activerecord.attributes.product.price'/></th>
         <th style="width:2%"></th>
       </tr>
     </thead>
