@@ -86,5 +86,13 @@ class ProductsController < ApplicationController
     end
     hobo_index products
   end
+  
+  def change_price
+    flash[:info] = I18n.t("product.show.prices_changed")
+    redirect_to '/products'
+    for product in Product.find(params[:product_check])
+      product.update_attribute(:price, params[:price])
+    end
+  end
 
 end

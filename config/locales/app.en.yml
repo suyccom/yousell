@@ -127,6 +127,9 @@ en:
       empty_cells: Empty cells
       labels_sent_to_printer: The labels have been sent to the printer
       no_labelsheet_error: Please add your labelsheets first. Go to Administration, Labelsheets to add some.
+      change_price_button: Change price to selected products
+      change_price: Change price
+      prices_changed: The prices have been updated
   
   product_type:
     optional_barcode: Barcode (optional)

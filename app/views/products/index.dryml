@@ -8,22 +8,28 @@
     </h2>
   </heading:>
   <collection: replace>
-    <table-plus without-page-nav without-header fields="this, barcode, amount, price, actions">
-      <tr: replace>
-        <hobo-cache expediente="&this.id" updated-at="&this.updated_at.to_i">
-          <tr restore/>
-        </hobo-cache>
-      </tr:>
-      <amount-view:>
-        <div part="part-w">
-          <this/>: <repeat with="&this_parent.product_warehouses" join=", "><this.warehouse/>
-            <click-editor-innards:amount updates="#part-w"/></repeat>
-        </div>
-      </amount-view:>
-      <price-view:><currency/></price-view:>
-      <actions-view:><bootstrap-table-actions/></actions-view:>
-    </table-plus>
+    <form method="POST" action="products/change_price">
+      <table-plus without-page-nav without-header fields="check, this, barcode, amount, price, actions">
+        <tr: replace>
+          <hobo-cache expediente="&this.id" updated-at="&this.updated_at.to_i">
+            <tr restore/>
+          </hobo-cache>
+        </tr:>
+        <check-view:><input type="checkbox" name="product_check[]" value="&this_parent.id"/></check-view:>
+        <check-heading:></check-heading:>
+        <amount-view:>
+          <div part="part-w">
+            <this/>: <repeat with="&this_parent.product_warehouses" join=", "><this.warehouse/>
+              <click-editor-innards:amount updates="#part-w"/></repeat>
+          </div>
+        </amount-view:>
+        <price-view:><currency/></price-view:>
+        <actions-view:><bootstrap-table-actions/></actions-view:>
+      </table-plus>
+      <change-price-modal/>
+    </form>
     <print-labels if="&params[:last_added]"/>
+    <change-price-button/>
   </collection:>
 </index-page>
 
@@ -60,5 +66,33 @@
   </modal>
   <modal-open-button class="pull-right" modal="print-label-modal">
     <i class="icon-print"></i> <t key="product.show.print_labels_last_added_products"/>
+  </modal-open-button>
+</def>
+
+
+<def tag="change-price-modal">
+  <modal id="change-price-modal">
+    <modal:>
+      <modal-header><t key="product.show.change_price"/></modal-header>
+      <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="control-group">
+            <label class="control-label" for="empty-cells"><t key="activerecord.attributes.product.price"/></label>
+            <div class="controls">
+              <input class="input-mini" type="text" name="price" value="0"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <modal-form-footer>
+        <submit: label="#{I18n.t 'product.show.change_price'}"/>
+      </modal-form-footer>
+    </modal:>
+  </modal>
+</def>
+
+<def tag="change-price-button">
+  <modal-open-button class="pull-right" modal="change-price-modal">
+    <i class="icon-tags"></i> <t key="product.show.change_price_button"/>
   </modal-open-button>
 </def>
