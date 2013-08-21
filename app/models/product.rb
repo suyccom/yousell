@@ -30,21 +30,19 @@ class Product < ActiveRecord::Base
   validates_presence_of :provider
 
   # --- Scopes --- #
-    scope :variaciones, lambda { |values|
-      if !values.blank?
-        clauses = []
-        args = []
-        for value in values.split(",")
-          clauses << 'product_variations.value = ?'
-          args.push value
-        end
-      clause = clauses.join(' OR '), *args
+  scope :variaciones, lambda { |values|
+    if !values.blank?
+      clauses = []
+      args = []
+      for value in values.split(",")
+        clauses << "products.name LIKE ?"
+        args << "%#{value}%"
       end
-      joins(:product_variations).
-      where(clause).
-      group("name")
-    }
-
+    clause = clauses.join(' AND '), *args
+    end
+    where(clause).
+    group("products.id")
+  }
 
   # --- Callbacks --- #
   before_save :set_name
