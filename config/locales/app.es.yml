@@ -140,6 +140,7 @@ es:
   labelsheet:
     nav_item: Plantillas
   product:
+    without_variation: Sin variación
     nav_item: Almacén
     index:
       heading: Almacén
