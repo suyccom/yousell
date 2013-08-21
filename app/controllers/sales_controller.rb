@@ -13,16 +13,10 @@ class SalesController < ApplicationController
 
   def update
     hobo_update do
-      if params[:sale][:day_sale] && params[:sale][:day_sale].to_i > 0
-        redirect_to('/pending_day_sales')
-      elsif params[:page_path] == "/sales/#{Sale.find(params[:id]).id}/edit"
-        redirect_to('/sales')
-      else
-        flash[:notice] = I18n.t("sale.messages.create.success", 
-        :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
-                 "/sales/#{Sale.find(params[:id]).id}")).html_safe
-        request.xhr? ? hobo_ajax_response : (redirect_to '/')
-      end
+      flash[:notice] = I18n.t("sale.messages.create.success", 
+      :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
+               "/sales/#{Sale.find(params[:id]).id}")).html_safe
+      request.xhr? ? hobo_ajax_response : (redirect_to '/')
     end
   end
 
