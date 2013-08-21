@@ -97,7 +97,7 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     page.should have_css('.label.label-important')
     click_on('There are pending day sales: 1')
     page.should have_css('tr.sale:nth-child(1)')
-    page.find('tr.sale:nth-child(1)').should have_content(Date.today.strftime('%Y-%m-%d'))
+    page.find('tr.sale:nth-child(1)').should have_content(Sale.last.created_at.strftime('%d-%m-%Y %H:%M'))
     page.find('tr.sale:nth-child(1)').should have_content("31")
     page.find('td.controls a i.icon-trash').click
     page.driver.browser.switch_to.alert.accept

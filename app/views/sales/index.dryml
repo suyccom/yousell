@@ -11,7 +11,8 @@
       </span>
     </a>
   </heading:>
-  <collection: fields="this, completed_at, total">
-    <total-view:><currency/></total-view:>
+  <collection: fields="this, completed_at, sale_total">
+    <sale-total-view:><currency/></sale-total-view:>
+    <completed-at-view:><%= this.strftime('%d-%m-%Y %H:%M') %></completed-at-view:>
   </collection:>
 </index-page:>
