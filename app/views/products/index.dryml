@@ -1,12 +1,15 @@
 <index-page>
   <heading: replace>
     <a action="new" to="&ProductType" class="new-link btn btn-primary pull-right span2"><ht key="product_type.actions.new">Add products</ht></a>
-    <a href="?last_added=true" class="btn pull-right span2"><t key="product.index.last_added_products"/></a>
+    <a if="&!params[:last_added]" href="?last_added=true" class="btn pull-right span2"><t key="product.index.last_added_products"/></a>
     <h2 class="heading">
       <a href="/products"><t key="product.index.heading"/></a>
       <span if="&params[:last_added]"><t key="product.index.last_added_products"/></span>
     </h2>
   </heading:>
+  <after-content-header:>
+    <search-products if="&!params[:last_added]"/>
+  </after-content-header:>
   <collection: replace>
     <table-plus without-page-nav without-header fields="this, barcode, amount, price, actions">
       <tr: replace>
@@ -27,6 +30,33 @@
   </collection:>
 </index-page>
 
+
+<def tag="search-products">
+  <p>
+    <a class="btn btn-large" data-toggle="collapse" href="#search">
+      <t key="product.index.advanced_search"/> <i class="icon-search"></i>
+    </a>
+    <div id="search" class="collapse">
+      <form method="get" action="/products">
+        <div class="row columns">
+          <div class="span4 controls-row">
+            <label><t key="activerecord.attributes.variation.name"/></label>
+            <input type="text" name="name" value="&params[:name]"/>
+          </div>
+            <% for v in Variation.all %>
+              <div class="span4 controls-row">
+                <label><%= v.name %></label>
+                <select-menu first-option="Selecciona un/a #{v.name.downcase}"
+                             name="#{v.name.downcase}" selected="&params[v.name.downcase]" options="&v.value.split(',')" />
+              </div>
+            <% end %>
+          </div>
+        <input type="submit" value="Buscar" 
+               class="btn btn-primary button submit-button search-button search-submit pull-right"/>
+      </form>
+    </div>
+  </p>
+</def>
 
 <def tag="print-labels">
   <modal id="print-label-modal">

@@ -84,7 +84,17 @@ class ProductsController < ApplicationController
     else
       products = Product.apply_scopes(:order_by => parse_sort_param(:name))
     end
-    hobo_index products
+    variaciones = []
+    for v in Variation.all
+      variaciones << params[v.name.downcase] if params[v.name.downcase] && params[v.name.downcase] != ""
+    end
+    hobo_index products.apply_scopes(
+      :name_contains => params[:name],
+      :variaciones => variaciones.join(",")
+    )
+
+
+
   end
 
 end
