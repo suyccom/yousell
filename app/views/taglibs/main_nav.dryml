@@ -28,6 +28,9 @@
           <nav-item with='&Labelsheet'>
             <ht key='labelsheet.nav_item' count='100'><model-name-human count='100'/></ht>
           </nav-item>
+          <nav-item href="product_types/transfer">
+            <t key='front.transfer'/>
+          </nav-item>
         </ul>
       </li>
     </navigation>
