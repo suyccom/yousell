@@ -13,7 +13,7 @@ class Variation < ActiveRecord::Base
   has_many :product_variations, :dependent => :destroy
   has_many :products, :through => :product_variations, :accessible => true
   
-  has_many :variation_values, :accessible => true
+  has_many :variation_values, :accessible => true, :order => 'name asc'
   
   def value
     variation_values.*.name.join(',')
