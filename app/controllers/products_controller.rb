@@ -50,7 +50,7 @@ class ProductsController < ApplicationController
         pdf.image barcode[:png], :scale => 0.72
         pdf.text  barcode[:barcode], :indent_paragraphs => 23, :size => 9
         pdf.text  barcode[:name], :indent_paragraphs => 5, :size => 8
-        pdf.text  barcode[:description], :indent_paragraphs => 23, :size => 9
+        pdf.text  barcode[:description], :indent_paragraphs => 23, :size => 9 if barcode[:description]
       end
     end
 
