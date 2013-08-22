@@ -91,10 +91,7 @@ class ProductsController < ApplicationController
     hobo_index products.apply_scopes(
       :name_contains => params[:name],
       :variaciones => variaciones.join(",")
-    )
-
-
-
+    ), :per_page => 15
   end
   
   def change_price
