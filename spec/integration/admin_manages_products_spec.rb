@@ -67,6 +67,22 @@ feature 'The admin wants to manage products', :driver => :selenium do
     page.find('tr.product:nth-child(3) .this-view').should have_content 'SuperZapas 300 37 green woman'
     page.find('tr.product:nth-child(3) .amount-view').should have_content '0: SuperShop 0 , Deusto 0'
     
+    # The admin changes the price to two products at the same time
+    page.find('tr.product:nth-child(1) .price-view').should have_content '20.00'
+    page.find('tr.product:nth-child(2) .price-view').should have_content '0.00'
+    within 'tr.product:nth-child(1)' do
+      check 'product_check[]'
+    end
+    within 'tr.product:nth-child(2)' do
+      check 'product_check[]'
+    end
+    click_on 'Change price to selected products'
+    fill_in 'price', :with => '55'
+    click_on 'Change price'
+    page.should have_content 'The prices have been updated'
+    page.find('tr.product:nth-child(1) .price-view').should have_content '55.00'
+    page.find('tr.product:nth-child(2) .price-view').should have_content '55.00'
+    
     # Removes the last product
     page.find('tr.product:nth-child(3) .icon-trash').click
     page.driver.browser.switch_to.alert.accept

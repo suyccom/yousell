@@ -11,22 +11,28 @@
     <search-products if="&!params[:last_added]"/>
   </after-content-header:>
   <collection: replace>
-    <table-plus without-page-nav without-header fields="this, barcode, amount, price, actions">
-      <tr: replace>
-        <hobo-cache expediente="&this.id" updated-at="&this.updated_at.to_i">
-          <tr restore/>
-        </hobo-cache>
-      </tr:>
-      <amount-view:>
-        <div part="part-w">
-          <this/>: <repeat with="&this_parent.product_warehouses" join=", "><this.warehouse/>
-            <click-editor-innards:amount updates="#part-w"/></repeat>
-        </div>
-      </amount-view:>
-      <price-view:><currency/></price-view:>
-      <actions-view:><bootstrap-table-actions/></actions-view:>
-    </table-plus>
+    <form method="POST" action="products/change_price">
+      <table-plus without-page-nav without-header fields="check, this, barcode, amount, price, actions">
+        <tr: replace>
+          <hobo-cache expediente="&this.id" updated-at="&this.updated_at.to_i">
+            <tr restore/>
+          </hobo-cache>
+        </tr:>
+        <check-view:><input type="checkbox" name="product_check[]" value="&this_parent.id"/></check-view:>
+        <check-heading:></check-heading:>
+        <amount-view:>
+          <div part="part-w">
+            <this/>: <repeat with="&this_parent.product_warehouses" join=", "><this.warehouse/>
+              <click-editor-innards:amount updates="#part-w"/></repeat>
+          </div>
+        </amount-view:>
+        <price-view:><currency/></price-view:>
+        <actions-view:><bootstrap-table-actions/></actions-view:>
+      </table-plus>
+      <change-price-modal/>
+    </form>
     <print-labels if="&params[:last_added]"/>
+    <change-price-button/>
   </collection:>
 </index-page>
 
@@ -36,59 +42,95 @@
     <a class="btn btn-large" data-toggle="collapse" href="#search">
       <t key="product.index.advanced_search"/> <i class="icon-search"></i>
     </a>
-    <div id="search" class="collapse">
+    <div id="search" class="collapse #{'in' if params[:name]}">
       <form method="get" action="/products">
         <div class="row columns">
           <div class="span4 controls-row">
             <label><t key="activerecord.attributes.variation.name"/></label>
             <input type="text" name="name" value="&params[:name]"/>
           </div>
-            <% for v in Variation.all %>
-              <div class="span4 controls-row">
-                <label><%= v.name %></label>
-                <select-menu first-option="Selecciona un/a #{v.name.downcase}"
-                             name="#{v.name.downcase}" selected="&params[v.name.downcase]" options="&v.value.split(',')" />
-              </div>
-            <% end %>
+          <repeat with="&Variation.all">
+            <div class="span4 controls-row">
+              <label><%= this.name %></label>
+              <select-menu first-option="Selecciona un/a #{this.name.downcase}"
+                           name="#{this.name.downcase}" selected="&params[this.name.downcase]"
+                           options="&this.value.split(',')" />
+            </div>
+          </repeat>
+          <div class="span4 controls-row">
+            <br/>
+            <input type="submit" value="Buscar" 
+                   class="btn btn-primary button submit-button search-button search-submit"/>
           </div>
-        <input type="submit" value="Buscar" 
-               class="btn btn-primary button submit-button search-button search-submit pull-right"/>
+        </div>
       </form>
     </div>
   </p>
 </def>
 
 <def tag="print-labels">
-  <modal id="print-label-modal">
-    <modal:>
-      <form method="GET" action="products/last_products_labels">
-        <modal-header><t key="product.show.print_labels"/></modal-header>
-        <div class="modal-body">
-          <div class="form-horizontal" if="&Labelsheet.count > 0">
-            <div class="control-group">
-              <label class="control-label" for="empty-cells"><t key="product.show.empty_cells"/></label>
-              <div class="controls">
-                <input class="input-mini" type="text" id="empty-cells" name="empty_cells" value="0"/>
+  <hobo-cache suffix="print-labels" labelsheet="&Labelsheet.count">
+    <modal id="print-label-modal">
+      <modal:>
+        <form method="GET" action="products/last_products_labels">
+          <modal-header><t key="product.show.print_labels"/></modal-header>
+          <div class="modal-body">
+            <div class="form-horizontal" if="&Labelsheet.count > 0">
+              <div class="control-group">
+                <label class="control-label" for="empty-cells"><t key="product.show.empty_cells"/></label>
+                <div class="controls">
+                  <input class="input-mini" type="text" id="empty-cells" name="empty_cells" value="0"/>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="empty-cells"><t key="activerecord.models.labelsheet.one"/></label>
+                <div class="controls">
+                  <select-menu name="labelsheet_id" options="&Labelsheet.all.map{|l| [l.name, l.id]}"/>
+                </div>
               </div>
             </div>
+            <p unless="&Labelsheet.count > 0">
+              <t key="product.show.no_labelsheet_error"/>
+            </p>
+          </div>
+          <modal-form-footer if="&Labelsheet.count > 0">
+            <submit: label="#{I18n.t 'product.show.print'}"/>
+          </modal-form-footer>
+        </form>
+      </modal:>
+    </modal>
+    <modal-open-button class="pull-right" modal="print-label-modal">
+      <i class="icon-print"></i> <t key="product.show.print_labels_last_added_products"/>
+    </modal-open-button>
+  </hobo-cache>
+</def>
+
+
+<def tag="change-price-modal">
+  <hobo-cache suffix="change-price-modal">
+    <modal id="change-price-modal">
+      <modal:>
+        <modal-header><t key="product.show.change_price"/></modal-header>
+        <div class="modal-body">
+          <div class="form-horizontal">
             <div class="control-group">
-              <label class="control-label" for="empty-cells"><t key="activerecord.models.labelsheet.one"/></label>
+              <label class="control-label" for="empty-cells"><t key="activerecord.attributes.product.price"/></label>
               <div class="controls">
-                <select-menu name="labelsheet_id" options="&Labelsheet.all.map{|l| [l.name, l.id]}"/>
+                <input class="input-mini" type="text" name="price" value="0"/>
               </div>
             </div>
           </div>
-          <p unless="&Labelsheet.count > 0">
-            <t key="product.show.no_labelsheet_error"/>
-          </p>
         </div>
-        <modal-form-footer if="&Labelsheet.count > 0">
-          <submit: label="#{I18n.t 'product.show.print'}"/>
+        <modal-form-footer>
+          <submit: label="#{I18n.t 'product.show.change_price'}"/>
         </modal-form-footer>
-      </form>
-    </modal:>
-  </modal>
-  <modal-open-button class="pull-right" modal="print-label-modal">
-    <i class="icon-print"></i> <t key="product.show.print_labels_last_added_products"/>
+      </modal:>
+    </modal>
+  </hobo-cache>
+</def>
+
+<def tag="change-price-button">
+  <modal-open-button class="pull-right" modal="change-price-modal">
+    <i class="icon-tags"></i> <t key="product.show.change_price_button"/>
   </modal-open-button>
 </def>

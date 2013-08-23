@@ -9,6 +9,8 @@ class VariationValue < ActiveRecord::Base
   end
   attr_accessible :name, :code
   
+  set_default_order 'name asc'
+  
   belongs_to :variation
 
   # --- Permissions --- #

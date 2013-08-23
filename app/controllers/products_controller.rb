@@ -50,7 +50,7 @@ class ProductsController < ApplicationController
         pdf.image barcode[:png], :scale => 0.72
         pdf.text  barcode[:barcode], :indent_paragraphs => 23, :size => 9
         pdf.text  barcode[:name], :indent_paragraphs => 5, :size => 8
-        pdf.text  barcode[:description], :indent_paragraphs => 23, :size => 9
+        pdf.text  barcode[:description], :indent_paragraphs => 23, :size => 9 if barcode[:description]
       end
     end
 
@@ -91,10 +91,15 @@ class ProductsController < ApplicationController
     hobo_index products.apply_scopes(
       :name_contains => params[:name],
       :variaciones => variaciones.join(",")
-    )
-
-
-
+    ), :per_page => 15
+  end
+  
+  def change_price
+    flash[:info] = I18n.t("product.show.prices_changed")
+    redirect_to '/products'
+    for product in Product.find(params[:product_check])
+      product.update_attribute(:price, params[:price])
+    end
   end
 
 end
