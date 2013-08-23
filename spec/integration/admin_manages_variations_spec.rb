@@ -21,16 +21,16 @@ feature 'The admin wants to manage variations', :driver => :selenium do
     fill_in 'variation[variation_values][2][name]', :with => 'grande'
     click_on 'Create Variation'
     page.find('tr.variation:nth-child(1) .this-view').should have_content 'Tamaño'
-    page.find('tr.variation:nth-child(1) .value-view').should have_content 'pequeña,mediana,grande'
+    page.find('tr.variation:nth-child(1) .value-view').should have_content 'Without variation,grande,mediana,pequeña'
     # The user can edit a variation (no conditions by now)
     page.find('tr.variation:nth-child(1) .icon-edit').click
     fill_in 'variation[name]', :with => 'Ingredientes'
-    fill_in 'variation[variation_values][0][name]', :with => 'avena'
-    fill_in 'variation[variation_values][1][name]', :with => 'maiz'
-    fill_in 'variation[variation_values][2][name]', :with => 'trigo'
+    fill_in 'variation[variation_values][1][name]', :with => 'avena'
+    fill_in 'variation[variation_values][2][name]', :with => 'maiz'
+    fill_in 'variation[variation_values][3][name]', :with => 'trigo'
     click_on 'Save Variation'
     page.find('tr.variation:nth-child(1) .this-view').should have_content 'Ingredientes'
-    page.find('tr.variation:nth-child(1) .value-view').should have_content 'avena,maiz,trigo'
+    page.find('tr.variation:nth-child(1) .value-view').should have_content 'Without variation,avena,maiz,trigo'
     # The user can add another variation
     click_on 'New Variation'
     fill_in 'variation[name]', :with => 'Aspecto'
@@ -42,7 +42,7 @@ feature 'The admin wants to manage variations', :driver => :selenium do
     click_on 'Create Variation'
     page.should have_css("tr.variation", :count => 2)
     page.find('tr.variation:nth-child(2) .this-view').should have_content 'Aspecto'
-    page.find('tr.variation:nth-child(2) .value-view').should have_content 'tostado,claro'
+    page.find('tr.variation:nth-child(2) .value-view').should have_content 'Without variation,claro,tostado'
     
     
     
