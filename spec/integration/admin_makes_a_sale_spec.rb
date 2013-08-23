@@ -60,9 +60,6 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     @product2.amount.should eq 8
   end
 
-
-
-
   scenario 'Admin makes a day sale' do
     login
     click_on('Sell')
@@ -91,13 +88,19 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     click_on('Complete Sale')
     page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
 
-    # Can sees/deletes pending 'day sales'
+    # Goes to the pending day_sales view
     click_on('Administration')
     click_on('Sales')
     page.should have_css('.label.label-important')
     click_on('There are pending day sales: 1')
+
+    # Can see all the 'day_sales' of a specific day
+    page.find('td.completed-at-date-view:first a').click
+    page.should have_content(Date.today.strftime('%Y-%m-%d'))
+
+    # Can delete pending 'day sales' on 'day_sales index'
     page.should have_css('tr.sale:nth-child(1)')
-    page.find('tr.sale:nth-child(1)').should have_content(Sale.last.created_at.strftime('%d-%m-%Y %H:%M'))
+    page.find('tr.sale:nth-child(1)').should have_content(Date.today.strftime('%d-%m-%Y %H:%M'))
     page.find('tr.sale:nth-child(1)').should have_content("31")
     page.find('td.controls a i.icon-trash').click
     page.driver.browser.switch_to.alert.accept

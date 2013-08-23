@@ -1,5 +1,6 @@
 <index-page:>
   <heading: replace>
+    <% unless params[:completed_at_date] %>
     <h2>
       <ht key='sale.index.heading'>
         <model-name-human model='&model'/>
@@ -10,6 +11,16 @@
         <t key='sale.pending_day_sales' count='&@day_sales_count.to_s'/>
       </span>
     </a>
+    <% else %>
+    <h2>
+      <t key='sale.index.viewing_pending_day_sales' date='&params[:completed_at_date]'/>
+    </h2>
+    <a href='/pending_day_sales'>
+      <span class='label label-info'>
+        <t key='sale.index.back_to_pending_day_sales'/>
+      </span>
+    </a>
+    <% end %>
   </heading:>
   <collection: fields="this, completed_at, sale_total">
     <sale-total-view:><currency/></sale-total-view:>
