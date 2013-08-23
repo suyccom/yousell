@@ -9,9 +9,15 @@ class Sale < ActiveRecord::Base
     total_discount :integer, :default => 0
     type_discount :string, :default => '%'
     completed_at :datetime
+    client_name :string
+    tax_number :string
+    address :string
+    zip_code :string
+    city :string
     timestamps
   end
-  attr_accessible :lines, :complete, :day_sale, :total_discount, :type_discount, :sale_total
+  attr_accessible :lines, :complete, :day_sale, :total_discount, :type_discount, 
+    :sale_total, :client_name, :tax_number, :address, :zip_code, :city
 
   has_many :lines
   children :lines
@@ -41,6 +47,14 @@ class Sale < ActiveRecord::Base
 
   def total
     lines.sum(:price) - discount
+  end
+  
+  def created_date
+    created_at.to_date
+  end
+  
+  def complete_address
+    "#{address} #{zip_code} #{city}"
   end
 
   def name

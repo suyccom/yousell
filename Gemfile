@@ -82,4 +82,6 @@ gem 'exception_notification'
 gem "barby" # Barcodes
 gem "chunky_png"
 gem "prawn-labels" # Labels
+gem "wicked_pdf" # Invoice PDFs
+
 

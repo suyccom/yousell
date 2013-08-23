@@ -1,0 +1,12 @@
+<extend tag="page">
+  <old-page merge>
+    <!-- Este código permite usar wicked_pdf sin tener que crear una vista personalizada -->
+    <stylesheets: replace>
+      <% if request.format == 'application/pdf' %>
+        <%= wicked_pdf_stylesheet_link_tag "print" -%>
+      <% else %>
+        <stylesheets restore/>
+      <% end %>
+    </stylesheets:>
+  </old-page>
+</extend>
