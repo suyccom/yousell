@@ -35,10 +35,11 @@ class SalesController < ApplicationController
   end
 
   def destroy_pending_day_sales
-    sale = Sale.find(params[:sales_date])
-    sale.destroy
-    @day_sales,@day_sales_count = calculate_day_sales_and_count
-    redirect_to('/pending_day_sales')
+    if params[:sales_date]
+      Sale.where(:completed_at => params[:sales_date].to_date.beginning_of_day..params[:sales_date].to_date.end_of_day).complete.day_sale.destroy_all
+      @day_sales,@day_sales_count = calculate_day_sales_and_count
+      redirect_to('/pending_day_sales')
+    end
   end
 
   def cancel

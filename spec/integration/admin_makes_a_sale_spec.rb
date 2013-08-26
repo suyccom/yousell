@@ -92,19 +92,20 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     click_on('Administration')
     click_on('Sales')
     page.should have_css('.label.label-important')
-    click_on('There are pending day sales: 1')
+    click_on('There are 1 day(s) with pending day sales to be checked')
 
     # Can see all the 'day_sales' of a specific day
     page.find('td.completed-at-date-view:first a').click
     page.should have_content(Date.today.strftime('%Y-%m-%d'))
 
     # Can delete pending 'day sales' on 'day_sales index'
+    click_on ('Back to pending day sales')
     page.should have_css('tr.sale:nth-child(1)')
-    page.find('tr.sale:nth-child(1)').should have_content(Date.today.strftime('%d-%m-%Y %H:%M'))
+    page.find('tr.sale:nth-child(1)').should have_content(Date.today.strftime('%d-%m-%Y'))
     page.find('tr.sale:nth-child(1)').should have_content("31")
     page.find('td.controls a i.icon-trash').click
     page.driver.browser.switch_to.alert.accept
-    page.should have_content('No pending day sales')
+    page.should have_content('No pending day sales to be checked')
   end
 
 end
