@@ -6,20 +6,18 @@
     </h2>
   </content-header:>
   <content-body:>
-    <table class='table table-condensed' with='&@day_sales' fields='completed_at,id,sale_total'>
-      <completed-at-heading:><t key="activerecord.attributes.sale.completed_at"/></completed-at-heading:>
-      <id-heading:>Tickect</id-heading:>
-      <sale-total-heading:>Total</sale-total-heading:>
-      <completed-at-view:><%= this.strftime('%d-%m-%Y %H:%M') %></completed-at-view:>
-      <sale-total-view:><currency/></sale-total-view:>
-      <id-view:>Tickect <this/></id-view:>
-      <controls:>
-        <a href="/sales/#{this.id}/edit" action="edit">
-          <i class="icon-pencil"></i>
+    <table class='table table-condensed' with='&@day_sales' fields='completed_at_date,sale_total_sum'>
+      <completed-at-date-heading:><t key='date'/></completed-at-date-heading:>
+      <completed-at-date-view:>
+        <a href="/sales?completed_at_date=#{this}">
+          <this/>
         </a>
-        <a href="/pending_day_sales/#{this.id}"
-           data-confirm="#{I18n.t('sale.confirm_delete_day_sales',
-                        :date => this.completed_at.strftime('%d-%m-%Y'))}">
+      </completed-at-date-view:>
+      <sale-total-sum-heading:>Total</sale-total-sum-heading:>
+      <sale-total-sum-view:><currency/></sale-total-sum-view:>
+      <controls:>
+        <a href="/pending_day_sales/#{this.completed_at_date}"
+           data-confirm="#{I18n.t('sale.confirm_delete_day_sales', :date => this.completed_at_date)}">
           <i class="icon-trash"></i>
         </a>
       </controls:>
