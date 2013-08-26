@@ -31,7 +31,7 @@ class Variation < ActiveRecord::Base
   end
 
   def update_permitted?
-    acting_user.administrator?
+    acting_user.administrator? && (products.count == 0 || only_changed?(:variation_values))
   end
 
   def destroy_permitted?
