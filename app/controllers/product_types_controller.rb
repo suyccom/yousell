@@ -40,7 +40,7 @@ class ProductTypesController < ApplicationController
       end
     end
   end
-  
+
   def new_from_barcode
     @variations = {}
     @position = 0
