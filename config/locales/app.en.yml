@@ -160,6 +160,9 @@ en:
     index:
       viewing_pending_day_sales: "%{date} Pending day sales"
       back_to_pending_day_sales: 'Back to pending day sales'
-
+    show:
+      print_invoice: Print Invoice
+      print: Print
+      invoice: Invoice
   warehouse:
     filter_all: All the Warehouses

@@ -58,6 +58,16 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     # Check that the amount in stock has been reduced
     @product1.amount.should eq 9
     @product2.amount.should eq 8
+    
+    # Goes to the sale and prints an invoice
+    click_on "#{Sale.last.id - 1}"
+    click_on 'Print Invoice'
+    fill_in 'sale[client_name]', :with => 'Jon Gutierrez'
+    fill_in 'sale[tax_number]', :with => '22222222A'
+    fill_in 'sale[address]', :with => 'Uribitarte 22'
+    fill_in 'sale[zip_code]', :with => '48001'
+    fill_in 'sale[city]', :with => 'Bilbao'
+    click_on 'Print'
   end
 
   scenario 'Admin makes a day sale' do

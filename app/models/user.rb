@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
     administrator       :boolean, :default => false
     language            :string, :default => "en"
     last_added_products :string
+    company_name        :string
+    company_address     :text
     timestamps
   end
   
@@ -18,7 +20,8 @@ class User < ActiveRecord::Base
   belongs_to :current_warehouse, :class_name => 'Warehouse'
   
   attr_accessible :name, :email_address, :password, :password_confirmation, 
-    :current_password, :current_warehouse, :current_warehouse_id
+    :current_password, :current_warehouse, :current_warehouse_id, :company_name, 
+    :company_address
 
   # This gives admin rights and an :active state to the first sign-up.
   # Just remove it if you don't want that
@@ -67,7 +70,9 @@ class User < ActiveRecord::Base
   def update_permitted?
     acting_user.administrator? ||
       (acting_user == self && only_changed?(:email_address, :crypted_password,
-                                            :current_password, :password, :password_confirmation, :current_warehouse, :current_warehouse_id))
+                                            :current_password, :password, :password_confirmation, 
+                                            :current_warehouse, :current_warehouse_id, 
+                                            :company_name, :company_address))
     # Note: crypted_password has attr_protected so although it is permitted to change, it cannot be changed
     # directly from a form submission.
   end

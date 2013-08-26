@@ -14,9 +14,15 @@ class SalesController < ApplicationController
   def update
     hobo_update do
       flash[:notice] = I18n.t("sale.messages.create.success", 
-        :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
-        "/sales/#{Sale.find(params[:id]).id}")).html_safe
-      request.xhr? ? hobo_ajax_response : (redirect_to '/')
+      :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
+               "/sales/#{Sale.find(params[:id]).id}")).html_safe
+      if request.xhr?
+        hobo_ajax_response
+      elsif params[:sale][:client_name]
+        redirect_to "/sales/#{@sale.id}.pdf"
+      else
+        redirect_to '/'
+      end
     end
   end
 
@@ -56,6 +62,18 @@ class SalesController < ApplicationController
     end
     @new_sale.update_attribute(:complete, true) # Now we "complete" it again :)
     redirect_to @new_sale
+  end
+  
+  def show
+    hobo_show do
+      if request.format.pdf?
+        render :pdf => I18n.t('sale.show.invoice'), 
+          :show_as_html => params[:debug].present?, 
+          :encoding => 'UTF-8',
+          :disable_javascript => true,
+          :use_xserver => true
+      end
+    end
   end
 
   private

@@ -1,4 +1,8 @@
 <show-page without-edit-link without-record-flags>
+  <before-heading:>
+    <print-invoice/>
+  </before-heading:>
+  <field-list: fields="sale_total, total_discount, type_discount, refunded_ticket"/>
   <collection: replace>
     <a class="pull-right btn btn-danger"
        onclick="confirm('#{I18n.t('sale.are_you_sure')}')"
@@ -11,3 +15,25 @@
     </table>
   </collection:>
 </show-page>
+
+<def tag="print-invoice">
+  <modal id="print-invoice-modal">
+    <modal:>
+      <form>
+        <modal-header><t key="sale.show.print_invoice"/></modal-header>
+        <div class="modal-body">
+          <div class="form-horizontal">
+            <field-list size="0" fields="client_name, tax_number, address, zip_code, city"/>
+          </div>
+        </div>
+        <modal-form-footer>
+          <submit: label="#{I18n.t 'sale.show.print'}"/>
+        </modal-form-footer>
+      </form>
+    </modal:>
+  </modal>
+  <modal-open-button class="pull-right" modal="print-invoice-modal">
+    <i class="icon-print"></i> <t key="sale.show.print_invoice"/>
+  </modal-open-button>
+</def>
+

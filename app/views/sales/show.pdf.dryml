@@ -1,0 +1,31 @@
+<show-page without-navbar without-edit-link without-record-flags>
+  <heading: replace>
+    <span class="pull-right"><view:created-date/></span>
+    <h1><t key="sale.show.invoice"></t> <this.id/></h1>
+  </heading:>
+  
+
+  <field-list: replace>
+    <div class="row form-horizontal">
+      <div class="span6">
+        <field-list size="0" fields="client_name, tax_number, complete_address"/>
+      </div>
+      <div class="span6">
+        <p><strong><%= current_user.company_name %></strong></p>
+        <%= simple_format(current_user.company_address) %>
+      </div>
+    </div>
+
+  </field-list:>
+   <collection: replace>
+    <table:lines class="table table-striped table-bordered collection" 
+                 fields="name, amount, price">
+      <price-view:><currency/></price-view:>
+      <tfoot:>
+        <td><strong>Total</strong></td>
+        <td></td>
+        <td><strong><currency with="&@sale.total"/></strong></td>
+      </tfoot:>
+    </table>
+  </collection:>
+</show-page>
