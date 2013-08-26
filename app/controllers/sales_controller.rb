@@ -28,8 +28,12 @@ class SalesController < ApplicationController
 
   def index
     # Get 'day sales' grouped by completed_at date: 2 columns, date and money amount
-    @day_sales_count = Sale.complete.day_sale.count
-    hobo_index Sale.complete.not_day_sale
+    @day_sales_count = Sale.complete.day_sale.select("sum(sale_total) as sale_total_sum, date(completed_at) as completed_at_date").group("date(completed_at)").to_a.count
+    unless params[:completed_at_date]
+      hobo_index Sale.complete.not_day_sale
+    else
+      hobo_index Sale.complete.day_sale.where(:created_at == params[:completed_at_date].to_date)
+    end
   end
 
   def pending_day_sales
@@ -37,10 +41,11 @@ class SalesController < ApplicationController
   end
 
   def destroy_pending_day_sales
-    sale = Sale.find(params[:sales_date])
-    sale.destroy
-    @day_sales,@day_sales_count = calculate_day_sales_and_count
-    redirect_to('/pending_day_sales')
+    if params[:sales_date]
+      Sale.where(:completed_at => params[:sales_date].to_date.beginning_of_day..params[:sales_date].to_date.end_of_day).complete.day_sale.destroy_all
+      @day_sales,@day_sales_count = calculate_day_sales_and_count
+      redirect_to('/pending_day_sales')
+    end
   end
 
   def cancel
@@ -74,8 +79,8 @@ class SalesController < ApplicationController
   private
 
   def calculate_day_sales_and_count
-    day_sales = Sale.complete.day_sale
-    day_sales_count = Sale.complete.day_sale.count
+    day_sales = Sale.complete.day_sale.select("sum(sale_total) as sale_total_sum, count(*) as sale_number, date(completed_at) as completed_at_date").group("date(completed_at)")
+    day_sales_count = day_sales.to_a.count
     return day_sales,day_sales_count
   end
 
