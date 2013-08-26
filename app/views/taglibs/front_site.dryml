@@ -19,6 +19,8 @@
 <include src="main_nav"/>
 <include src="bootstrap_table_actions"/>
 
+<include src="wicked_pdf"/>
+
 <def tag="currency">
   <%= number_to_currency(this) %>
 </def>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130812093826) do
+ActiveRecord::Schema.define(:version => 20130823103229) do
 
   create_table "labelsheets", :force => true do |t|
     t.string   "name_printer"
@@ -101,6 +101,11 @@ ActiveRecord::Schema.define(:version => 20130812093826) do
     t.string   "type_discount",                                    :default => "%"
     t.boolean  "day_sale",                                         :default => false
     t.decimal  "sale_total",         :precision => 8, :scale => 2, :default => 0.0
+    t.string   "client_name"
+    t.string   "tax_number"
+    t.string   "address"
+    t.string   "zip_code"
+    t.string   "city"
   end
 
   add_index "sales", ["refunded_ticket_id"], :name => "index_sales_on_refunded_ticket_id"
@@ -120,6 +125,8 @@ ActiveRecord::Schema.define(:version => 20130812093826) do
     t.string   "language",                                :default => "en"
     t.integer  "current_warehouse_id"
     t.string   "last_added_products"
+    t.string   "company_name"
+    t.text     "company_address"
   end
 
   add_index "users", ["current_warehouse_id"], :name => "index_users_on_current_warehouse_id"

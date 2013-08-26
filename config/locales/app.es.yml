@@ -66,6 +66,8 @@ es:
         password_confirmation: Confirmación Contraseña
         email_address: Correo Electrónico
         current_warehouse: Almacén de venta
+        company_name: Nombre de la empresa
+        company_address: Dirección de la empresa
       warehouse:
         Warehouse: Almacén
         actions: Acciones
@@ -109,6 +111,17 @@ es:
         day_sale: Venta del día
         actions: Acciones
         lines: Líneas
+        sale_total: Total
+        total_discount: Descuento
+        type_discount: Tipo de descuento
+        refunded_ticket: Ticket devolución
+        client_name: Nombre del cliente
+        tax_number: CIF/NIF
+        address: Dirección
+        zip_code: Código postal
+        city: Ciudad
+        created_date: Fecha
+        complete_address: Dirección
       provider:
         Provider: Proveedor
         code: Código
@@ -189,5 +202,9 @@ es:
     messages:
       create:
         success: "La venta %{href} se ha efectuado con éxito"
+    show:
+      print_invoice: Imprimir Factura
+      print: Imprimir
+      invoice: Factura
   warehouse:
     filter_all: Todos los Almacenes
