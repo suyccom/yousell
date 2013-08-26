@@ -40,27 +40,6 @@ class ProductTypesController < ApplicationController
       end
     end
   end
-  
-
-  def update
-    @pr = ProductType.find(params[:id])
-    if @pr.products.size != 0
-      flash[:message] = "No se puede actualizar"
-      redirect_to "/product_types/#{@pr.id}/edit"
-    else
-      hobo_update
-    end
-  end
-
-  def destroy
-    if ProductType.find(params[:id]).products
-      redirect_to "/product_types"
-      flash[:alert] = I18n.t cant_delete "No se puede borrar un tipo de producto que tiene productos"
-    else
-      hobo_destroy
-    end
-  end
-
 
   def new_from_barcode
     @variations = {}

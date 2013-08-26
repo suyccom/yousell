@@ -1,11 +1,13 @@
 <!-- Small hack for Bootstrap template issue when disabling the show page -->
 <!-- We force the delete icon to work -->
 <def tag="bootstrap-table-actions">
+  <% if can_update?(this_parent) %>
   <do with="&this_parent">
     <a action="edit" if="&object_url(this, :edit)" param="edit">
       <i class="icon icon-edit"></i>
     </a>
   </do>
+  <% end %>
   <% if can_delete?(this_parent) %>
     <do param="delete">
       <%= link_to '<i class=\'icon-trash\'></i>'.html_safe, this_parent, :'data-confirm' => t('hobo.messages.confirm', :default=>'Are you sure?'), :method => :delete %>
