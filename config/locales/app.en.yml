@@ -157,6 +157,10 @@ en:
     messages:
       create:
         success: "The sale %{href} has been completed successfully"
+    show:
+      print_invoice: Print Invoice
+      print: Print
+      invoice: Invoice
 
   warehouse:
     filter_all: All the Warehouses
