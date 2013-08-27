@@ -1,7 +1,7 @@
 <new-page title="&t('sale.actions.new', :default => 'Sale')" without-heading>
   <content: with-flash-messages="&false"/>
     <before-content-body:>
-      <aparcar/>
+
     </before-content-body:>
   <form: replace>
     <add-line-form/>
@@ -21,7 +21,7 @@
 </def>
 
 <def tag="aparcar">
-  <a href="/pending_sales" class="btn btn-success">Aparcar</a>
+  <a href="/pending_sales" class="btn btn-large btn-info pull-right">Aparcar</a>
 </def>
 
 <def tag="add-line-form">
@@ -51,9 +51,14 @@
     </field-list:>
     <submit: replace>
       <input type='hidden' name='sale[complete]' value='true'/>
-      <div class='row'><div class="span8 offset2">
+      <div class='row'>
+        <div class="span8 offset1">
           <submit id="complete-sale-button" class="btn-large btn-success span8" restore/>
-      </div></div>
+        </div>
+        <div class="span2">
+          <aparcar/>
+        </div>
+      </div>
     </submit:>
   </form>
 </def>

@@ -7,13 +7,16 @@
   </content-header:>
   <content-body:>
     <a href="/sales/new_sale" class="btn btn-small btn-success"><t key="sale.new_sale"/> </a>
-    <table class='table table-condensed' with='&@sales' fields='created_at,total'>
-      <created-at-heading:><t key='date'/></created-at-heading:>
+    <table class='table table-condensed' with='&@sales' fields='created_at,lines,total'>
+      <created-at-heading: class="span3"><t key='front.date'/></created-at-heading:>
       <created-at-view:>
         <a href="/?active_sale_id=#{this_parent.id}">
-          <this/>
+         <%= this.strftime('%d-%m-%Y %H:%M') %>
         </a>
       </created-at-view:>
+      <lines-view:>
+        <this.to-sentence/>
+      </lines-view:>
       <total-heading:>Total</total-heading:>
       <total-view:><currency/></total-view:>
       <controls:>
