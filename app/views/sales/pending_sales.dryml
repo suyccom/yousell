@@ -1,0 +1,29 @@
+<page title="#{I18n.t('sale.pending_sales_title')}">
+  <content-header: class='well'>
+    <h2>
+      <t if='&@sales_count > 0' key='sale.pending_sales' count='&@sales_count.to_s'/>
+      <t if='&@sales_count == 0' key='sale.no_pending_sales'/>
+    </h2>
+  </content-header:>
+  <content-body:>
+    <a href="/sales/new_sale" class="btn btn-small btn-success"><t key="sale.new_sale"/> </a>
+    <table class='table table-condensed' with='&@sales' fields='created_at,total'>
+      <created-at-heading:><t key='date'/></created-at-heading:>
+      <created-at-view:>
+        <a href="/?active_sale_id=#{this_parent.id}">
+          <this/>
+        </a>
+      </created-at-view:>
+      <total-heading:>Total</total-heading:>
+      <total-view:><currency/></total-view:>
+      <controls:>
+        <a href="/pending_sales/#{this.id}"
+           data-confirm="#{I18n.t('sale.confirm_delete_day_sales', :date => this.id)}">
+          <i class="icon-trash"></i>
+        </a>
+      </controls:>
+    </table>
+  </content-body:>
+</page>
+
+

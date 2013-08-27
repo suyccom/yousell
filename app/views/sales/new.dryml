@@ -1,5 +1,8 @@
 <new-page title="&t('sale.actions.new', :default => 'Sale')" without-heading>
   <content: with-flash-messages="&false"/>
+    <before-content-body:>
+      <aparcar/>
+    </before-content-body:>
   <form: replace>
     <add-line-form/>
     <day-sale-formlet/>
@@ -17,7 +20,12 @@
   </div>
 </def>
 
+<def tag="aparcar">
+  <a href="/pending_sales" class="btn btn-success">Aparcar</a>
+</def>
+
 <def tag="add-line-form">
+
   <form with="&this.lines.new" updates="#lines,#total" refocus-form reset-form>
     <div id="add-product-form" part="add-product-form">
       <flash-messages/>

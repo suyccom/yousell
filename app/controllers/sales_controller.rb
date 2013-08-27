@@ -6,9 +6,20 @@ class SalesController < ApplicationController
   auto_actions :all
 
   def new
-    # If there's an incomplete sale in the DB, load it. Else, create a new one
-    @sale = Sale.not_complete.count > 0 ? Sale.not_complete.last : Sale.create
+    # If there's an active sale in the DB, load it. Else, create a new one
+    if session[:active_sale_id] && Sale.not_complete.exists?(session[:active_sale_id])
+      @sale = Sale.find(session[:active_sale_id])
+    else
+      @sale = Sale.create
+      session[:active_sale_id] = @sale.id
+    end
     hobo_new
+  end
+
+  def new_sale
+    @sale = Sale.create
+    session[:active_sale_id] = @sale.id
+    redirect_to '/'
   end
 
   def update
@@ -29,6 +40,7 @@ class SalesController < ApplicationController
   def index
     # Get 'day sales' grouped by completed_at date: 2 columns, date and money amount
     @day_sales_count = Sale.complete.day_sale.select("sum(sale_total) as sale_total_sum, date(completed_at) as completed_at_date").group("date(completed_at)").to_a.count
+    @sales_count = Sale.where("complete == ?", false).to_a.count
     unless params[:completed_at_date]
       hobo_index Sale.complete.not_day_sale
     else
@@ -40,12 +52,25 @@ class SalesController < ApplicationController
     @day_sales,@day_sales_count = calculate_day_sales_and_count
   end
 
+  def pending_sales
+    @sales,@sales_count = calculate_sales_and_count
+  end
+
+
   def destroy_pending_day_sales
     if params[:sales_date]
       Sale.where(:completed_at => params[:sales_date].to_date.beginning_of_day..params[:sales_date].to_date.end_of_day).complete.day_sale.destroy_all
       @day_sales,@day_sales_count = calculate_day_sales_and_count
       redirect_to('/pending_day_sales')
     end
+  end
+
+  def destroy_pending_sales
+    if params[:sales_id]
+      Sale.find(params[:sales_id]).destroy
+    end 
+    @day_sales,@day_sales_count = calculate_day_sales_and_count
+    redirect_to('/pending_sales')
   end
 
   def cancel
@@ -63,7 +88,7 @@ class SalesController < ApplicationController
     @new_sale.update_attribute(:complete, true) # Now we "complete" it again :)
     redirect_to @new_sale
   end
-  
+
   def show
     hobo_show do
       if request.format.pdf?
@@ -82,6 +107,12 @@ class SalesController < ApplicationController
     day_sales = Sale.complete.day_sale.select("sum(sale_total) as sale_total_sum, count(*) as sale_number, date(completed_at) as completed_at_date").group("date(completed_at)")
     day_sales_count = day_sales.to_a.count
     return day_sales,day_sales_count
+  end
+
+  def calculate_sales_and_count
+    sales = Sale.where("complete == ?", false)
+    sales_count = sales.to_a.count
+    return sales,sales_count
   end
 
 end
