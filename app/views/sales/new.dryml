@@ -1,8 +1,5 @@
 <new-page title="&t('sale.actions.new', :default => 'Sale')" without-heading>
   <content: with-flash-messages="&false"/>
-    <before-content-body:>
-
-    </before-content-body:>
   <form: replace>
     <add-line-form/>
     <day-sale-formlet/>
