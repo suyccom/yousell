@@ -207,6 +207,8 @@ es:
       back_to_pending_day_sales: 'Volver a ventas del día pendientes'
     show:
       print_invoice: Imprimir Factura
+      print_ticket: Imprimir Ticket
+      ticket: Ticket
       print: Imprimir
       invoice: Factura
   warehouse:
