@@ -9,7 +9,7 @@ en:
   adddiscount: apply
   addamount: add
   typediscountsymbol: $
-  product_not_found: No se ha encontrado el producto
+  product_not_found: Product not found
 
   placeholder:
     discounts: Discounts
@@ -166,5 +166,8 @@ en:
       invoice: Invoice
   warehouse:
     filter_all: All the Warehouses
+  payment_method:
+    collection:
+      empty_message: No Payment methods, please add some
 
 

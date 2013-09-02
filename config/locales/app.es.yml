@@ -211,3 +211,6 @@ es:
       invoice: Factura
   warehouse:
     filter_all: Todos los Almacenes
+  payment_method:
+    collection:
+      empty_message: No hay Métodos de pago, por favor añade alguno
