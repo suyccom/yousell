@@ -34,6 +34,11 @@ feature 'The admin manages different kinds of payment methods:', :driver => :sel
     fill_in('payment_method[name]',:with => 'Check')
     click_on('Save')
     page.should have_content('Check')
+    # The admin can't add a payment method with the same name of an existant payment method
+    click_on('New Payment method')
+    fill_in('payment_method[name]',:with => 'Check')
+    click_on('Create Payment method')
+    page.should have_content('Name has already been taken')
   end
 
 end
