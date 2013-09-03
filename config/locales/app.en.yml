@@ -5,7 +5,7 @@ en:
     to: "TO:"
     scan: Scan the products you want to move
 
-  date: Date
+  pending_day_sales_date: Date
   adddiscount: apply
   addamount: add
   typediscountsymbol: $
