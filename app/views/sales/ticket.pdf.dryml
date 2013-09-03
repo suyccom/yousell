@@ -1,0 +1,40 @@
+<show-page without-navbar without-edit-link without-record-flags>
+  <content-header: replace>
+    <address>
+      <strong>ZAPATERIA MORALES</strong><br/>
+      C/ Rodriguez Arias, Nº37<br/>
+      48011 - Bilbao<br/>
+      Vizcaya<br/>
+      C.I.F.: 30583286W
+    </address>
+  </content-header:>
+
+
+    <collection-section: replace/>
+   <field-list: replace>
+      <span class=""><view:created-date/></span>
+      <span class="pull-right"><t key="sale.show.ticket"></t> <this.id/></span>
+    <br/><br/><table:lines class="table without-borders" 
+                 fields="amount, name, price">
+      <price-view:><currency/></price-view:>
+      <tfoot:>
+        <td>
+          <strong>Total</strong><br/>
+          Entrega:<br/>
+          Cambio:
+        </td>
+        <td></td>
+        <td><strong><currency with="&@sale.total"/></strong></td>
+        
+      </tfoot:>
+    </table>
+  </field-list:>
+  <footer:>
+    <div class="align-center">
+PAGADO CON TARJETA CREDITO<br/><br/>
+NO SE ACEPTAN CAMBIOS SIN CAJA<br/>
+NO SE DEVUELVE EL DINERO
+    </div>
+  </footer:>
+
+</show-page>

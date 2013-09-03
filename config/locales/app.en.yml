@@ -6,11 +6,6 @@ en:
     scan: Scan the products you want to move
     date: Date
 
-  adddiscount: apply
-  addamount: add
-  typediscountsymbol: $
-  product_not_found: No se ha encontrado el producto
-
   placeholder:
     discounts: Discounts
 
@@ -166,6 +161,8 @@ en:
       back_to_pending_day_sales: 'Back to pending day sales'
     show:
       print_invoice: Print Invoice
+      print_ticket: Print Ticket
+      ticket: Ticket
       print: Print
       invoice: Invoice
   warehouse:

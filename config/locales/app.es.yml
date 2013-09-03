@@ -16,11 +16,6 @@ es:
     scan: Escanea los productos que quieras trasladar(uno por linea)
     date: Fecha
 
-  adddiscount: aplicar
-  addamount: añadir
-  typediscountsymbol: €
-  product_not_found: No se ha encontrado el producto
-
   placeholder:
     discounts: Descuentos
 
@@ -209,6 +204,8 @@ es:
       back_to_pending_day_sales: 'Volver a ventas del día pendientes'
     show:
       print_invoice: Imprimir Factura
+      print_ticket: Imprimir Ticket
+      ticket: Ticket
       print: Imprimir
       invoice: Factura
   warehouse:

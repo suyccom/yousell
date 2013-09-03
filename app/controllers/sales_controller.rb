@@ -93,11 +93,20 @@ class SalesController < ApplicationController
   def show
     hobo_show do
       if request.format.pdf?
-        render :pdf => I18n.t('sale.show.invoice'), 
-          :show_as_html => params[:debug].present?, 
-          :encoding => 'UTF-8',
-          :disable_javascript => true,
-          :use_xserver => true
+        if params[:ticket]
+          render :pdf => I18n.t('sale.show.ticket'), 
+            :show_as_html => params[:debug].present?, 
+            :encoding => 'UTF-8',
+            :disable_javascript => true,
+            :use_xserver => true,
+            :template => 'sales/ticket.pdf.dryml'
+        else
+          render :pdf => I18n.t('sale.show.invoice'), 
+            :show_as_html => params[:debug].present?, 
+            :encoding => 'UTF-8',
+            :disable_javascript => true,
+            :use_xserver => true
+        end
       end
     end
   end
