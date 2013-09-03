@@ -4,6 +4,7 @@ en:
     from: "FROM:"
     to: "TO:"
     scan: Scan the products you want to move
+    date: Date
 
   date: Date
   adddiscount: apply
@@ -141,6 +142,7 @@ en:
       heading: Add products
 
   sale:
+    new_sale: New sale
     cancel: Cancel
     are_you_sure: Are you sure?
     nav_item: Sales
@@ -149,6 +151,9 @@ en:
     pending_day_sales_title: Pending day sales
     pending_day_sales: "There are %{count} day(s) with pending day sales to be checked"
     no_pending_day_sales: No pending day sales to be checked
+    pending_sales_title: Pending sales
+    pending_sales: "There are %{count} pending day sales to be checked"
+    no_pending_sales: No pending sales to be checked
     barcode: Barcode
     search: Search
     actions:
@@ -162,6 +167,8 @@ en:
       back_to_pending_day_sales: 'Back to pending day sales'
     show:
       print_invoice: Print Invoice
+      print_ticket: Print Ticket
+      ticket: Ticket
       print: Print
       invoice: Invoice
   warehouse:
