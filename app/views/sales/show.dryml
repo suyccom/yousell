@@ -1,6 +1,7 @@
 <show-page without-edit-link without-record-flags>
   <before-heading:>
     <print-invoice/>
+    <print-ticket/>
   </before-heading:>
   <field-list: fields="sale_total, total_discount, type_discount, refunded_ticket"/>
   <collection: replace>
@@ -35,5 +36,9 @@
   <modal-open-button class="pull-right" modal="print-invoice-modal">
     <i class="icon-print"></i> <t key="sale.show.print_invoice"/>
   </modal-open-button>
+</def>
+
+<def tag="print-ticket">
+  <a class="btn pull-right" style="margin-right:2%" href="/sales/#{this.id}.pdf?ticket=true" name="ticket"><i class="icon-print"></i> <t key="sale.show.print_ticket"/></a>
 </def>
 

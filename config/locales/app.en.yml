@@ -162,6 +162,8 @@ en:
       back_to_pending_day_sales: 'Back to pending day sales'
     show:
       print_invoice: Print Invoice
+      print_ticket: Print Ticket
+      ticket: Ticket
       print: Print
       invoice: Invoice
   warehouse:
