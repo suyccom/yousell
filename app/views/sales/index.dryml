@@ -10,11 +10,6 @@
       <span class='label label-important'>
         <t key='sale.pending_day_sales' count='&@day_sales_count.to_s'/>
       </span>
-    </a><br/>
-    <a href='/pending_sales' class='success' if='&@sales_count > 0'>
-      <span class='label label-important'>
-        <t key='sale.pending_sales' count='&@sales_count.to_s'/>
-      </span>
     </a>
     <% else %>
     <h2>

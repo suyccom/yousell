@@ -104,16 +104,45 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     page.should have_css('.label.label-important')
     click_on('There are 1 day(s) with pending day sales to be checked')
 
+    # The admin travels in time and creates another Day sale
+    # (we need another Day sale at a day to test the next feature)
+    Timecop.travel(Date.today + 1.day)
+    click_on('Sell')
+    page.should_not have_css('tr.line')
+
+    # Adds a product
+    within '#add-product-form' do
+      fill_in('barcode', :with => @product1.barcode)
+      click_on('+')
+    end
+    page.should have_css('tr.line:nth-child(1)')
+    page.find('tr.line:nth-child(1)').should have_content(@product1.name)
+    page.should have_content('$15.00')
+
+    # Clicks on 'day sale' and completes the sale
+    page.find('#day_sale_button').click
+    click_on('Complete Sale')
+    page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
+
+    # Goes to the pending day_sales view
+    click_on('Administration')
+    click_on('Sales')
+    page.should have_css('.label.label-important')
+    click_on('There are 2 day(s) with pending day sales to be checked')
+
     # Can see all the 'day_sales' of a specific day
     page.find('td.completed-at-date-view:first a').click
     page.should have_content(Date.today.strftime('%Y-%m-%d'))
+    page.should have_css('tr.sale', :count => 1)
 
     # Can delete pending 'day sales' on 'day_sales index'
     click_on ('Back to pending day sales')
-    page.should have_css('tr.sale:nth-child(1)')
-#    imanol comments this line because i have tryed 100 times  and the test works right in local but in abeja the test fail always.
-#    page.find('tr.sale:nth-child(1)').should have_content(Date.today.strftime('%d-%m-%Y'))
+    page.find('tr.sale:nth-child(1)').should have_content(Sale.first.created_at.to_date.strftime('%Y-%m-%d'))
     page.find('tr.sale:nth-child(1)').should have_content("31")
+    page.find('td.controls a i.icon-trash').click
+    page.driver.browser.switch_to.alert.accept
+    page.find('tr.sale:nth-child(1)').should have_content(Date.today.strftime('%Y-%m-%d'))
+    page.find('tr.sale:nth-child(1)').should have_content("15")
     page.find('td.controls a i.icon-trash').click
     page.driver.browser.switch_to.alert.accept
     page.should have_content('No pending day sales to be checked')

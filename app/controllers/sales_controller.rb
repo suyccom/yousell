@@ -45,7 +45,7 @@ class SalesController < ApplicationController
     unless params[:completed_at_date]
       hobo_index Sale.complete.not_day_sale
     else
-      hobo_index Sale.complete.day_sale.where(:created_at == params[:completed_at_date].to_date)
+      hobo_index Sale.complete.day_sale.where(['DATE(completed_at) = ?',params[:completed_at_date].to_date])
     end
   end
 
