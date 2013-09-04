@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130823103229) do
+ActiveRecord::Schema.define(:version => 20130902214001) do
 
   create_table "labelsheets", :force => true do |t|
     t.string   "name_printer"
@@ -40,6 +40,12 @@ ActiveRecord::Schema.define(:version => 20130823103229) do
 
   add_index "lines", ["product_id"], :name => "index_lines_on_product_id"
   add_index "lines", ["sale_id"], :name => "index_lines_on_sale_id"
+
+  create_table "payment_methods", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "product_types", :force => true do |t|
     t.string   "name"
