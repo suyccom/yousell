@@ -6,7 +6,7 @@ en:
     scan: Scan the products you want to move
     date: Date
 
-  date: Date
+  pending_day_sales_date: Date
   adddiscount: apply
   addamount: add
   typediscountsymbol: $
@@ -145,14 +145,14 @@ en:
     new_sale: New sale
     cancel: Cancel
     are_you_sure: Are you sure?
-    nav_item: Sales
     refund: Refund
+    nav_item: Sales
     confirm_delete_day_sales: "%{date} day sales will be deleted, ok?"
     pending_day_sales_title: Pending day sales
     pending_day_sales: "There are %{count} day(s) with pending day sales to be checked"
-    no_pending_day_sales: No pending day sales to be checked
-    pending_sales_title: Pending sales
     pending_sales: "There are %{count} pending day sales to be checked"
+    pending_sales_title: Pending sales
+    no_pending_day_sales: No pending day sales to be checked
     no_pending_sales: No pending sales to be checked
     barcode: Barcode
     search: Search

@@ -14,7 +14,7 @@ es:
     from: "DESDE:"
     to: "HASTA:"
     scan: Escanea los productos que quieras trasladar(uno por linea)
-    date: Fecha
+    pending_day_sales_date: Fecha
 
   placeholder:
     discounts: Descuentos
