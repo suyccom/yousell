@@ -35,7 +35,7 @@ feature 'The admin wants to manage products', :driver => :selenium do
     click_on 'Save'
     page.should have_css('tr.product', :count => 2)
     page.find('tr.product:nth-child(1) .this-view').should have_content 'SuperZapas 300 35 red woman'
-    page.find('tr.product:nth-child(1) .amount-view').should have_content '0: SuperShop 0 , Deusto 0'
+    page.find('tr.product:nth-child(1) .amount-view').should have_content '0: SuperShop 0, Deusto 0'
     page.find('tr.product:nth-child(1) .barcode-view').should have_content 'SZW0300RED35'
     
     # Edits the product price
@@ -54,7 +54,7 @@ feature 'The admin wants to manage products', :driver => :selenium do
     click_on 'Stock'
     page.should have_css('tr.product', :count => 3)
     page.find('tr.product:nth-child(3) .this-view').should have_content 'SuperZapas 300 37 green woman'
-    page.find('tr.product:nth-child(1) .amount-view').should have_content '0: SuperShop 0 , Deusto 0'
+    page.find('tr.product:nth-child(1) .amount-view').should have_content '0: SuperShop 0, Deusto 0'
     
     # The admin adds one unit of a product that already exists in the DB (it should be summed)
     click_on 'Add products'
@@ -65,7 +65,7 @@ feature 'The admin wants to manage products', :driver => :selenium do
     click_on 'Stock'
     page.should have_css('tr.product', :count => 3)
     page.find('tr.product:nth-child(3) .this-view').should have_content 'SuperZapas 300 37 green woman'
-    page.find('tr.product:nth-child(3) .amount-view').should have_content '0: SuperShop 0 , Deusto 0'
+    page.find('tr.product:nth-child(3) .amount-view').should have_content '0: SuperShop 0, Deusto 0'
     
     # The admin changes the price to two products at the same time
     page.find('tr.product:nth-child(1) .price-view').should have_content '20.00'
