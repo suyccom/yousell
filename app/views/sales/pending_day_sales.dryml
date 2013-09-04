@@ -10,7 +10,7 @@
       <completed-at-date-heading:><t key='pending_day_sales_date'/></completed-at-date-heading:>
       <completed-at-date-view:>
         <a href="/sales?completed_at_date=#{this}">
-          <%= Date.parse(this) %>
+          <%= l Date.parse(this) %>
         </a>
       </completed-at-date-view:>
       <sale-total-sum-heading:>Total</sale-total-sum-heading:>
