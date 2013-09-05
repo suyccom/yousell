@@ -113,7 +113,8 @@ class Product < ActiveRecord::Base
         string += product_variation ? product_variation.code : ('X' * piece[:chars])
       when :code
         # What format have this? If it can be F000, 1000, 100, 300Z, 6000X, etc... Why dont have this field as wildcard and all that user puts here save it in our database 
-        string += "%0#{piece[:chars]}d" % product_type.name.to_i unless product_type.name.blank?
+        zero_amount = piece[:chars] - product_type.name.size
+        string += "0" * zero_amount + product_type.name unless product_type.name.blank?
       end
     end
     return string
