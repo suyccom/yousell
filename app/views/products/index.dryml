@@ -21,10 +21,7 @@
         <check-view:><input type="checkbox" name="product_check[]" value="&this_parent.id"/></check-view:>
         <check-heading:></check-heading:>
         <amount-view:>
-          <div part="part-w">
-            <this/>: <repeat with="&this_parent.product_warehouses" join=", "><this.warehouse/>
-              <click-editor-innards:amount updates="#part-w"/></repeat>
-          </div>
+          <this/>: <repeat with="&this_parent.product_warehouses" join=", "><this.warehouse/> <this.amount/></repeat>
         </amount-view:>
         <price-view:><currency/></price-view:>
         <actions-view:><bootstrap-table-actions/></actions-view:>
