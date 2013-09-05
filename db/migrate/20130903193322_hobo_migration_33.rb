@@ -1,4 +1,4 @@
-class HoboMigration32 < ActiveRecord::Migration
+class HoboMigration33 < ActiveRecord::Migration
   def self.up
     create_table :vouchers do |t|
       t.date     :validity_period
