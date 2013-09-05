@@ -19,6 +19,8 @@ class Sale < ActiveRecord::Base
   attr_accessible :lines, :complete, :day_sale, :total_discount, :type_discount, 
     :sale_total, :client_name, :tax_number, :address, :zip_code, :city
 
+  # --- Relations --- #
+  has_many :payments
   has_many :lines
   children :lines
   belongs_to :refunded_ticket, :class_name => 'Sale'

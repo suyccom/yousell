@@ -53,6 +53,15 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     page.should have_css 'tr.line', :count => 2
     page.driver.browser.switch_to.alert.accept
 
+    # Selects a Payment Method (TODO: model and test are ready, but we need change views and controllers yet)
+    #click_on('Cash') 
+    #page.driver.brower.switch_to.confirm.accept #Here we should check that the ammount in the alert is correct
+    #page.should have_css('.cash-button .pushed') #This means: the button should be push after accept
+    #
+    # Notes: 
+    ## PaymentMethods need to be links/anchors because if they are buttons a submit action is done :(
+    ## This is a first simple scenario working version. Afterwards we should check a more complex one (multiple payment methods, edition of the payment amount on each method, cancel a payment method, etc).
+
     click_on('Complete Sale')
     page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
     # Check that the amount in stock has been reduced
