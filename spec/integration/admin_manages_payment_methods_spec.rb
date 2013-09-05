@@ -5,6 +5,7 @@ require 'spec_helper'
 feature 'The admin manages different kinds of payment methods:', :driver => :selenium do
 
   before do
+    PaymentMethod.delete_all # We need to empty this table to avoid collisions with admin_makes_a_sale_spec.rb
     User.current_user = User.last
     login
   end

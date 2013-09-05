@@ -52,6 +52,8 @@ en:
         current_password: Current password
         password_confirmation: Confirm password
         email_address: Email address
+      payment_method:
+        PaymentMethod: Payment Method
       warehouse:
         Warehouse: Warehouse
         actions: Actions

@@ -73,6 +73,13 @@
       <tfoot:><total-row with="&this.first.sale" if="&this.first"/></tfoot:>
     </table>
   </div>
+  <if test='&PaymentMethod.count > 0'>
+    <div class='row'>
+      <repeat with='&PaymentMethod.all'>
+        <button class='span2 btn btn-large'><this/></button>
+      </repeat>
+    </div>
+  </if>
 </def>
 
 <def tag="total-row">

@@ -1,15 +1,16 @@
-class PaymentMethod < ActiveRecord::Base
+class Payment < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
 
   fields do
-    name :string, :unique
+    ammount :decimal, :precision => 8, :scale => 2, :default => 0
     timestamps
   end
-  attr_accessible :name
+  attr_accessible :ammount
 
   # --- Relations --- #
-  has_many :payments
+  belongs_to :sale
+  belongs_to :payment_method
 
   # --- Permissions --- #
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130903193322) do
+ActiveRecord::Schema.define(:version => 20130905095523) do
 
   create_table "labelsheets", :force => true do |t|
     t.string   "name_printer"
@@ -46,6 +46,17 @@ ActiveRecord::Schema.define(:version => 20130903193322) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "payments", :force => true do |t|
+    t.decimal  "ammount",           :precision => 8, :scale => 2, :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "sale_id"
+    t.integer  "payment_method_id"
+  end
+
+  add_index "payments", ["payment_method_id"], :name => "index_payments_on_payment_method_id"
+  add_index "payments", ["sale_id"], :name => "index_payments_on_sale_id"
 
   create_table "product_types", :force => true do |t|
     t.string   "name"
