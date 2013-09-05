@@ -179,6 +179,8 @@ es:
       create: Guardar
     new:
       heading: Añadir productos
+  voucher:
+    nav_item: Vales de descuento
   sale:
     new_sale: Nueva venta
     cancel: Cancelar

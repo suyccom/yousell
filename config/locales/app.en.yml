@@ -140,6 +140,8 @@ en:
       create: Save
     new:
       heading: Add products
+  voucher:
+    nav_item: Vouchers
 
   sale:
     new_sale: New sale
