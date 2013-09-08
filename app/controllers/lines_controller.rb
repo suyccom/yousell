@@ -27,11 +27,11 @@ class LinesController < ApplicationController
     # If there is only one unit, destroy the line!
     params[:line] ||= {}
     if params[:minus]
-      @line.amount == 1 ? destroy = true : params[:line][:amount] = @line.amount - 1
+      params[:line][:amount] = @line.amount - 1
     elsif params[:sum]
       params[:line][:amount] = @line.amount + 1
     end
-    if destroy
+    if params[:destroy]
       @line.destroy
       hobo_ajax_response
     else
