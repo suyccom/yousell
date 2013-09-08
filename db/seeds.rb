@@ -31,5 +31,9 @@ def clear_tables_and_create_admin
   type.variation_values << VariationValue.new(:name => "woman", :code => "W")
   type.variation_values << VariationValue.new(:name => "man", :code => "M")
   type.save
+
+  # Create some PaymentMethods
+  PaymentMethod.create(:name => 'Cash')
+  PaymentMethod.create(:name => 'Credit Card')
   
 end
