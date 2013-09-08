@@ -92,6 +92,7 @@ en:
         code: Code
         actions: Actions
       line:
+        remove: Remove
         name: Name
         amount: Amount
         price: Price

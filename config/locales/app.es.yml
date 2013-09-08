@@ -121,6 +121,7 @@ es:
         code: Código
         actions: Acciones
       line:
+        remove: Borrar
         name: Nombre
         amount: Cantidad
         price: Precio
