@@ -1,5 +1,5 @@
 <new-page title="&t('sale.actions.new', :default => 'Sale')" without-heading>
-  <content: with-flash-messages="&false"/>
+  <content: with-flash-messages='&false'/>
   <form: replace>
     <add-line-form/>
     <day-sale-formlet/>
@@ -7,33 +7,32 @@
   </form:>
 </new-page>
 
-<def tag="day-sale-formlet">
-  <div part="day-sale-formlet">
-    <formlet updates="#lines, #day-sale-formlet" class="pull-left">
+<def tag='day-sale-formlet'>
+  <div part='day-sale-formlet'>
+    <formlet updates='#lines, #day-sale-formlet' class='pull-left'>
       <% value = this.day_sale ? false : true %>
-      <input id='day_sale_hidden' type="hidden" name='sale[day_sale]' value="#{value}"/>
-      <input id="submit_day_sale" type="submit" class="hide"/>
+      <input id='day_sale_hidden' type='hidden' name='sale[day_sale]' value="#{value}"/>
+      <input id='submit_day_sale' type='submit' class='hide'/>
     </formlet>
   </div>
 </def>
 
-<def tag="aparcar">
-  <a href="/pending_sales" class="btn btn-large btn-info pull-right">Aparcar</a>
+<def tag='save-sale'>
+  <a href='/pending_sales' class='btn btn-large btn-info pull-right'><t key='sale.save'/></a>
 </def>
 
-<def tag="add-line-form">
-
-  <form with="&this.lines.new" updates="#lines,#total" refocus-form reset-form>
-    <div id="add-product-form" part="add-product-form">
+<def tag='add-line-form'>
+  <form with='&this.lines.new' updates='#lines,#total' refocus-form reset-form>
+    <div id='add-product-form' part='add-product-form'>
       <flash-messages/>
-      <div class="form-inline well">
-        <div class="row-fluid">
-          <div class="span11">
-            <input type="text" placeholder="&t('sale.barcode', :default => 'Barcode')" name="barcode" class="span6" autofocus/>&nbsp;
-            <name-one:product placeholder="&t('sale.search', :default => 'Search')" name="search" autocomplete="off" class="span6"/>
+      <div class='form-inline well'>
+        <div class='row-fluid'>
+          <div class='span11'>
+            <input type='text' placeholder="&t('sale.barcode', :default => 'Barcode')" name='barcode' class='span6' autofocus/>&nbsp;
+            <name-one:product placeholder="&t('sale.search', :default => 'Search')" name='search' autocomplete='off' class='span6'/>
           </div>
-          <div class="span1">
-            <button type="submit" class="btn">+</button>
+          <div class='span1'>
+            <button type='submit' class='btn'>+</button>
           </div>
         </div>
       </div>
@@ -41,7 +40,7 @@
   </form>
 </def>
 
-<def tag="complete-sale-form">
+<def tag='complete-sale-form'>
   <form without-cancel>
     <field-list: replace>
       <lines/>
@@ -49,144 +48,177 @@
     <submit: replace>
       <input type='hidden' name='sale[complete]' value='true'/>
       <div class='row'>
-        <div class="span8 offset1">
-          <submit id="complete-sale-button" class="btn-large btn-success span8" restore/>
+        <div class='span8'>
+          <submit id='complete-sale-button' class='btn-large btn-success span8' restore/>
         </div>
-        <div class="span2">
-          <aparcar/>
+        <div class='span3'>
+          <save-sale/>
         </div>
       </div>
     </submit:>
   </form>
 </def>
 
-<def tag="lines">
-  <div part="lines">
-    <!-- We use reload here in order to get the lines fresh from the DB. 
-    If not, the new line form adds one additional empty line to the array -->
-    <table:lines.reload class="table table-striped table-bordered collection" fields="name, amount, discount, price, type-discount">
-      <price-view:><currency/></price-view:>
-      <amount-view:><line-amount-controls/></amount-view:>
-      <discount-view:><line-discount-controls/></discount-view:>
-      <type-discount-heading:><t key="activerecord.attributes.line.remove"/></type-discount-heading:>
-      <type-discount-view:>
-        <ajax-button name="destroy" icon="remove" id="&this_parent.id"/>
-      </type-discount-view:>
-      <tfoot:><total-row with="&this.first.sale" if="&this.first"/></tfoot:>
-    </table>
-  </div>
+<def tag='payment-buttons'>
   <if test='&PaymentMethod.count > 0'>
-    <div class='row'>
+    <div part='payment-buttons' class='text-right'>
+      <span part='payment-register-message'>
+        <unless test='&this.lines.empty?'>
+          <if test='&this.pending_amount > 0'>
+            <span class='text-error'><strong><t key='sale.messages.pending'/><currency with='&this.pending_amount'/></strong></span>
+          </if>
+          <if test='&this.pending_amount < 0'>
+            <span class='text-info'><strong><t key='sale.messages.return'/><currency with='&this.pending_amount.abs'/></strong></span>
+          </if>
+          <if test='&this.pending_amount == 0'>
+            <span class='text-success'><strong><t key='sales.messages.matches'/></strong></span>
+          </if>
+        </unless>
+      </span>
       <repeat with='&PaymentMethod.all'>
-        <button class='span2 btn btn-large'><this/></button>
+        <modal-open-button id='#{this.name}' modal='payment-modal' class='btn btn-large payment-method' data-method-id='#{this.id}'>
+          <if test='&@sale.payments.where(:payment_method_id => this.id)'>
+            <this/><br/><currency with='&@sale.payments.where(:payment_method_id => this.id).sum(:amount)'/>
+          </if>
+          <else>
+            <this/>
+          </else>
+        </modal-open-button>
       </repeat>
     </div>
   </if>
+  <modal>
+    <modal: id='payment-modal'>
+      <formlet action='/payments/at_sale' updates='#payment-buttons,#payment-register-message' 
+        complete="$('#payment-modal').modal('hide')">
+        <modal-header id='modal-header'/>
+        <div class='modal-body'>
+          <input type='text' name='payment_amount' value='' placeholder='0'/>
+          <input type='hidden' name='payment_method_id' value=''/>
+          <input type='hidden' name='payment_sale_id' value='&@sale.id'/>
+        </div>
+        <modal-form-footer/>
+      </formlet>
+    </modal:>
+  </modal>
 </def>
 
-<def tag="total-row">
+<def tag='lines'>
+  <div part='lines'>
+    <!-- We use reload here in order to get the lines fresh from the DB. 
+    If not, the new line form adds one additional empty line to the array -->
+    <table:lines.reload class='table table-striped table-bordered collection' fields='name, amount, discount, price, type-discount'>
+      <price-view:><currency/></price-view:>
+      <amount-view:><line-amount-controls/></amount-view:>
+      <discount-view:><line-discount-controls/></discount-view:>
+      <type-discount-heading:><t key='activerecord.attributes.line.remove'/></type-discount-heading:>
+      <type-discount-view:>
+        <ajax-button name='destroy' icon='remove' id='&this_parent.id'/>
+      </type-discount-view:>
+      <tfoot:><total-row with='&this.first.sale' if='&this.first'/></tfoot:>
+    </table>
+  </div>
+  <payment-buttons/>
+</def>
+
+<def tag='total-row'>
   <tr>
     <th>Total</th>
     <th></th>
     <th><total-discount/></th>
     <th>
-      <a href="#" onclick="$('#submit_day_sale').click(); return false;" 
+      <a href='#' onclick="$('#submit_day_sale').click(); return false;" 
          id='day_sale_button' type='button' class="btn btn-large btn-info #{'active' if this.day_sale}">
-         <i if="&this.day_sale" class="icon-white icon-ok"></i><strong><currency:total/></strong>
+         <i if='&this.day_sale' class='icon-white icon-ok'></i><strong><currency:total/></strong>
       </a>
     </th>
-    <th></th>
   </tr>
 </def>
 
-<def tag="total-discount">
-  <div class="btn-group discount-group">
-    <div part="total-discount-part" class="pull-left discount-button">
-      <click-editor-innards:total-discount updates="#lines">
+<def tag='total-discount'>
+  <div class='btn-group discount-group'>
+    <div part='total-discount-part' class='pull-left discount-button'>
+      <click-editor-innards:total-discount updates='#lines'>
         <view: replace>
-          <span data-rapid="{&quot;click-editor&quot;:{}}" 
-                class="in-place-edit btn view total-discount" 
-                style="display: inline-block;">
-            <this/><if test="&this > 0"> <%= this_parent.type_discount %></if>
+          <span data-rapid='{&quot;click-editor&quot;:{}}' 
+                class='in-place-edit btn view total-discount' 
+                style='display: inline-block;'>
+            <this/><if test='&this > 0'> <%= this_parent.type_discount %></if>
           </span>
         </view:>
       </click-editor-innards>
     </div>
-    <button class="btn dropdown-toggle" data-toggle="dropdown">
-      <span class="caret"></span>
+    <button class='btn dropdown-toggle' data-toggle='dropdown'>
+      <span class='caret'></span>
     </button>
-    <ul class="dropdown-menu">
+    <ul class='dropdown-menu'>
       <li>
-        <formlet updates="#lines" class="pull-left">
-          <input type="hidden" name="sale[type_discount]" value="%"/>
-          <input id="submit_percentage_total" type="submit" value="%" class="hide"/>
+        <formlet updates='#lines' class='pull-left'>
+          <input type='hidden' name='sale[type_discount]' value='%'/>
+          <input id='submit_percentage_total' type='submit' value='%' class='hide'/>
         </formlet>
-        <a href="#" onclick="$('#submit_percentage_total').click(); return false;">%</a>
+        <a href='#' onclick="$('#submit_percentage_total').click(); return false;">%</a>
       </li>
       <li>
-        <formlet updates="#lines" class="pull-left">
-          <input type="hidden" name="sale[type_discount]" value="€"/>
-          <input id="submit_euro_total" type="submit" value="€" class="hide"/>
+        <formlet updates='#lines' class='pull-left'>
+          <input type='hidden' name='sale[type_discount]' value='€'/>
+          <input id='submit_euro_total' type='submit' value='€' class='hide'/>
         </formlet>
-        <a href="#" onclick="$('#submit_euro_total').click(); return false;">€</a>
+        <a href='#' onclick="$('#submit_euro_total').click(); return false;">€</a>
       </li>
     </ul>
   </div>
 </def>
 
-
-<def tag="line-amount-controls">
-  <ajax-button name="minus" icon="minus" id="&this_parent.id"/>
-  <div part="amount-part" class="pull-left amount-button">
+<def tag='line-amount-controls'>
+  <ajax-button name='minus' icon='minus' id='&this_parent.id'/>
+  <div part='amount-part' class='pull-left amount-button'>
     <click-editor-innards>
-      <view: class="btn" />
+      <view: class='btn' />
     </click-editor-innards>
   </div>
-  <ajax-button name="sum" icon="plus" id="&this_parent.id"/>
+  <ajax-button name='sum' icon='plus' id='&this_parent.id'/>
 </def>
 
-<def tag="ajax-button" attrs="id, name, icon">
-  <formlet with="&this_parent" updates="#lines" class="pull-left">
-    <input type="hidden" name="#{name}" value="true"/>
-    <label for="input-#{name}-#{id}" class="btn"><i class="icon-#{icon}"></i></label>
-    <input id="input-#{name}-#{id}" type="submit" value="Go" class="hide" />
+<def tag='ajax-button' attrs='id, name, icon'>
+  <formlet with='&this_parent' updates='#lines' class='pull-left'>
+    <input type='hidden' name="#{name}" value='true'/>
+    <label for="input-#{name}-#{id}" class='btn'><i class="icon-#{icon}"></i></label>
+    <input id="input-#{name}-#{id}" type='submit' value='Go' class='hide' />
   </formlet>
 </def>
 
-<def tag="line-discount-controls">
-  <div class="btn-group discount-group">
-    <div part="discount-part" class="pull-left discount-button">
-      <click-editor-innards updates="#lines">
+<def tag='line-discount-controls'>
+  <div class='btn-group discount-group'>
+    <div part='discount-part' class='pull-left discount-button'>
+      <click-editor-innards updates='#lines'>
         <view: replace>
-          <span data-rapid="{&quot;click-editor&quot;:{}}" 
-                class="in-place-edit btn view line-discount" 
-                style="display: inline-block;">
-            <this/><if test="&this > 0"> <%= this_parent.type_discount %></if>
+          <span data-rapid='{&quot;click-editor&quot;:{}}' 
+                class='in-place-edit btn view line-discount' 
+                style='display: inline-block;'>
+            <this/><if test='&this > 0'> <%= this_parent.type_discount %></if>
           </span>
         </view:>
       </click-editor-innards>
     </div>
-    <button class="btn dropdown-toggle" data-toggle="dropdown">
-      <span class="caret"></span>
+    <button class='btn dropdown-toggle' data-toggle='dropdown'>
+      <span class='caret'></span>
     </button>
-    <ul class="dropdown-menu">
+    <ul class='dropdown-menu'>
       <li>
-        <formlet with="&this_parent" updates="#lines" class="pull-left">
-          <input type="hidden" name="line[type_discount]" value="%"/>
-          <input id="submit_percentage-#{this.id}" type="submit" value="%" class="hide"/>
+        <formlet with='&this_parent' updates='#lines' class='pull-left'>
+          <input type='hidden' name='line[type_discount]' value='%'/>
+          <input id="submit_percentage-#{this.id}" type='submit' value='%' class='hide'/>
         </formlet>
-        <a href="#" onclick="$('#submit_percentage-#{this_parent.id}').click(); return false;">%</a>
+        <a href='#' onclick="$('#submit_percentage-#{this_parent.id}').click(); return false;">%</a>
       </li>
       <li>
-        <formlet with="&this_parent" updates="#lines" class="pull-left">
-          <input type="hidden" name="line[type_discount]" value="€"/>
-          <input id="submit_euro-#{this.id}" type="submit" value="€" class="hide"/>
+        <formlet with='&this_parent' updates='#lines' class='pull-left'>
+          <input type='hidden' name='line[type_discount]' value='€'/>
+          <input id="submit_euro-#{this.id}" type='submit' value='€' class='hide'/>
         </formlet>
-        <a href="#" onclick="$('#submit_euro-#{this_parent.id}').click(); return false;">€</a>
+        <a href='#' onclick="$('#submit_euro-#{this_parent.id}').click(); return false;">€</a>
       </li>
     </ul>
   </div>
 </def>
-
-
-

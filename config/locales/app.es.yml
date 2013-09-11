@@ -183,6 +183,7 @@ es:
   voucher:
     nav_item: Vales de descuento
   sale:
+    save: Aparcar y una nueva
     new_sale: Nueva venta
     cancel: Cancelar
     are_you_sure: ¿Estás seguro de querer cancelar esta venta?
@@ -200,6 +201,10 @@ es:
       new: Vender
       save: Efectuar Venta
     messages:
+      pending_amount: "No se puede completar la venta porque hay una cantidad pendiente de pago"
+      pending: 'Pendiente: '
+      return: 'Devolver: '
+      matches: 'Los pagos equivalen al total'
       create:
         success: "La venta %{href} se ha efectuado con éxito"
     index:
