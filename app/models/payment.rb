@@ -3,10 +3,10 @@ class Payment < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    ammount :decimal, :precision => 8, :scale => 2, :default => 0
+    amount :decimal, :precision => 8, :scale => 2, :default => 0
     timestamps
   end
-  attr_accessible :ammount
+  attr_accessible :amount, :sale_id, :payment_method_id
 
   # --- Relations --- #
   belongs_to :sale

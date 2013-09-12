@@ -5,6 +5,8 @@ class HoboMigration32 < ActiveRecord::Migration
       t.datetime :created_at
       t.datetime :updated_at
     end
+    PaymentMethod.create(:name => "Cash")
+    PaymentMethod.create(:name => "Credit Card")
   end
 
   def self.down

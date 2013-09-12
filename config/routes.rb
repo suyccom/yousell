@@ -13,19 +13,22 @@ Yousell::Application.routes.draw do
   
   match 'sales/:id/cancel' => 'sales#cancel'
 
-  # Products routes
+  # Products
   match 'products/:id/product_labels' => 'products#product_labels'
   match 'products/last_products_labels' => 'products#last_products_labels'
   match 'products/change_price' => 'products#change_price'
   match 'product_types/new_from_barcode' => 'product_types#new_from_barcode'
   match 'product_types/transfer' => 'product_types#transfer'
 
-  # Pending day sales routes
+  # Pending day sales
   match 'pending_day_sales' => 'sales#pending_day_sales'
   match 'pending_day_sales/:sales_date' => 'sales#destroy_pending_day_sales'
   match 'pending_sales' => 'sales#pending_sales'
   match 'pending_sales/:sales_id' => 'sales#destroy_pending_sales'
   match 'sales/new_sale' => 'sales#new_sale'
+
+  # Payments
+  match 'payments/at_sale' => 'payments#at_sale'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -20,20 +20,25 @@ class SalesController < ApplicationController
   def new_sale
     @sale = Sale.create
     session[:active_sale_id] = @sale.id
-    redirect_to '/'
+    redirect_to('/')
   end
 
   def update
-    hobo_update do
-      flash[:notice] = I18n.t("sale.messages.create.success", 
-      :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
-               "/sales/#{Sale.find(params[:id]).id}")).html_safe
-      if request.xhr?
-        hobo_ajax_response
-      elsif params[:sale][:client_name]
-        redirect_to "/sales/#{@sale.id}.pdf"
-      else
-        redirect_to '/'
+    if params[:payment_sale_id] && Sale.find(params[:payment_sale_id]).pending_amount > 0
+      flash[:error] = I18n.t('sale.messages.pending_amount')
+      redirect_to('/')
+    else
+      hobo_update do
+        flash[:notice] = I18n.t('sale.messages.create.success', 
+        :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
+                 "/sales/#{Sale.find(params[:id]).id}")).html_safe
+        if request.xhr?
+          hobo_ajax_response
+        elsif params[:sale][:client_name]
+          redirect_to("/sales/#{@sale.id}.pdf")
+        else
+          redirect_to('/')
+        end
       end
     end
   end
