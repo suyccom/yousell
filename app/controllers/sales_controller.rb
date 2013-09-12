@@ -24,7 +24,7 @@ class SalesController < ApplicationController
   end
 
   def update
-    if Sale.find(params[:payment_sale_id]).pending_amount > 0
+    if params[:payment_sale_id] && Sale.find(params[:payment_sale_id]).pending_amount > 0
       flash[:error] = I18n.t('sale.messages.pending_amount')
       redirect_to('/')
     else

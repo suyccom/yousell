@@ -135,6 +135,14 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     page.should have_content('$31.00')
     page.find('#day_sale_button').click
 
+    # ... create a payment
+    click_on('Credit Card')
+    within('#payment-modal') do
+      find_field("payment_amount").value.should == ''
+      fill_in("payment_amount", :with => 31)
+      click_on('Submit')
+    end
+
     # ...and completes the sale
     click_on('Complete Sale')
     page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
@@ -144,10 +152,6 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     click_on('Sales')
     page.should have_css('.label.label-important')
     click_on('There are 1 day(s) with pending day sales to be checked')
-
-    # The admin travels in time and creates another Day sale
-    # (we need another Day sale at a day to test the next feature)
-    Timecop.travel(Date.today + 1.day)
     click_on('Sell')
     page.should_not have_css('tr.line')
 
@@ -160,10 +164,19 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     page.find('tr.line:nth-child(1)').should have_content(@product1.name)
     page.should have_content('$15.00')
 
+    # ... create a payment
+    click_on('Credit Card')
+    within('#payment-modal') do
+      find_field("payment_amount").value.should == ''
+      fill_in("payment_amount", :with => 15)
+      click_on('Submit')
+    end
+
     # Clicks on 'day sale' and completes the sale
     page.find('#day_sale_button').click
     click_on('Complete Sale')
     page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
+    Sale.complete.last.update_attribute(:completed_at, Date.today + 10.days)
 
     # Goes to the pending day_sales view
     click_on('Administration')

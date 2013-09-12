@@ -71,7 +71,7 @@
             <span class='text-info'><strong><t key='sale.messages.return'/><currency with='&this.pending_amount.abs'/></strong></span>
           </if>
           <if test='&this.pending_amount == 0'>
-            <span class='text-success'><strong><t key='sales.messages.matches'/></strong></span>
+            <span class='text-success'><strong><t key='sale.messages.matches'/></strong></span>
           </if>
         </unless>
       </span>
