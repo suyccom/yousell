@@ -147,6 +147,7 @@ en:
     nav_item: Vouchers
 
   sale:
+    save: Save and new one
     new_sale: New sale
     cancel: Cancel
     are_you_sure: Are you sure?
@@ -165,6 +166,10 @@ en:
       new: Sell
       save: Complete Sale
     messages:
+      pending_amount: "The sale can't be completed because there is an amount pending to be paid"
+      pending: 'Pending: '
+      return: 'Return: '
+      matches: 'Payment matches total amount'
       create:
         success: "The sale %{href} has been completed successfully"
     index:

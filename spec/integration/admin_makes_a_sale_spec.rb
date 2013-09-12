@@ -53,15 +53,47 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     page.should have_css 'tr.line', :count => 2
     page.driver.browser.switch_to.alert.accept
 
-    # Selects a Payment Method (TODO: model and test are ready, but we need change views and controllers yet)
-    #click_on('Cash') 
-    #page.driver.brower.switch_to.confirm.accept #Here we should check that the ammount in the alert is correct
-    #page.should have_css('.cash-button .pushed') #This means: the button should be push after accept
-    #
-    # Notes: 
-    ## PaymentMethods need to be links/anchors because if they are buttons a submit action is done :(
-    ## This is a first simple scenario working version. Afterwards we should check a more complex one (multiple payment methods, edition of the payment amount on each method, cancel a payment method, etc).
+    # Selects a Payment Method
+    click_on('Cash') 
+    within('#payment-modal') do
+      fill_in("payment_amount", :with => 10)
+      click_on('Submit')
+    end
+    sleep 1
+    page.find('a#Cash').should have_content('$10.00')
+    page.should have_content("Pending: $37.00")
+    click_on('Complete Sale')
+    page.should have_content("The sale can't be completed because there is an amount pending to be paid")
+    click_on('Cash')
+    within('#payment-modal') do
+      find_field("payment_amount").value.should == ''
+      fill_in("payment_amount", :with => 50)
+      click_on('Submit')
+    end
+    sleep 1
+    Sale.last.payments.size.should eq 1
+    Sale.last.payments.last.payment_method.to_s.should eq 'Cash'
+    Sale.last.payments.last.amount.to_i.should eq 50
+    Sale.last.pending_amount.to_i.should eq -3
+    page.find('a#Cash').should have_content('$50.00')
+    page.should have_content("Return: $3.00")
+    # Admin cancels Cash payment
+    click_on('Cash')
+    click_on('Submit')
+    sleep 1
+    page.find('a#Cash').text.should eq('Cash')
+    Sale.last.payments.size.should eq 0
+    Sale.last.pending_amount.to_i.should eq 47
+    page.should have_content("Pending: $47.00")
+    click_on('Credit Card')
+    within('#payment-modal') do
+      find_field("payment_amount").value.should == ''
+      fill_in("payment_amount", :with => 47)
+      click_on('Submit')
+    end
+    page.should have_content("Payment matches total amount")
 
+    # Complete the sale
     click_on('Complete Sale')
     page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
     # Check that the amount in stock has been reduced
@@ -103,6 +135,14 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     page.should have_content('$31.00')
     page.find('#day_sale_button').click
 
+    # ... create a payment
+    click_on('Credit Card')
+    within('#payment-modal') do
+      find_field("payment_amount").value.should == ''
+      fill_in("payment_amount", :with => 31)
+      click_on('Submit')
+    end
+
     # ...and completes the sale
     click_on('Complete Sale')
     page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
@@ -112,10 +152,6 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     click_on('Sales')
     page.should have_css('.label.label-important')
     click_on('There are 1 day(s) with pending day sales to be checked')
-
-    # The admin travels in time and creates another Day sale
-    # (we need another Day sale at a day to test the next feature)
-    Timecop.travel(Date.today + 1.day)
     click_on('Sell')
     page.should_not have_css('tr.line')
 
@@ -128,10 +164,19 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     page.find('tr.line:nth-child(1)').should have_content(@product1.name)
     page.should have_content('$15.00')
 
+    # ... create a payment
+    click_on('Credit Card')
+    within('#payment-modal') do
+      find_field("payment_amount").value.should == ''
+      fill_in("payment_amount", :with => 15)
+      click_on('Submit')
+    end
+
     # Clicks on 'day sale' and completes the sale
     page.find('#day_sale_button').click
     click_on('Complete Sale')
     page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
+    Sale.complete.last.update_attribute(:completed_at, Date.today + 10.days)
 
     # Goes to the pending day_sales view
     click_on('Administration')

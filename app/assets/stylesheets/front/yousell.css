@@ -21,10 +21,14 @@
 .product ul.input-many .variation-field{
   display: none;
 }
-
-
-
-
+.modal-body input{
+  font-size:5em;
+  height:1em;
+  width:200px;
+}
+.payment-method {
+  margin-left:1em;
+}
 .new-page.sale #add-product-form input {
   font-size: 1.8em;
   height: 1.5em;

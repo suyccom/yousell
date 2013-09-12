@@ -67,6 +67,10 @@ class Sale < ActiveRecord::Base
     end
   end
 
+  def pending_amount
+    return self.total - self.payments.sum(:amount)
+  end
+
   # --- Hooks --- #
   include ActiveModel::Dirty  # http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
   before_save :set_some_attributes
