@@ -44,6 +44,22 @@ feature 'The admin wants to manage products', :driver => :selenium do
     click_on 'Save Product'
     click_on 'Stock'
     page.find('tr.product:nth-child(1) .price-view').should have_content '$20.00'
+    page.find('tr.product:nth-child(1) .barcode-view').should have_content 'SZW0300RED35'
+
+    # The admin change a variation of product and get a new product
+    click_on 'Stock'
+    page.find('tr.product:nth-child(1) .icon-edit').click
+    select '36'
+    click_on 'Save'
+    page.find('tr.product:nth-child(1) .barcode-view').should have_content 'SZW0300RED36'
+    
+    # The admin change a variation of product but the product exist
+    click_on 'Stock'
+    page.find('tr.product:nth-child(1) .icon-edit').click
+    select '37'
+    select 'Green'
+    click_on 'Save'
+    page.should have_content 'El producto ya existe en la base de datos'
 
     # The admin adds one unit of a product using a barcode
     click_on 'Add products'
