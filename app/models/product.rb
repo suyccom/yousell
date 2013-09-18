@@ -48,7 +48,7 @@ class Product < ActiveRecord::Base
   }
 
   # --- Callbacks --- #
-  before_save :set_name
+  before_update :set_name, :set_barcode_if_necessary
   def set_name
     for p in self.product_variations
       if p.value != I18n.t('product.wihout_variation')
@@ -58,8 +58,6 @@ class Product < ActiveRecord::Base
     self.name = "#{provider} #{product_type.name} #{variations}"
   end
 
-
-  before_update :set_barcode_if_necessary
   def set_barcode_if_necessary
     old_barcode = barcode
     new_barcode = calculate_barcode
@@ -69,6 +67,7 @@ class Product < ActiveRecord::Base
     else
       if old_barcode != new_barcode
         errors.add :barcode, "El producto ya existe y no puedes actualizarlo"
+        return false
       end
     end
   end

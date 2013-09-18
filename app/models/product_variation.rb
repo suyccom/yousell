@@ -12,9 +12,13 @@ class ProductVariation < ActiveRecord::Base
   belongs_to :variation
   belongs_to :product
   
-  before_save :save_code
+  before_save :save_code, :touch_product
   def save_code
     self.code = variation.variation_values.name_is(value).first.code
+  end
+
+  def touch_product
+    product.touch
   end
   
   def to_s

@@ -49,19 +49,19 @@ feature 'The admin wants to manage products', :driver => :selenium do
     # The admin change a variation of product and get a new product
     click_on 'Stock'
     page.find('tr.product:nth-child(1) .icon-edit').click
-    select '36'
+    select '37', :from => 'product[product_variations][0][value]'
     click_on 'Save'
-    page.find('tr.product:nth-child(1) .barcode-view').should have_content 'SZW0300RED36'
+    page.should have_content 'Changes to the Product were saved'
     
     # The admin change a variation of product but the product exist
     click_on 'Stock'
     page.find('tr.product:nth-child(1) .icon-edit').click
-    select '37'
-    select 'Green'
+    select '36', :from => 'product[product_variations][0][value]'
     click_on 'Save'
-    page.should have_content 'El producto ya existe en la base de datos'
+    page.should have_content 'El producto ya existe y no puedes actualizarlo'
 
     # The admin adds one unit of a product using a barcode
+    click_on 'Stock'
     click_on 'Add products'
     fill_in 'barcode', :with => 'SZW0300GRE37'
     page.find('.add-product-button').click
@@ -105,7 +105,7 @@ feature 'The admin wants to manage products', :driver => :selenium do
     page.should have_css('tr.product', :count => 2)
 
     # Prints some labels
-    click_on 'SuperZapas 300 35 red woman'
+    click_on 'SuperZapas 300 36 red woman'
     click_on 'Print Labels'
     # a message with no labelsheet defined should appear
     page.should have_content('Please add your labelsheets first. Go to Administration, Labelsheets to add some.')
@@ -124,7 +124,7 @@ feature 'The admin wants to manage products', :driver => :selenium do
     click_on 'Create Labelsheet'
     # finally can print labels
     click_on 'Stock'
-    click_on 'SuperZapas 300 35 red woman'
+    click_on 'SuperZapas 300 36 red woman'
     click_on 'Print Labels'
     fill_in 'empty_cells', :with => '0'
     select 'Brother Apli1285'
