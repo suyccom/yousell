@@ -59,18 +59,19 @@ class Product < ActiveRecord::Base
   end
 
 
-  after_update :set_barcode_if_necessary
+  before_update :set_barcode_if_necessary
   def set_barcode_if_necessary
-    barcode = calculate_barcode
-    product = Product.find_by_barcode(barcode)
-    if product
-      errors.add :barcode, "El producto ya existe y no puedes actualizarlo"
+    old_barcode = barcode
+    new_barcode = calculate_barcode
+    product = Product.find_by_barcode(new_barcode)
+    if product.blank?
+      self.barcode = new_barcode
     else
-      self.update_attribute(:barcode, calculate_barcode)
+      if old_barcode != new_barcode
+        errors.add :barcode, "El producto ya existe y no puedes actualizarlo"
+      end
     end
   end
-  
-  
 
   after_create :set_barcode, :create_product_warehouses
   def set_barcode

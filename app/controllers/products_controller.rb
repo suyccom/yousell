@@ -6,12 +6,6 @@ class ProductsController < ApplicationController
 
   autocomplete
 
-  def update
-    hobo_update do
-      @this.update_attribute(:barcode, @this.calculate_barcode)
-    end
-  end
-
   def generate_labels(empty_cells, products, labelsheet)
     require 'barby'
     require 'barby/barcode/code_93'
