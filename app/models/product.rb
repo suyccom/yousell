@@ -66,7 +66,7 @@ class Product < ActiveRecord::Base
       self.barcode = new_barcode
     else
       if old_barcode != new_barcode
-        errors.add :barcode, "El producto ya existe y no puedes actualizarlo"
+        errors.add :barcode, I18n.t('errors.barcode_in_use')
         return false
       end
     end
