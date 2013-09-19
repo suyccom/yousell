@@ -1,6 +1,6 @@
 en:
   errors:
-    barcode_in_use: The product already exists and you cant update it. 
+    barcode_in_use: The product already exists and you can't update it.
   front:
     transfer: Transfer
     from: "FROM:"
@@ -183,6 +183,7 @@ en:
       ticket: Ticket
       print: Print
       invoice: Invoice
+      payments: Payments
   warehouse:
     filter_all: All the Warehouses
   payment_method:

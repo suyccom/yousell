@@ -10,7 +10,7 @@
 
 es:
   errors:
-    barcode_in_use: El producto ya existe y no puedes actualizarlo. 
+    barcode_in_use: El producto ya existe y no puedes actualizarlo.
   front:
     transfer: Traslado
     from: "DESDE:"
@@ -218,6 +218,7 @@ es:
       ticket: Ticket
       print: Imprimir
       invoice: Factura
+      payments: Pagos
   warehouse:
     filter_all: Todos los Almacenes
   payment_method:
