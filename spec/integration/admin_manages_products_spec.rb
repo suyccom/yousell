@@ -58,7 +58,7 @@ feature 'The admin wants to manage products', :driver => :selenium do
     page.find('tr.product:nth-child(1) .icon-edit').click
     select '36', :from => 'product[product_variations][0][value]'
     click_on 'Save'
-    page.should have_content 'The product already exists and you cant update it.'
+    page.should have_content "The product already exists and you can't update it."
 
 
     # The admin adds one unit of a product using a barcode
