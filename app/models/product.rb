@@ -48,7 +48,7 @@ class Product < ActiveRecord::Base
   }
 
   # --- Callbacks --- #
-  before_save :set_name
+  before_update :set_name, :set_barcode_if_necessary
   def set_name
     for p in self.product_variations
       if p.value != I18n.t('product.wihout_variation')
@@ -56,6 +56,20 @@ class Product < ActiveRecord::Base
       end
     end
     self.name = "#{provider} #{product_type.name} #{variations}"
+  end
+
+  def set_barcode_if_necessary
+    old_barcode = barcode
+    new_barcode = calculate_barcode
+    product = Product.find_by_barcode(new_barcode)
+    if product.blank?
+      self.barcode = new_barcode
+    else
+      if old_barcode != new_barcode
+        errors.add :barcode, I18n.t('errors.barcode_in_use')
+        return false
+      end
+    end
   end
 
   after_create :set_barcode, :create_product_warehouses
