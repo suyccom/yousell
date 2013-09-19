@@ -26,7 +26,7 @@ feature 'The admin manages vouchers:', :driver => :selenium do
     click_on('Create Voucher')
     page.should have_content("Voucher #{Voucher.last.id}")
     # The admin clicks on delete icon (index) and the index just shows one voucher
-    page.find('tr.voucher:nth-child(1) .icon-trash').click
+    page.find('tr.voucher:nth-child(2) .icon-trash').click
     page.driver.browser.switch_to.alert.accept
     page.should_not have_content("Voucher #{Voucher.last.id}")
     # The admin clicks on edit icon and then the admin changes the amount of voucher
