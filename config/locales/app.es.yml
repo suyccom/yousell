@@ -9,6 +9,8 @@
 # please post it to http://hobousers.googlegroups.com. Thank you!
 
 es:
+  errors:
+    barcode_in_use: El producto ya existe y no puedes actualizarlo. 
   front:
     transfer: Traslado
     from: "DESDE:"
