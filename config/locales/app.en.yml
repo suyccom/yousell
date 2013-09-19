@@ -1,4 +1,6 @@
 en:
+  errors:
+    barcode_in_use: The product already exists and you cant update it. 
   front:
     transfer: Transfer
     from: "FROM:"

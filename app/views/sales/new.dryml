@@ -9,7 +9,7 @@
 
 <def tag='day-sale-formlet'>
   <div part='day-sale-formlet'>
-    <formlet updates='#lines, #day-sale-formlet' class='pull-left'>
+    <formlet updates='#lines, #day-sale-formlet,#payment-register-message' class='pull-left'>
       <% value = this.day_sale ? false : true %>
       <input id='day_sale_hidden' type='hidden' name='sale[day_sale]' value="#{value}"/>
       <input id='submit_day_sale' type='submit' class='hide'/>
@@ -22,7 +22,7 @@
 </def>
 
 <def tag='add-line-form'>
-  <form with='&this.lines.new' updates='#lines,#total' refocus-form reset-form>
+  <form with='&this.lines.new' updates='#lines,#total,#payment-register-message' refocus-form reset-form>
     <div id='add-product-form' part='add-product-form'>
       <flash-messages/>
       <div class='form-inline well'>
@@ -77,7 +77,7 @@
       </span>
       <repeat with='&PaymentMethod.all'>
         <modal-open-button id='#{this.name}' modal='payment-modal' class='btn btn-large payment-method' data-method-id='#{this.id}'>
-          <if test='&@sale.payments.where(:payment_method_id => this.id)'>
+          <if test='&@sale.payments.where(:payment_method_id => this.id) && @sale.payments.where(:payment_method_id => this.id).sum(:amount) != 0'>
             <this/><br/><currency with='&@sale.payments.where(:payment_method_id => this.id).sum(:amount)'/>
           </if>
           <else>
@@ -89,7 +89,7 @@
   </if>
   <modal>
     <modal: id='payment-modal'>
-      <formlet action='/payments/at_sale' updates='#payment-buttons,#payment-register-message' 
+      <formlet action='/payments/at_sale' updates='#payment-register-message,#payment-buttons' 
         complete="$('#payment-modal').modal('hide')">
         <modal-header id='modal-header'/>
         <div class='modal-body'>
@@ -138,7 +138,7 @@
 <def tag='total-discount'>
   <div class='btn-group discount-group'>
     <div part='total-discount-part' class='pull-left discount-button'>
-      <click-editor-innards:total-discount updates='#lines'>
+      <click-editor-innards:total-discount updates='#lines,#payment-register-message'>
         <view: replace>
           <span data-rapid='{&quot;click-editor&quot;:{}}' 
                 class='in-place-edit btn view total-discount' 
@@ -153,14 +153,14 @@
     </button>
     <ul class='dropdown-menu'>
       <li>
-        <formlet updates='#lines' class='pull-left'>
+        <formlet updates='#lines, #payment-register-message' class='pull-left'>
           <input type='hidden' name='sale[type_discount]' value='%'/>
           <input id='submit_percentage_total' type='submit' value='%' class='hide'/>
         </formlet>
         <a href='#' onclick="$('#submit_percentage_total').click(); return false;">%</a>
       </li>
       <li>
-        <formlet updates='#lines' class='pull-left'>
+        <formlet updates='#lines, #payment-register-message' class='pull-left'>
           <input type='hidden' name='sale[type_discount]' value='€'/>
           <input id='submit_euro_total' type='submit' value='€' class='hide'/>
         </formlet>
@@ -181,7 +181,7 @@
 </def>
 
 <def tag='ajax-button' attrs='id, name, icon'>
-  <formlet with='&this_parent' updates='#lines' class='pull-left'>
+  <formlet with='&this_parent' updates='#lines,#payment-register-message' class='pull-left'>
     <input type='hidden' name="#{name}" value='true'/>
     <label for="input-#{name}-#{id}" class='btn'><i class="icon-#{icon}"></i></label>
     <input id="input-#{name}-#{id}" type='submit' value='Go' class='hide' />
@@ -191,7 +191,7 @@
 <def tag='line-discount-controls'>
   <div class='btn-group discount-group'>
     <div part='discount-part' class='pull-left discount-button'>
-      <click-editor-innards updates='#lines'>
+      <click-editor-innards updates='#lines,#payment-register-message'>
         <view: replace>
           <span data-rapid='{&quot;click-editor&quot;:{}}' 
                 class='in-place-edit btn view line-discount' 
@@ -206,14 +206,14 @@
     </button>
     <ul class='dropdown-menu'>
       <li>
-        <formlet with='&this_parent' updates='#lines' class='pull-left'>
+        <formlet with='&this_parent' updates='#lines,#payment-register-message' class='pull-left'>
           <input type='hidden' name='line[type_discount]' value='%'/>
           <input id="submit_percentage-#{this.id}" type='submit' value='%' class='hide'/>
         </formlet>
         <a href='#' onclick="$('#submit_percentage-#{this_parent.id}').click(); return false;">%</a>
       </li>
       <li>
-        <formlet with='&this_parent' updates='#lines' class='pull-left'>
+        <formlet with='&this_parent' updates='#lines,#payment-register-message' class='pull-left'>
           <input type='hidden' name='line[type_discount]' value='€'/>
           <input id="submit_euro-#{this.id}" type='submit' value='€' class='hide'/>
         </formlet>
