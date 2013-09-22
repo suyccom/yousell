@@ -17,13 +17,6 @@ class Line < ActiveRecord::Base
 
   validates_presence_of :sale, :product
   
-  validate :check_stock
-  def check_stock
-    if product && product.available_amount < amount
-      errors.add(:amount, I18n.t('activerecord.errors.models.product.attributes.amount.stock'))
-    end
-  end
-
   # --- Hooks --- #
   before_create :copy_product_name
   def copy_product_name
