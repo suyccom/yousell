@@ -146,6 +146,8 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     # ...and completes the sale
     click_on('Complete Sale')
     page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
+    click_on "#{Sale.last.id - 1}"
+    page.should_not have_content('Payments')
 
     # Goes to the pending day_sales view
     click_on('Administration')
