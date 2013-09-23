@@ -11,7 +11,7 @@
     <search-products if="&!params[:last_added]"/>
   </after-content-header:>
   <collection: replace>
-    <form method="POST" action="products/change_price">
+    <form method="POST" action="products/multiple_changes">
       <table-plus without-page-nav without-header fields="check, this, barcode, amount, price, actions">
         <tr: replace>
           <tr restore/>
@@ -25,9 +25,11 @@
         <actions-view:><bootstrap-table-actions/></actions-view:>
       </table-plus>
       <change-price-modal/>
+      <remove-products-modal/>
     </form>
     <print-labels if="&params[:last_added]"/>
     <change-price-button/>
+    <remove-products-button/>
   </collection:>
 </index-page>
 
@@ -125,7 +127,37 @@
 </def>
 
 <def tag="change-price-button">
-  <modal-open-button class="pull-right" modal="change-price-modal">
+  <modal-open-button class="pull-right" style="margin-left:10px;" modal="change-price-modal">
     <i class="icon-tags"></i> <t key="product.show.change_price_button"/>
+  </modal-open-button>
+</def>
+
+<def tag="remove-products-modal">
+  <hobo-cache suffix="remove-products-modal">
+    <modal id="remove-products-modal">
+      <modal:>
+        <modal-header><t key="product.show.remove_products"/></modal-header>
+        <div class="modal-body">
+          <div class="form-horizontal">
+            <div class="control-group">
+              <div class="controls">
+                <button class="btn btn-danger btn-large" style="margin-right:10px;" name="borrar" value="true">
+                  <t key="product.show.remove_yes"/>
+                </button>
+                <button class="btn btn-danger btn-large" name="borrar" value="false">
+                  <t key="product.show.remove_no"/>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal:>
+    </modal>
+  </hobo-cache>
+</def>
+
+<def tag="remove-products-button">
+  <modal-open-button class="pull-right" modal="remove-products-modal">
+    <i class="icon-trash"></i> <t key="product.show.remove_products_button"/>
   </modal-open-button>
 </def>

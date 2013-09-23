@@ -134,12 +134,22 @@ feature 'The admin wants to manage products', :driver => :selenium do
     page.find('tr.product:nth-child(4) .amount-view').should have_content '0: SuperShop 0, Deusto 0'
     page.find('tr.product:nth-child(4) .barcode-view').should have_content 'SZM0120BLU35'
     page.should have_css('tr.product', :count => 4)
-    # Admin selects 3 and 4 rows
-    # Admin click on delete products button
-    # A confirmation message appears and clicks No, nothing happens: products remains as they are
-    # Admin clicks again on delete products
-    # A confirmation message appears and clicks Yes
-    # There should be just 2 products.
+    within 'tr.product:nth-child(3)' do
+      check 'product_check[]'
+    end
+    within 'tr.product:nth-child(4)' do
+      check 'product_check[]'
+    end
+    click_on('Remove selected products')
+    click_on('No, i am not sure')
+    sleep 4
+    page.should have_css('tr.product', :count => 4)
+    click_on('Remove selected products')
+    click_on('Yes, i am sure')
+    page.should have_css('tr.product', :count => 2)
+    page.should have_content('The products have been removed')
+
+
 
     # Prints some labels
     click_on 'SuperZapas 300 36 red woman'
