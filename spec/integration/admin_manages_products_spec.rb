@@ -105,6 +105,42 @@ feature 'The admin wants to manage products', :driver => :selenium do
     page.driver.browser.switch_to.alert.accept
     page.should have_css('tr.product', :count => 2)
 
+    # Adds two more products and the removes them at once
+    click_on 'Add products'
+    within '.product:nth-child(1)' do
+      select 'SuperZapas'
+      fill_in 'product_type[products][][code]', :with => '150'
+      find_field('product_type[products][][product_warehouses][][amount]').value.should == '0'
+      select '37'
+      select 'green'
+      select 'man'
+    end
+    click_on 'Save'
+    page.find('tr.product:nth-child(1) .this-view').should have_content 'SuperZapas 150 37 green man'
+    page.find('tr.product:nth-child(1) .amount-view').should have_content '0: SuperShop 0, Deusto 0'
+    page.find('tr.product:nth-child(1) .barcode-view').should have_content 'SZM0150GRE37'
+    click_on 'Add products'
+    within '.product:nth-child(1)' do
+      select 'SuperZapas'
+      fill_in 'product_type[products][][code]', :with => '120'
+      find_field('product_type[products][][product_warehouses][][amount]').value.should == '0'
+      select '35'
+      select 'blue'
+      select 'man'
+    end
+    click_on 'Save'
+    click_on('Stock')
+    page.find('tr.product:nth-child(4) .this-view').should have_content 'SuperZapas 120 35 blue man'
+    page.find('tr.product:nth-child(4) .amount-view').should have_content '0: SuperShop 0, Deusto 0'
+    page.find('tr.product:nth-child(4) .barcode-view').should have_content 'SZM0120BLU35'
+    page.should have_css('tr.product', :count => 4)
+    # Admin selects 3 and 4 rows
+    # Admin click on delete products button
+    # A confirmation message appears and clicks No, nothing happens: products remains as they are
+    # Admin clicks again on delete products
+    # A confirmation message appears and clicks Yes
+    # There should be just 2 products.
+
     # Prints some labels
     click_on 'SuperZapas 300 36 red woman'
     click_on 'Print Labels'
