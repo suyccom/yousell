@@ -49,7 +49,7 @@ feature 'The admin wants to manage variations', :driver => :selenium do
     # The user can't delete a variation if it's been being used on a product_type_variation
     Variation.delete_all
     User.current_user = User.last
-    size = Variation.create(:name => "Talla")
+    size = Variation.create(:name => "Size")
     size.variation_values << VariationValue.new(:name => "35", :code => "35")
     size.variation_values << VariationValue.new(:name => "36", :code => "36")
     size.variation_values << VariationValue.new(:name => "37", :code => "37")
@@ -59,7 +59,7 @@ feature 'The admin wants to manage variations', :driver => :selenium do
     color.variation_values << VariationValue.new(:name => "blue", :code => "BLU")
     color.variation_values << VariationValue.new(:name => "green", :code => "GRE")
     color.save
-    type = Variation.create(:name => "Tipo")
+    type = Variation.create(:name => "Type")
     type.variation_values << VariationValue.new(:name => "woman", :code => "W")
     type.variation_values << VariationValue.new(:name => "man", :code => "M")
     type.save

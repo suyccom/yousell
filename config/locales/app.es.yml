@@ -175,6 +175,11 @@ es:
       change_price_button: Cambiar el precio a los productos seleccionados
       change_price: Cambiar el precio
       prices_changed: Los precios han sido actualizados
+      remove_products_button: Borrar productos seleccionados
+      remove_products: ¿Estás seguro de borrar los productos?
+      products_removed: Los productos han sido eliminados
+      remove_yes: Sí, estoy seguro
+      remove_no: No, no estoy seguro
   product_type:
     optional_barcode: Código de barras (opcional)
     actions:

@@ -137,7 +137,11 @@ en:
       change_price_button: Change price to selected products
       change_price: Change price
       prices_changed: The prices have been updated
-  
+      remove_products_button: Remove selected products
+      remove_products: ¿Are you sure of delete the products?
+      products_removed: The products have been removed
+      remove_yes: Yes, I am sure
+      remove_no: No, I am not sure
   product_type:
     optional_barcode: Barcode (optional)
     actions:
