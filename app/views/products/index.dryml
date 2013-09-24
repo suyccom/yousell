@@ -127,7 +127,7 @@
 </def>
 
 <def tag="change-price-button">
-  <modal-open-button class="pull-right" style="margin-left:10px;" modal="change-price-modal">
+  <modal-open-button class="pull-right change-price" modal="change-price-modal">
     <i class="icon-tags"></i> <t key="product.show.change_price_button"/>
   </modal-open-button>
 </def>
@@ -141,10 +141,10 @@
           <div class="form-horizontal">
             <div class="control-group">
               <div class="controls">
-                <button class="btn btn-danger btn-large" style="margin-right:10px;" name="borrar" value="true">
+                <button class="btn btn-danger btn-large delete" name="delete" value="true">
                   <t key="product.show.remove_yes"/>
                 </button>
-                <button class="btn btn-danger btn-large" name="borrar" value="false">
+                <button class="btn btn-danger btn-large delete" name="delete" value="false">
                   <t key="product.show.remove_no"/>
                 </button>
               </div>

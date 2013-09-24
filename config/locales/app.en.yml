@@ -140,8 +140,8 @@ en:
       remove_products_button: Remove selected products
       remove_products: ¿Are you sure of delete the products?
       products_removed: The products have been removed
-      remove_yes: Yes, i am sure
-      remove_no: No, i am not sure
+      remove_yes: Yes, I am sure
+      remove_no: No, I am not sure
   product_type:
     optional_barcode: Barcode (optional)
     actions:

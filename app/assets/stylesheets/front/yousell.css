@@ -21,6 +21,14 @@
 .product ul.input-many .variation-field{
   display: none;
 }
+
+a.change-price{
+  margin-left:10px;
+}
+button.delete{
+  margin-left:10px;
+}
+
 .modal-body input{
   font-size:5em;
   height:1em;

@@ -95,7 +95,7 @@ class ProductsController < ApplicationController
   end
   
   def multiple_changes
-    if params[:borrar] && params[:borrar] == "true"
+    if params[:delete] && params[:delete] == "true"
       for product in Product.find(params[:product_check])
         product.destroy
       end
