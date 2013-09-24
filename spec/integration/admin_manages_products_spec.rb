@@ -141,11 +141,16 @@ feature 'The admin wants to manage products', :driver => :selenium do
       check 'product_check[]'
     end
     click_on('Remove selected products')
-    click_on('No, i am not sure')
-    sleep 4
+    click_on('No, I am not sure')
+    within 'tr.product:nth-child(3)' do
+      check 'product_check[]'
+    end
+    within 'tr.product:nth-child(4)' do
+      check 'product_check[]'
+    end
     page.should have_css('tr.product', :count => 4)
     click_on('Remove selected products')
-    click_on('Yes, i am sure')
+    click_on('Yes, I am sure')
     page.should have_css('tr.product', :count => 2)
     page.should have_content('The products have been removed')
 

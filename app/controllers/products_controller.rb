@@ -95,12 +95,12 @@ class ProductsController < ApplicationController
   end
   
   def multiple_changes
-    if params[:delete] && params[:delete] == "true"
+    if params[:delete] && params[:delete] == "true" && params[:product_check] && !params[:product_check].empty?
       for product in Product.find(params[:product_check])
         product.destroy
       end
       flash[:info] = I18n.t("product.show.products_removed")
-    elsif params[:price] && params[:price].to_i > 0 
+    elsif params[:price] && params[:price].to_i > 0 && params[:product_check] && !params[:product_check].empty?
       for product in Product.find(params[:product_check])
         product.update_attribute(:price, params[:price])
       end
