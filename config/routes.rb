@@ -16,7 +16,7 @@ Yousell::Application.routes.draw do
   # Products
   match 'products/:id/product_labels' => 'products#product_labels'
   match 'products/last_products_labels' => 'products#last_products_labels'
-  match 'products/change_price' => 'products#change_price'
+  match 'products/multiple_changes' => 'products#multiple_changes'
   match 'product_types/new_from_barcode' => 'product_types#new_from_barcode'
   match 'product_types/transfer' => 'product_types#transfer'
 
