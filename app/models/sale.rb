@@ -77,6 +77,7 @@ class Sale < ActiveRecord::Base
   def set_some_attributes
     # Only run if the sale has just been marked as completed
     if complete && complete_changed? && !completed_at
+      self.payments.delete_all if day_sale # Only run if the sale is day sale.
       self.completed_at = Time.now
       self.sale_total = self.total
       for line in lines
