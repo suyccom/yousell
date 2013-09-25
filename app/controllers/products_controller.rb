@@ -90,6 +90,7 @@ class ProductsController < ApplicationController
     end
     hobo_index products.apply_scopes(
       :name_contains => params[:name],
+      :description_contains => params[:description],
       :variaciones => variaciones.join(",")
     ), :per_page => 15
   end
