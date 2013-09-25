@@ -80,6 +80,7 @@ es:
         actions: Acciones
         name: Nombre
         variation_values: Valores
+        description: Descripción
       variation_value:
         name: Nombre
         code: Código

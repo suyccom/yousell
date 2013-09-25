@@ -46,6 +46,10 @@
             <label><t key="activerecord.attributes.variation.name"/></label>
             <input type="text" name="name" value="&params[:name]"/>
           </div>
+          <div class="span4 controls-row">
+            <label><t key="activerecord.attributes.variation.description"/></label>
+            <input type="text" name="description" value="&params[:description]"/>
+          </div>
           <repeat with="&Variation.all">
             <div class="span4 controls-row">
               <label><%= this.name %></label>
