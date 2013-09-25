@@ -70,6 +70,7 @@ en:
         value: Value
         actions: Actions
         name: Name
+        description: Description
       product:
         Product: Product
         name: Product
