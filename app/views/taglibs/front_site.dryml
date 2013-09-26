@@ -24,3 +24,11 @@
 <def tag="currency">
   <%= number_to_currency(this) %>
 </def>
+
+<extend tag="page">
+  <old-page merge>
+    <account-nav:>
+      <search: replace/>
+    </account-nav:>
+  </old-page>
+</extend>
