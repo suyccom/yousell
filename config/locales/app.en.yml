@@ -110,7 +110,7 @@ en:
             provider_code:
               taken: 'has already been taken. <a href="%{link}">Click here to go to the product with provider code %{provider_code}</a>.'
             amount:
-              stock: 'is bigger than the current stock of this product'
+              stock: " %{href} doesn't have stock"
 
   menu:
     administration: Administration
