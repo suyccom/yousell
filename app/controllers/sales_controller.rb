@@ -28,16 +28,32 @@ class SalesController < ApplicationController
       flash[:error] = I18n.t('sale.messages.pending_amount')
       redirect_to('/')
     else
-      hobo_update do
-        flash[:notice] = I18n.t('sale.messages.create.success', 
-        :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
-                 "/sales/#{Sale.find(params[:id]).id}")).html_safe
-        if request.xhr?
-          hobo_ajax_response
-        elsif params[:sale][:client_name]
-          redirect_to("/sales/#{@sale.id}.pdf")
-        else
-          redirect_to('/')
+      # Comprobamos si todos los productos tienen stock
+      for l in Sale.find(params[:id]).lines
+        cantidad = 0
+        for w in l.product.product_warehouses
+          cantidad += w.amount if w.amount
+        end
+        break if cantidad <= 0
+      end
+      product_id = Product.find_by_name(w.product.name).id
+      if cantidad == 0
+        flash[:error] = I18n.t('activerecord.errors.models.product.attributes.amount.stock',
+                        :href => ActionController::Base.helpers.link_to("#{w.product.name}",
+                        "/products/#{product_id}/edit")).html_safe
+        redirect_to('/')
+      else
+        hobo_update do
+          flash[:notice] = I18n.t('sale.messages.create.success', 
+                          :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
+                          "/sales/#{Sale.find(params[:id]).id}")).html_safe
+          if request.xhr?
+            hobo_ajax_response
+          elsif params[:sale][:client_name]
+            redirect_to("/sales/#{@sale.id}.pdf")
+          else
+            redirect_to('/')
+          end
         end
       end
     end

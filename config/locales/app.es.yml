@@ -149,7 +149,7 @@ es:
             provider_code:
               taken: 'está repetido. <a href="%{link}">Haz clic aquí para ir al producto con código de proveedor %{provider_code}</a>.'
             amount:
-              stock: 'es mayor que el stock de este producto'
+              stock: ' %{href} no tiene stock'
 
   menu:
     administration: Administración
