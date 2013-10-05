@@ -153,9 +153,19 @@ feature 'The admin wants to manage products', :driver => :selenium do
     click_on('Yes, I am sure')
     page.should have_css('tr.product', :count => 2)
     page.should have_content('The products have been removed')
-
-
-
+    # Trasfer two products 
+    within 'tr.product:nth-child(1)' do
+      check 'product_check[]'
+    end
+    within 'tr.product:nth-child(2)' do
+      check 'product_check[]'
+    end
+    click_on('Trasfer selected products')
+    select "#{Warehouse.first.name}", :from => "to"
+    select "#{Warehouse.last.name}", :from => "from"
+    click_on('Trasfer products')
+    page.should have_css('tr.product', :count => 2)
+    page.should have_content('The products have been trasfered')
     # Prints some labels
     click_on 'SuperZapas 300 36 red woman'
     click_on 'Print Labels'
