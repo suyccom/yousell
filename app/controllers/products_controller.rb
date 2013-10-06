@@ -104,7 +104,7 @@ class ProductsController < ApplicationController
       flash[:info] = I18n.t("product.show.products_removed")
 
 
-    # Trasfer products selected
+    # Transfer products selected
     elsif params[:price] && params[:price].to_i == 0 && params[:to] && params[:from] && !params[:to].empty? && !params[:from].empty? && params[:product_check] && !params[:product_check].empty?
       from = Warehouse.find_by_name(params[:from]).id
       to = Warehouse.find_by_name(params[:to]).id
@@ -116,7 +116,7 @@ class ProductsController < ApplicationController
           init_pr.first.update_attribute(:amount, init_pr.first.amount - 1) if init_pr.first.amount > 0
           # I'm adding to the amount of product in stock destination
           end_pr.first.update_attribute(:amount, end_pr.first.amount + 1)
-          flash[:info] = I18n.t("product.show.products_trasfered")
+          flash[:info] = I18n.t("product.show.products_transfered")
         end
       end
 

@@ -143,9 +143,9 @@ en:
       products_removed: The products have been removed
       remove_yes: Yes, I am sure
       remove_no: No, I am not sure
-      trasfer_products_button: Trasfer selected products
-      trasfer_products: Trasfer products
-      products_trasfered: The products have been trasfered
+      transfer_products_button: Transfer selected products
+      transfer_products: Transfer products
+      products_transfered: The products have been transfered
   product_type:
     optional_barcode: Barcode (optional)
     actions:
