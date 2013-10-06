@@ -181,6 +181,9 @@ es:
       products_removed: Los productos han sido eliminados
       remove_yes: Sí, estoy seguro
       remove_no: No, no estoy seguro
+      transfer_products_button: Trasladar productos seleccionados
+      transfer_products: Trasladar productos
+      products_transfered: Los productos han sido trasladados
   product_type:
     optional_barcode: Código de barras (opcional)
     actions:

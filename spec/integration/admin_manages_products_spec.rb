@@ -20,6 +20,7 @@ feature 'The admin wants to manage products', :driver => :selenium do
       select 'SuperZapas'
       fill_in 'product_type[products][][code]', :with => '300'
       find_field('product_type[products][][product_warehouses][][amount]').value.should == '0'
+      fill_in 'product_type[products][][product_warehouses][][amount]', :with => '300'
       select '35'
       select 'red'
       select 'woman'
@@ -28,14 +29,14 @@ feature 'The admin wants to manage products', :driver => :selenium do
     within '.product:nth-child(2)' do
       find_field('product_type[products][][provider_id]').value.should == @provider.id.to_s
       find_field('product_type[products][][code]').value.should == '300'
-      find_field('product_type[products][][product_warehouses][][amount]').value.should == '0'
+      find_field('product_type[products][][product_warehouses][][amount]').value.should == '300'
       find_field('product_type[products][][product_warehouses][][warehouse_id]').value.should == @shop.id.to_s
       select '36'
     end
     click_on 'Save'
     page.should have_css('tr.product', :count => 2)
     page.find('tr.product:nth-child(1) .this-view').should have_content 'SuperZapas 300 35 red woman'
-    page.find('tr.product:nth-child(1) .amount-view').should have_content '0: SuperShop 0, Deusto 0'
+    page.find('tr.product:nth-child(1) .amount-view').should have_content '300: SuperShop 300, Deusto 0'
     page.find('tr.product:nth-child(1) .barcode-view').should have_content 'SZW0300RED35'
     
     # Edits the product price
@@ -71,7 +72,7 @@ feature 'The admin wants to manage products', :driver => :selenium do
     click_on 'Stock'
     page.should have_css('tr.product', :count => 3)
     page.find('tr.product:nth-child(3) .this-view').should have_content 'SuperZapas 300 37 green woman'
-    page.find('tr.product:nth-child(1) .amount-view').should have_content '0: SuperShop 0, Deusto 0'
+    page.find('tr.product:nth-child(3) .amount-view').should have_content '0: SuperShop 0, Deusto 0'
     
     # The admin adds one unit of a product that already exists in the DB (it should be summed)
     click_on 'Add products'
@@ -104,7 +105,6 @@ feature 'The admin wants to manage products', :driver => :selenium do
     page.find('tr.product:nth-child(3) .icon-trash').click
     page.driver.browser.switch_to.alert.accept
     page.should have_css('tr.product', :count => 2)
-
     # Adds two more products and the removes them at once
     click_on 'Add products'
     within '.product:nth-child(1)' do
@@ -153,9 +153,21 @@ feature 'The admin wants to manage products', :driver => :selenium do
     click_on('Yes, I am sure')
     page.should have_css('tr.product', :count => 2)
     page.should have_content('The products have been removed')
-
-
-
+    # Transfer two products 
+    within 'tr.product:nth-child(1)' do
+      check 'product_check[]'
+    end
+    within 'tr.product:nth-child(2)' do
+      check 'product_check[]'
+    end
+    click_on('Transfer selected products')
+    select "#{Warehouse.first.name}", :from => "from"
+    select "#{Warehouse.last.name}", :from => "to"
+    click_on('Transfer products')
+    page.find('tr.product:nth-child(1) .amount-view').should have_content '300: SuperShop 299, Deusto 1'
+    page.find('tr.product:nth-child(2) .amount-view').should have_content '300: SuperShop 299, Deusto 1'
+    page.should have_css('tr.product', :count => 2)
+    page.should have_content('The products have been transfered')
     # Prints some labels
     click_on 'SuperZapas 300 36 red woman'
     click_on 'Print Labels'
