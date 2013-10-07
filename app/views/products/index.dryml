@@ -26,10 +26,12 @@
       </table-plus>
       <change-price-modal/>
       <remove-products-modal/>
+      <transfer-products-modal/>
     </form>
     <print-labels if="&params[:last_added]"/>
     <change-price-button/>
     <remove-products-button/>
+    <transfer-products-button/>
   </collection:>
 </index-page>
 
@@ -131,7 +133,7 @@
 </def>
 
 <def tag="change-price-button">
-  <modal-open-button class="pull-right change-price" modal="change-price-modal">
+  <modal-open-button class="pull-right modal-left" modal="change-price-modal">
     <i class="icon-tags"></i> <t key="product.show.change_price_button"/>
   </modal-open-button>
 </def>
@@ -161,7 +163,41 @@
 </def>
 
 <def tag="remove-products-button">
-  <modal-open-button class="pull-right" modal="remove-products-modal">
+  <modal-open-button class="pull-right modal-left" modal="remove-products-modal">
     <i class="icon-trash"></i> <t key="product.show.remove_products_button"/>
   </modal-open-button>
 </def>
+
+<def tag="transfer-products-modal">
+  <hobo-cache suffix="transfer-products-modal">
+    <modal id="transfer-products-modal">
+      <modal:>
+        <modal-header><t key="product.show.transfer_products"/></modal-header>
+        <div class="modal-body">
+          <div class="form-horizontal">
+            <div class="control-group">
+              <div class="span5 row">
+                <div class="span1"><t key='front.from'/></div>
+                <div class="span3"><select-menu name="from" options="&Warehouse.all"/></div>
+                <div class="span1"><t key='front.to'/></div>
+                <div class="span3">
+                  <select-menu name="to" style="margin-top:1px;" options="&Warehouse.all"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <modal-form-footer>
+          <submit: label="#{I18n.t 'product.show.transfer_products'}"/>
+        </modal-form-footer>
+      </modal:>
+    </modal>
+  </hobo-cache>
+</def>
+
+<def tag="transfer-products-button">
+  <modal-open-button class="pull-right modal-left" modal="transfer-products-modal">
+    <i class="icon-share"></i> <t key="product.show.transfer_products_button"/>
+  </modal-open-button>
+</def>
+

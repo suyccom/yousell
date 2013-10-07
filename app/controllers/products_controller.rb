@@ -96,11 +96,32 @@ class ProductsController < ApplicationController
   end
   
   def multiple_changes
+    # Delete products selected
     if params[:delete] && params[:delete] == "true" && params[:product_check] && !params[:product_check].empty?
       for product in Product.find(params[:product_check])
         product.destroy
       end
       flash[:info] = I18n.t("product.show.products_removed")
+
+
+    # Transfer products selected
+    elsif params[:price] && params[:price].to_i == 0 && params[:to] && params[:from] && !params[:to].empty? && !params[:from].empty? && params[:product_check] && !params[:product_check].empty?
+      from = Warehouse.find_by_name(params[:from]).id
+      to = Warehouse.find_by_name(params[:to]).id
+      for p in params[:product_check]
+        init_pr = ProductWarehouse.where('warehouse_id = ?',from).where('product_id = ?', Product.find(p))
+        end_pr = ProductWarehouse.where('warehouse_id = ?',to).where('product_id = ?', Product.find(p))
+        if !init_pr.empty? && !init_pr.first.amount.blank? && !end_pr.empty? && !end_pr.first.amount.blank?
+          # Rest one to the quantity of product in the warehouse indicated
+          init_pr.first.update_attribute(:amount, init_pr.first.amount - 1) if init_pr.first.amount > 0
+          # I'm adding to the amount of product in stock destination
+          end_pr.first.update_attribute(:amount, end_pr.first.amount + 1)
+          flash[:info] = I18n.t("product.show.products_transfered")
+        end
+      end
+
+
+    # Change price 
     elsif params[:price] && params[:price].to_i > 0 && params[:product_check] && !params[:product_check].empty?
       for product in Product.find(params[:product_check])
         product.update_attribute(:price, params[:price])
@@ -109,5 +130,4 @@ class ProductsController < ApplicationController
     end
     redirect_to '/products'
   end
-
 end
