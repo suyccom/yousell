@@ -92,7 +92,7 @@ class ProductsController < ApplicationController
       :name_contains => params[:name],
       :description_contains => params[:description],
       :variaciones => variaciones.join(",")
-    ), :per_page => 15
+    ), :per_page => params[:per_page] ? params[:per_page].to_i : 15
   end
   
   def multiple_changes

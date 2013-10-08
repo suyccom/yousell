@@ -66,6 +66,7 @@ en:
         variations: Atrributes
         name: Name
       variation:
+        per_page: Results per page
         Variation: Attribute
         value: Value
         actions: Actions
