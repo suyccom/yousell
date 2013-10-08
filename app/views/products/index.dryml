@@ -17,7 +17,7 @@
           <tr restore/>
         </tr:>
         <check-view:><input type="checkbox" name="product_check[]" value="&this_parent.id"/></check-view:>
-        <check-heading:></check-heading:>
+        <check-heading:><i class="icon-ok" onclick="check_toggle()"></i></check-heading:>
         <amount-view:>
           <this/>: <repeat with="&this_parent.product_warehouses" join=", "><this.warehouse/> <this.amount/></repeat>
         </amount-view:>
