@@ -17,7 +17,7 @@
           <tr restore/>
         </tr:>
         <check-view:><input type="checkbox" name="product_check[]" value="&this_parent.id"/></check-view:>
-        <check-heading:></check-heading:>
+        <check-heading:><i class="icon-ok" onclick="check_toggle()"></i></check-heading:>
         <amount-view:>
           <this/>: <repeat with="&this_parent.product_warehouses" join=", "><this.warehouse/> <this.amount/></repeat>
         </amount-view:>
@@ -41,6 +41,7 @@
     <a class="btn btn-large" data-toggle="collapse" href="#search">
       <t key="product.index.advanced_search"/> <i class="icon-search"></i>
     </a>
+
     <div id="search" class="collapse #{'in' if params[:name]}">
       <form method="get" action="/products">
         <div class="row columns">
@@ -60,6 +61,10 @@
                            options="&this.value.split(',')" />
             </div>
           </repeat>
+          <div class="span4 controls-row">
+            <label><t key="activerecord.attributes.variation.per_page"/></label>
+            <select-menu name="per_page" options='&[["15"],["30"],["50"],["75"],["100"]]' selected="&params[:per_page]"/>
+          </div>
           <div class="span4 controls-row">
             <br/>
             <input type="submit" value="Buscar" 

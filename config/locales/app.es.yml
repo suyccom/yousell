@@ -75,6 +75,7 @@ es:
         variations: Atributos
         name: Nombre
       variation:
+        per_page: Resultados por página
         Variation: Atributo
         value: Valor
         actions: Acciones
