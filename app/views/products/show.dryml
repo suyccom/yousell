@@ -7,7 +7,7 @@
     <print-labels/>
   </before-heading:>
   <description: replace/>
-  <field-list: fields='product_type, provider, amount, price, barcode' id='products'/>
+  <field-list: fields='product_type, provider, amount, price, barcode, description' id='products'/>
 </show-page:>
 
 <def tag="print-labels">
