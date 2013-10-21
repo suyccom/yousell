@@ -6,6 +6,8 @@ class ProductTypesController < ApplicationController
 
   include ActionView::Helpers::JavaScriptHelper
 
+  autocomplete
+
   def create
     # First of all, clear the last_added_products field
     current_user.update_attribute(:last_added_products, [])
