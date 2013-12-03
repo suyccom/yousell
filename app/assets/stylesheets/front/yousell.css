@@ -98,3 +98,15 @@ button.delete{
   color: #555;
 }
 
+.search-products-input{
+  width:100%;
+  height:330px!important;
+}
+.textarea-transfer{
+  height:200px;
+  margin-top:5px;
+}
+.form-horizontal .search-products{
+  margin-top:50px;
+}
+
