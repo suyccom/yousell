@@ -38,9 +38,7 @@ class SalesController < ApplicationController
         break if cantidad <= 0
       end
       product_id = Product.find_by_name(w.product.name).id
-
       if cantidad == 0 && !params[:complete]
-        logger.info "esto llega aqui"
         flash[:error] = I18n.t('activerecord.errors.models.product.attributes.amount.stock',
                         :href => ActionController::Base.helpers.link_to("#{w.product.name}",
                         "/products/#{product_id}/edit")).html_safe
