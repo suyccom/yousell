@@ -55,19 +55,6 @@ class ProductTypesController < ApplicationController
     render :js => "$('#{linea}').hide().appendTo('#products-table').fadeIn(250); $('#barcode').val('').focus()"
   end
 
-  def search_products
-    clauses = []
-    args = []
-    for value in params[:term].split(" ")
-      clauses << "products.name LIKE ?"
-      args << "%#{value}%"
-    end
-    clause = clauses.join(' AND '), *args
-    logger.info "esto es clause #{clause}"
-    @products = Product.where(clause)
-    hobo_ajax_response
-  end
-
   def rellenar_textarea
         logger.info "esto es textarea #{@textarea}"
         logger.info "esto es products #{params[:products_id]}"

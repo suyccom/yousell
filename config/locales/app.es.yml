@@ -184,6 +184,8 @@ es:
       remove_no: No, no estoy seguro
       transfer_products_button: Trasladar productos seleccionados
       transfer_products: Trasladar productos
+      search_products: Buscar productos
+      search_products_button: Seleccionar productos
       products_transfered: Los productos han sido trasladados
   product_type:
     optional_barcode: Código de barras (opcional)

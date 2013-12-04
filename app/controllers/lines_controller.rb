@@ -7,8 +7,8 @@ class LinesController < ApplicationController
   def create
     if params[:barcode] && !params[:barcode].blank?
       product = Product.find_by_barcode(params[:barcode])
-    elsif params[:search] && !params[:search].blank?
-      product = Product.find_by_name(params[:search])
+    elsif params[:products_id] && !params[:products_id].blank?
+      product = Product.find(params[:products_id].first) if params[:products_id].size == 1
     end # There's no need to use else here: Hobo will throw a validation error :)
     params[:line][:product_id] = product.id if product
     # If the sale already has the same product, just add one unit to it instead of creating a new line

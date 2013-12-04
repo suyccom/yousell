@@ -16,4 +16,17 @@ class FrontController < ApplicationController
     end
   end
 
+  def search_products
+    clauses = []
+    args = []
+    for value in params[:term].split(" ")
+      clauses << "products.name LIKE ?"
+      args << "%#{value}%"
+    end
+    clause = clauses.join(' AND '), *args
+    logger.info "esto es clause #{clause}"
+    @products = Product.where(clause)
+    hobo_ajax_response
+  end
+
 end

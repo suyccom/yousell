@@ -109,4 +109,11 @@ button.delete{
 .form-horizontal .search-products{
   margin-top:50px;
 }
+input.barcode{
+  border-radius:15px;
+  border: 1px solid #CCCCCC;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+
 
