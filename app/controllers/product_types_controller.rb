@@ -56,19 +56,13 @@ class ProductTypesController < ApplicationController
   end
 
   def rellenar_textarea
-        logger.info "esto es textarea #{@textarea}"
-        logger.info "esto es products #{params[:products_id]}"
-    for p in params[:products_id]
-        logger.info "esto entra por for"
-      if @textarea.blank?
-        @textarea = "#{Product.find(p).barcode}\n"
-      else
-        @textarea += "#{Product.find(p).barcode}\n"
-        logger.info "esto es textarea #{@textarea}"
+    @textarea = params[:clon_textarea].blank? ? params[:clon_textarea] : "#{params[:clon_textarea]}\n"
+    unless params[:product_id].blank?
+      for p in params[:products_id]
+        @textarea += p == params[:products_id].last ? "#{Product.find(p).barcode}" : "#{Product.find(p).barcode}\n"
       end
     end
     hobo_ajax_response
-#$('textarea[name=textarea-transfer]').text();
   end
 
 

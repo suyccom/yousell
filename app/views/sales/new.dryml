@@ -31,6 +31,7 @@
 </def>
 
 <def tag='add-line-form'>
+  <search-products/>
   <form with='&this.lines.new' updates='#lines,#total,#payment-register-message' refocus-form reset-form>
     <div id='add-product-form' part='add-product-form'>
       <flash-messages/>
@@ -38,7 +39,6 @@
         <div class='row-fluid'>
           <div class='span11'>
             <input type='text' placeholder="&t('sale.barcode', :default => 'Barcode')" name='barcode' class='span5 barcode' autofocus/>&nbsp;
-            <search-products/>
           </div>
           <div class='span1'>
             <button type='submit' class='btn'>+</button>
@@ -236,7 +236,7 @@
   <hobo-cache suffix="search-products-modal">
     <modal part="search-products-modal-part">
       <modal: id="search-products-modal">
-        <formlet class="form-horizontal" with='&this' complete="$('#search-products-modal').modal('hide')" updates='#lines,#total,#payment-register-message'>
+        <formlet class="form-horizontal" with='&this.lines.new' complete="$('#search-products-modal').modal('hide')" updates='#lines,#total,#payment-register-message'>
           <modal-header><t key="product.show.search_products"/></modal-header>
           <div class="modal-body">
             <div class="form-horizontal">

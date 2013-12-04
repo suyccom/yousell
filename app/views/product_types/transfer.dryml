@@ -35,6 +35,7 @@
           <div class="modal-body">
             <div class="form-horizontal">
               <div class="control-group">
+                <input type="hidden" name="clon_textarea" id="clon-textarea" value=""/>
                 <select-menu class="search-products-input" name="products_id[]" multiple="true" options="&@products.map{|p| [p.name, p.id]}">
                   <% for p in @products %>
                     <option value="#{p.id}" ><%= p.name %></option>
