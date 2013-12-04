@@ -11,6 +11,11 @@
         <t key='sale.pending_day_sales' count='&@day_sales_count.to_s'/>
       </span>
     </a>
+    <br/><a href='/pending_sales' class='success' if='&@sales_count > 0'>
+      <span class='label label-important'>
+        <t key='sale.pending_sales' count='&@sales_count.to_s'/>
+      </span>
+    </a>
     <% else %>
     <h2>
       <t key='sale.index.viewing_pending_day_sales' date='&params[:completed_at_date]'/>
@@ -18,6 +23,11 @@
     <a href='/pending_day_sales'>
       <span class='label label-info'>
         <t key='sale.index.back_to_pending_day_sales'/>
+      </span>
+    </a>
+    <br/><a href='/pending_sales' class='success' if='&@sales_count > 0'>
+      <span class='label label-important'>
+        <t key='sale.pending_sales' count='&@sales_count.to_s'/>
       </span>
     </a>
     <% end %>

@@ -8,7 +8,7 @@
   <content-body:>
     <a href="/sales/new_sale" class="btn btn-small btn-success"><t key="sale.new_sale"/> </a>
     <table class='table table-condensed' with='&@sales' fields='created_at,lines,total'>
-      <created-at-heading: class="span3"><t key='front.date'/></created-at-heading:>
+      <created-at-heading: class="span2"><t key='front.date'/></created-at-heading:>
       <created-at-view:>
         <a href="/?active_sale_id=#{this_parent.id}">
          <%= this.strftime('%d-%m-%Y %H:%M') %>
@@ -18,7 +18,7 @@
         <this.to-sentence/>
       </lines-view:>
       <total-heading:>Total</total-heading:>
-      <total-view:><currency/></total-view:>
+      <total-view: class="span2"><currency/></total-view:>
       <controls:>
         <a href="/pending_sales/#{this.id}"
            data-confirm="#{I18n.t('sale.confirm_delete_day_sales', :date => this.id)}">

@@ -7,6 +7,7 @@ class LinesController < ApplicationController
   def create
     sale = Sale.find(params[:line][:sale_id])
     products = []
+    lines = []
 
     if params[:barcode] && !params[:barcode].blank?
       products << Product.find_by_barcode(params[:barcode])
@@ -14,15 +15,13 @@ class LinesController < ApplicationController
       for p in params[:products_id]
         products << Product.find(p)
       end
-    end # There's no need to use else here: Hobo will throw a validation error :)
-
+    end
     for product in products
       params[:line][:product_id] = product.id if product
       # If the sale already has the same product, just add one unit to it instead of creating a new line
       line = sale.lines.find{|s| s.product == product;}
-      if line && xhr.request?
+      if line
         line.update_attributes(:amount => line.amount + 1)
-        hobo_ajax_response
       else
         Line.create(params[:line])
       end
@@ -46,5 +45,4 @@ class LinesController < ApplicationController
       hobo_update
     end
   end
-
 end

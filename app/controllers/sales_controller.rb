@@ -38,21 +38,28 @@ class SalesController < ApplicationController
         break if cantidad <= 0
       end
       product_id = Product.find_by_name(w.product.name).id
-      if cantidad == 0
+
+      if cantidad == 0 && !params[:complete]
+        logger.info "esto llega aqui"
         flash[:error] = I18n.t('activerecord.errors.models.product.attributes.amount.stock',
                         :href => ActionController::Base.helpers.link_to("#{w.product.name}",
                         "/products/#{product_id}/edit")).html_safe
-        redirect_to('/')
+        if params[:sale][:day_sale] 
+          hobo_update
+        else
+          hobo_ajax_response
+          redirect_to ("/")
+        end
       else
         hobo_update do
-          flash[:notice] = I18n.t('sale.messages.create.success', 
-                          :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
-                          "/sales/#{Sale.find(params[:id]).id}")).html_safe
           if request.xhr?
             hobo_ajax_response
           elsif params[:sale][:client_name]
             redirect_to("/sales/#{@sale.id}.pdf")
           else
+          flash[:notice] = I18n.t('sale.messages.create.success', 
+                          :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
+                          "/sales/#{Sale.find(params[:id]).id}")).html_safe
             redirect_to('/')
           end
         end

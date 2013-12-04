@@ -26,6 +26,9 @@ en:
       user:
         one: User
         other: Users
+      payment_method:
+        one: Payment method
+        other: Payment methods
       warehouse:
         one: Warehouse
         other: Warehouses
