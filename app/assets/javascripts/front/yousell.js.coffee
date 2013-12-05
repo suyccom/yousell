@@ -5,7 +5,7 @@ $ ->
     $(".alert").fadeOut()
   setTimeout flashCallback, 4000
 
-  $(".search-query").on "keypress", ->
+  $(".search-query").keyup ->
     $("form.search-products").submit()
 
   $("#search-products").on "click", ->

@@ -235,7 +235,7 @@
               <div class="control-group">
                 <select-menu class="search-products-input" name="products_id[]" multiple="true" options="&@products.map{|p| [p.name, p.id]}">
                   <% for p in @products %>
-                    <option value="#{p.id}" ><%= p.name %></option>
+                    <option value="#{p.id}" ><%= p.metabusqueda %></option>
                   <% end %>
                 </select-menu>
               </div>
@@ -253,7 +253,7 @@
 
 <def tag="search-products">
   <search-products-modal/>
-  <form class="form-horizontal search-products span6" action="/search_products" ajax updates="#search-products-modal-part">
+  <form class="form-horizontal search-products span6" no-spinner="true" action="/search_products" ajax updates="#search-products-modal-part">
     <div id="search-product-form" class="row-fluid">
         <div class='span11'>
           <input type="text" name="term" id="search-query" class="span search-query" placeholder="&t('sale.search', :default => 'Search')"/>

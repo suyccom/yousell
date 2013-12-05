@@ -57,11 +57,12 @@ class ProductTypesController < ApplicationController
 
   def rellenar_textarea
     @textarea = params[:clon_textarea].blank? ? params[:clon_textarea] : "#{params[:clon_textarea]}\n"
-    unless params[:product_id].blank?
+    unless params[:products_id].blank?
       for p in params[:products_id]
         @textarea += p == params[:products_id].last ? "#{Product.find(p).barcode}" : "#{Product.find(p).barcode}\n"
       end
     end
+
     hobo_ajax_response
   end
 

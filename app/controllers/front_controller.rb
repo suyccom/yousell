@@ -20,7 +20,7 @@ class FrontController < ApplicationController
     clauses = []
     args = []
     for value in params[:term].split(" ")
-      clauses << "products.name LIKE ?"
+      clauses << "products.metabusqueda LIKE ?"
       args << "%#{value}%"
     end
     clause = clauses.join(' AND '), *args

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131204134830) do
+ActiveRecord::Schema.define(:version => 20131205143635) do
 
   create_table "labelsheets", :force => true do |t|
     t.string   "name_printer"
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(:version => 20131204134830) do
     t.string   "name"
     t.integer  "provider_id"
     t.string   "description"
-    t.string   "metadata"
+    t.string   "metabusqueda"
   end
 
   add_index "products", ["product_type_id"], :name => "index_products_on_product_type_id"

@@ -8,7 +8,7 @@ class Product < ActiveRecord::Base
     price   :decimal, :precision => 8, :scale => 2, :default => 0
     barcode :string, :unique
     description :string
-    metadata :string
+    metabusqueda :string
     timestamps
   end
   attr_accessible :price, :amount, :barcode, :product_type, :product_type_id, :product_variations, 
@@ -57,7 +57,7 @@ class Product < ActiveRecord::Base
       end
     end
     self.name = "#{provider} #{product_type.name} #{variations}"
-    self.metadata = "#{name} #{description}"
+    self.metabusqueda = "#{name} #{description if description}"
   end
 
   def set_barcode_if_necessary
