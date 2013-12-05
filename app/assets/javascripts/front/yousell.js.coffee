@@ -5,8 +5,15 @@ $ ->
     $(".alert").fadeOut()
   setTimeout flashCallback, 4000
 
+  $(".search-query").keyup ->
+    $("form.search-products").submit()
+
+  $("#search-products").on "click", ->
+    valor = $("#textarea-transfer").val()
+    $("#clon-textarea").val(valor) 
+
+
 @check_toggle = ->
   $("input[type='checkbox']").click()
-
 
 

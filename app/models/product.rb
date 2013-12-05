@@ -8,6 +8,7 @@ class Product < ActiveRecord::Base
     price   :decimal, :precision => 8, :scale => 2, :default => 0
     barcode :string, :unique
     description :string
+    metabusqueda :string
     timestamps
   end
   attr_accessible :price, :amount, :barcode, :product_type, :product_type_id, :product_variations, 
@@ -48,14 +49,15 @@ class Product < ActiveRecord::Base
   }
 
   # --- Callbacks --- #
-  before_update :set_name, :set_barcode_if_necessary
-  def set_name
+  before_update :set_name_and_metadata, :set_barcode_if_necessary
+  def set_name_and_metadata
     for p in self.product_variations
       if p.value != I18n.t('product.wihout_variation')
         variations = "#{variations} #{p.value}"
       end
     end
     self.name = "#{provider} #{product_type.name} #{variations}"
+    self.metabusqueda = "#{name} #{description if description}"
   end
 
   def set_barcode_if_necessary

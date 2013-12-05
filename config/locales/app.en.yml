@@ -26,6 +26,9 @@ en:
       user:
         one: User
         other: Users
+      payment_method:
+        one: Payment method
+        other: Payment methods
       warehouse:
         one: Warehouse
         other: Warehouses
@@ -146,6 +149,8 @@ en:
       remove_no: No, I am not sure
       transfer_products_button: Transfer selected products
       transfer_products: Transfer products
+      search_products: Search products
+      search_products_button: Choose products
       products_transfered: The products have been transfered
   product_type:
     optional_barcode: Barcode (optional)

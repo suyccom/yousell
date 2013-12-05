@@ -19,6 +19,8 @@ Yousell::Application.routes.draw do
   match 'products/multiple_changes' => 'products#multiple_changes'
   match 'product_types/new_from_barcode' => 'product_types#new_from_barcode'
   match 'product_types/transfer' => 'product_types#transfer'
+  match 'search_products' => 'front#search_products'
+  match 'product_types/rellenar_textarea' => 'product_types#rellenar_textarea'
 
   # Pending day sales
   match 'pending_day_sales' => 'sales#pending_day_sales'

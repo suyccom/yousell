@@ -1,4 +1,7 @@
 <new-page title="&t('sale.actions.new', :default => 'Sale')" without-heading>
+  <append-scripts:>
+  </append-scripts:>
+
   <content: with-flash-messages='&false'/>
   <form: replace>
     <add-line-form/>
@@ -22,38 +25,36 @@
 </def>
 
 <def tag='add-line-form'>
-  <form with='&this.lines.new' updates='#lines,#total,#payment-register-message' refocus-form reset-form>
+  <div class="well" style="padding-bottom:40px">
+  <search-products/>
+  <form with='&this.lines.new' updates='#lines,#total,#payment-register-message' class="span5" refocus-form reset-form>
     <div id='add-product-form' part='add-product-form'>
-      <flash-messages/>
-      <div class='form-inline well'>
-        <div class='row-fluid'>
-          <div class='span11'>
-            <input type='text' placeholder="&t('sale.barcode', :default => 'Barcode')" name='barcode' class='span6' autofocus/>&nbsp;
-            <name-one:product placeholder="&t('sale.search', :default => 'Search')" name='search' autocomplete='off' class='span6'/>
-          </div>
-          <div class='span1'>
-            <button type='submit' class='btn'>+</button>
-          </div>
+      <div class='row-fluid'>
+        <div class='span11'>
+          <input type='text' placeholder="&t('sale.barcode', :default => 'Barcode')" name='barcode' class='span barcode' autofocus/>&nbsp;
+        </div>
+        <div class='span1'>
+          <button type='submit' class='btn'><i class="icon-plus"></i></button>
         </div>
       </div>
     </div>
   </form>
+  </div>
 </def>
 
 <def tag='complete-sale-form'>
+  <flash-messages/>
   <form without-cancel>
     <field-list: replace>
       <lines/>
     </field-list:>
     <submit: replace>
       <input type='hidden' name='sale[complete]' value='true'/>
-      <div class='row'>
-        <div class='span8'>
-          <submit id='complete-sale-button' class='btn-large btn-success span8' restore/>
-        </div>
-        <div class='span3'>
-          <save-sale/>
-        </div>
+      <div class='span8'>
+        <submit id='complete-sale-button' class='btn-large btn-success span8' restore/>
+      </div>
+      <div class='span3'>
+        <save-sale/>
       </div>
     </submit:>
   </form>
@@ -222,3 +223,50 @@
     </ul>
   </div>
 </def>
+
+<def tag="search-products-modal">
+  <hobo-cache suffix="search-products-modal">
+    <modal part="search-products-modal-part">
+      <modal: id="search-products-modal">
+        <formlet class="form-horizontal" with='&this.lines.new' complete="$('#search-products-modal').modal('hide')" updates='#lines,#total,#payment-register-message'>
+          <modal-header><t key="product.show.search_products"/></modal-header>
+          <div class="modal-body">
+            <div class="form-horizontal">
+              <div class="control-group">
+                <select-menu class="search-products-input" name="products_id[]" multiple="true" options="&@products.map{|p| [p.name, p.id]}">
+                  <% for p in @products %>
+                    <option value="#{p.id}" ><%= p.metabusqueda %></option>
+                  <% end %>
+                </select-menu>
+              </div>
+            </div>
+          </div>
+          <modal-form-footer>
+            <submit: label="#{I18n.t 'product.show.search_products_button'}"/>
+          </modal-form-footer>
+        </formlet>
+      </modal:>
+    </modal>
+  </hobo-cache>
+</def>
+
+
+<def tag="search-products">
+  <search-products-modal/>
+  <form class="form-horizontal search-products span6" no-spinner="true" action="/search_products" ajax updates="#search-products-modal-part">
+    <div id="search-product-form" class="row-fluid">
+        <div class='span11'>
+          <input type="text" name="term" id="search-query" class="span search-query" placeholder="&t('sale.search', :default => 'Search')"/>
+        </div>
+        <div class='span1'>
+          <modal-open-button id="search-products" modal="search-products-modal">
+            <i class="icon-search"></i>
+          </modal-open-button>
+        </div>
+    </div>
+    <input type="submit" class="hidden span1 pull-right"/>
+  </form>
+
+</def>
+
+

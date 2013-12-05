@@ -26,6 +26,7 @@ class ProductTypesController < ApplicationController
   end
 
   def transfer
+    @products = Product.all
     @warehouse = Warehouse.all
     if params[:products_transfer] && !params[:products_transfer].empty?
       from = Warehouse.find_by_name(params[:from]).id
@@ -53,6 +54,18 @@ class ProductTypesController < ApplicationController
     linea = escape_javascript(render_to_string)
     render :js => "$('#{linea}').hide().appendTo('#products-table').fadeIn(250); $('#barcode').val('').focus()"
   end
+
+  def rellenar_textarea
+    @textarea = params[:clon_textarea].blank? ? params[:clon_textarea] : "#{params[:clon_textarea]}\n"
+    unless params[:products_id].blank?
+      for p in params[:products_id]
+        @textarea += p == params[:products_id].last ? "#{Product.find(p).barcode}" : "#{Product.find(p).barcode}\n"
+      end
+    end
+
+    hobo_ajax_response
+  end
+
 
   private
 

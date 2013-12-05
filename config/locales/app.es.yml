@@ -12,6 +12,7 @@ es:
   errors:
     barcode_in_use: El producto ya existe y no puedes actualizarlo.
   front:
+    date: Fecha
     transfer: Traslado
     from: "DESDE:"
     to: "HASTA:"
@@ -30,6 +31,9 @@ es:
       user:
         one: Usuario
         other: Usuarios
+      payment_method:
+        one: Método de pago
+        other: Métodos de pago
       warehouse:
         one: Almacén
         other: Almacenes
@@ -184,6 +188,8 @@ es:
       remove_no: No, no estoy seguro
       transfer_products_button: Trasladar productos seleccionados
       transfer_products: Trasladar productos
+      search_products: Buscar productos
+      search_products_button: Seleccionar productos
       products_transfered: Los productos han sido trasladados
   product_type:
     optional_barcode: Código de barras (opcional)
@@ -207,6 +213,7 @@ es:
     pending_sales: "Hay %{count} ventas pendientes de revisión"
     pending_sales_title: Ventas pendientes
     no_pending_sales: No hay ventas del día pendientes de revisión
+    no_pending_day_sales: No hay ventas del día pendientes de revisión
     barcode: Código de barras
     search: Buscar
     actions:

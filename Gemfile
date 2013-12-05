@@ -54,6 +54,7 @@ gem 'hobo-metasearch', :git => "git://github.com/suyccom/hobo-metasearch"
 gem "factory_girl_rails", "4.2.0", :require => false
 gem "faker", :git => 'git://github.com/jorgegorka/faker'
 gem "turbolinks"
+gem "jquery-turbolinks"
 
 # Development gems
 group :development do
