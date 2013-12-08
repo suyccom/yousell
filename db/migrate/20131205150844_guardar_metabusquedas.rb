@@ -1,6 +1,7 @@
 class GuardarMetabusquedas < ActiveRecord::Migration
   def up
     for p in Product.all
+      variations = ""
       for v in p.product_variations
         if v.value != I18n.t('product.wihout_variation')
           variations = "#{variations} #{v.value}"

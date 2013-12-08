@@ -11,9 +11,9 @@ $ ->
   $("#search-products").on "click", ->
     valor = $("#textarea-transfer").val()
     $("#clon-textarea").val(valor) 
-
+    valor2 = $("#selected_products_ids").val()
+    $("#clon-lines").val(valor2) 
 
 @check_toggle = ->
   $("input[type='checkbox']").click()
-
 

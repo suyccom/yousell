@@ -102,8 +102,6 @@ class ProductsController < ApplicationController
         product.destroy
       end
       flash[:info] = I18n.t("product.show.products_removed")
-
-
     # Transfer products selected
     elsif params[:price] && params[:price].to_i == 0 && params[:to] && params[:from] && !params[:to].empty? && !params[:from].empty? && params[:product_check] && !params[:product_check].empty?
       from = Warehouse.find_by_name(params[:from]).id
@@ -119,8 +117,6 @@ class ProductsController < ApplicationController
           flash[:info] = I18n.t("product.show.products_transfered")
         end
       end
-
-
     # Change price 
     elsif params[:price] && params[:price].to_i > 0 && params[:product_check] && !params[:product_check].empty?
       for product in Product.find(params[:product_check])
@@ -129,5 +125,13 @@ class ProductsController < ApplicationController
       flash[:info] = I18n.t("product.show.prices_changed")
     end
     redirect_to '/products'
+  end
+
+  def update
+    if request.xhr?
+      hobo_ajax_response
+    else
+      hobo_update
+    end
   end
 end

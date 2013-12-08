@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131205143635) do
+ActiveRecord::Schema.define(:version => 20131205150844) do
 
   create_table "labelsheets", :force => true do |t|
     t.string   "name_printer"

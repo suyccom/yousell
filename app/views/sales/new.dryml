@@ -1,7 +1,4 @@
 <new-page title="&t('sale.actions.new', :default => 'Sale')" without-heading>
-  <append-scripts:>
-  </append-scripts:>
-
   <content: with-flash-messages='&false'/>
   <form: replace>
     <add-line-form/>
@@ -9,20 +6,6 @@
     <complete-sale-form/>
   </form:>
 </new-page>
-
-<def tag='day-sale-formlet'>
-  <div part='day-sale-formlet'>
-    <formlet updates='#lines, #day-sale-formlet,#payment-register-message' class='pull-left'>
-      <% value = this.day_sale ? false : true %>
-      <input id='day_sale_hidden' type='hidden' name='sale[day_sale]' value="#{value}"/>
-      <input id='submit_day_sale' type='submit' class='hide'/>
-    </formlet>
-  </div>
-</def>
-
-<def tag='save-sale'>
-  <a href='/pending_sales' class='btn btn-large btn-info pull-right'><t key='sale.save'/></a>
-</def>
 
 <def tag='add-line-form'>
   <div class="well" style="padding-bottom:40px">
@@ -42,6 +25,59 @@
   </div>
 </def>
 
+<def tag="search-products">
+  <search-products-modal/>
+  <form class="form-horizontal search-products span6" no-spinner="true" action="/search_products" ajax updates="#search-products-modal-part">
+    <div id="search-product-form" class="row-fluid">
+        <div class='span11'>
+          <input type="text" name="term" id="search-query" class="span search-query" placeholder="&t('sale.search', :default => 'Search')"/>
+        </div>
+        <div class='span1'>
+          <modal-open-button id="search-products" modal="search-products-modal">
+            <i class="icon-search"></i>
+          </modal-open-button>
+        </div>
+    </div>
+    <input type="submit" class="hidden span1 pull-right"/>
+  </form>
+</def>
+
+<def tag="search-products-modal">
+  <hobo-cache suffix="search-products-modal">
+    <modal part="search-products-modal-part">
+      <modal: id="search-products-modal">
+        <formlet class="form-horizontal" with='&this.lines.new' complete="$('#search-products-modal').modal('hide')" updates='#lines,#total,#payment-register-message'>
+          <modal-header><t key="product.show.search_products"/></modal-header>
+          <div class="modal-body">
+            <div class="form-horizontal">
+              <div class="control-group">
+                <select-menu class="search-products-input" name="products_id[]" multiple="true" options="&@products.map{|p| [p.name, p.id]}">
+                  <% for p in @products %>
+                    <option value="#{p.id}" ><%= p.metabusqueda %></option>
+                  <% end %>
+                </select-menu>
+              </div>
+            </div>
+          </div>
+          <modal-form-footer>
+            <submit: label="#{I18n.t 'product.show.search_products_button'}"/>
+          </modal-form-footer>
+        </formlet>
+      </modal:>
+    </modal>
+  </hobo-cache>
+</def>
+
+<def tag='day-sale-formlet'>
+  <div part='day-sale-formlet'>
+    <formlet updates='#lines, #day-sale-formlet,#payment-register-message' class='pull-left'>
+      <% value = this.day_sale ? false : true %>
+      <input id='day_sale_hidden' type='hidden' name='sale[day_sale]' value="#{value}"/>
+      <input id='submit_day_sale' type='submit' class='hide'/>
+    </formlet>
+  </div>
+</def>
+
 <def tag='complete-sale-form'>
   <flash-messages/>
   <form without-cancel>
@@ -58,6 +94,24 @@
       </div>
     </submit:>
   </form>
+</def>
+
+<def tag='lines'>
+  <div part='lines'>
+    <!-- We use reload here in order to get the lines fresh from the DB. 
+    If not, the new line form adds one additional empty line to the array -->
+    <table:lines.reload class='table table-striped table-bordered collection' fields='name, amount, discount, price, type-discount'>
+      <price-view:><currency/></price-view:>
+      <amount-view:><line-amount-controls/></amount-view:>
+      <discount-view:><line-discount-controls/></discount-view:>
+      <type-discount-heading:><t key='activerecord.attributes.line.remove'/></type-discount-heading:>
+      <type-discount-view:>
+        <ajax-button name='destroy' icon='remove' id='&this_parent.id'/>
+      </type-discount-view:>
+      <tfoot:><total-row with='&this.first.sale' if='&this.first'/></tfoot:>
+    </table>
+  </div>
+  <payment-buttons/>
 </def>
 
 <def tag='payment-buttons'>
@@ -102,24 +156,6 @@
       </formlet>
     </modal:>
   </modal>
-</def>
-
-<def tag='lines'>
-  <div part='lines'>
-    <!-- We use reload here in order to get the lines fresh from the DB. 
-    If not, the new line form adds one additional empty line to the array -->
-    <table:lines.reload class='table table-striped table-bordered collection' fields='name, amount, discount, price, type-discount'>
-      <price-view:><currency/></price-view:>
-      <amount-view:><line-amount-controls/></amount-view:>
-      <discount-view:><line-discount-controls/></discount-view:>
-      <type-discount-heading:><t key='activerecord.attributes.line.remove'/></type-discount-heading:>
-      <type-discount-view:>
-        <ajax-button name='destroy' icon='remove' id='&this_parent.id'/>
-      </type-discount-view:>
-      <tfoot:><total-row with='&this.first.sale' if='&this.first'/></tfoot:>
-    </table>
-  </div>
-  <payment-buttons/>
 </def>
 
 <def tag='total-row'>
@@ -224,49 +260,7 @@
   </div>
 </def>
 
-<def tag="search-products-modal">
-  <hobo-cache suffix="search-products-modal">
-    <modal part="search-products-modal-part">
-      <modal: id="search-products-modal">
-        <formlet class="form-horizontal" with='&this.lines.new' complete="$('#search-products-modal').modal('hide')" updates='#lines,#total,#payment-register-message'>
-          <modal-header><t key="product.show.search_products"/></modal-header>
-          <div class="modal-body">
-            <div class="form-horizontal">
-              <div class="control-group">
-                <select-menu class="search-products-input" name="products_id[]" multiple="true" options="&@products.map{|p| [p.name, p.id]}">
-                  <% for p in @products %>
-                    <option value="#{p.id}" ><%= p.metabusqueda %></option>
-                  <% end %>
-                </select-menu>
-              </div>
-            </div>
-          </div>
-          <modal-form-footer>
-            <submit: label="#{I18n.t 'product.show.search_products_button'}"/>
-          </modal-form-footer>
-        </formlet>
-      </modal:>
-    </modal>
-  </hobo-cache>
+<def tag='save-sale'>
+  <a href='/pending_sales' class='btn btn-large btn-info pull-right'><t key='sale.save'/></a>
 </def>
-
-
-<def tag="search-products">
-  <search-products-modal/>
-  <form class="form-horizontal search-products span6" no-spinner="true" action="/search_products" ajax updates="#search-products-modal-part">
-    <div id="search-product-form" class="row-fluid">
-        <div class='span11'>
-          <input type="text" name="term" id="search-query" class="span search-query" placeholder="&t('sale.search', :default => 'Search')"/>
-        </div>
-        <div class='span1'>
-          <modal-open-button id="search-products" modal="search-products-modal">
-            <i class="icon-search"></i>
-          </modal-open-button>
-        </div>
-    </div>
-    <input type="submit" class="hidden span1 pull-right"/>
-  </form>
-
-</def>
-
 

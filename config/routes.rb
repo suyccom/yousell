@@ -22,6 +22,10 @@ Yousell::Application.routes.draw do
   match 'search_products' => 'front#search_products'
   match 'product_types/rellenar_textarea' => 'product_types#rellenar_textarea'
 
+  # Warehouses
+  match 'refill_lines' => 'warehouses#refill_lines'
+  match 'change_amount' => 'warehouses#change_amount'
+
   # Pending day sales
   match 'pending_day_sales' => 'sales#pending_day_sales'
   match 'pending_day_sales/:sales_date' => 'sales#destroy_pending_day_sales'
