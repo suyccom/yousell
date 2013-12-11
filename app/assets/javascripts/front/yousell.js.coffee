@@ -14,6 +14,10 @@ $ ->
     valor2 = $("#selected_products_ids").val()
     $("#clon-lines").val(valor2) 
 
+  $(".modal").on "shown", -> 
+    $("#payment_modal").focus()
+
 @check_toggle = ->
   $("input[type='checkbox']").click()
+
 
