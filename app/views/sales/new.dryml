@@ -151,7 +151,7 @@
           <input type='hidden' name='payment_sale_id' value='&@sale.id'/>
         </div>
         <modal-form-footer>
-          <submit: label="Guardar"/>
+          <submit: label="#{ht 'sale.actions.save', :default=>['Save']}"/>
         </modal-form-footer>
       </formlet>
     </modal:>

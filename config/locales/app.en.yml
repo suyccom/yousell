@@ -62,6 +62,10 @@ en:
       warehouse:
         Warehouse: Warehouse
         actions: Actions
+        delete_all: Delete all
+        name: Name
+        change_product: Change product of warehouse
+        change: Change
       product_type:
         ProductType: Product type
         actions: Actions
