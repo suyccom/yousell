@@ -1,0 +1,84 @@
+<index-page>
+
+
+  <after-content-body:>
+    <change-amount/>
+    <lines/>
+  </after-content-body:>
+
+</index-page>
+
+
+<def tag="change-amount">
+  <div class="row-fluid">
+    Cambiar los productos de almacén
+  </div>
+  <div class="well" style="padding-bottom:40px">
+    <search-products/>
+  </div>
+</def>
+
+<def tag="search-products">
+  <search-products-modal/>
+  <form class="form-horizontal search-products span11" no-spinner="true" action="/search_products" ajax updates="#search-products-modal-part">
+    <div id="search-product-form" class="row-fluid">
+        <div class='span11'>
+          <input type="text" name="term" id="search-query" class="span search-query" placeholder="&t('sale.search', :default => 'Search')"/>
+        </div>
+        <div class='span1'>
+          <modal-open-button id="search-products" modal="search-products-modal">
+            <i class="icon-search"></i>
+          </modal-open-button>
+        </div>
+    </div>
+    <input type="submit" class="hidden span1 pull-right"/>
+  </form>
+</def>
+
+<def tag="search-products-modal">
+  <hobo-cache suffix="search-products-modal">
+    <modal part="search-products-modal-part">
+      <modal: id="search-products-modal">
+        <formlet class="form-horizontal" action='refill_lines' complete="$('#search-products-modal').modal('hide')" updates='#lines'>
+          <modal-header><t key="product.show.search_products"/></modal-header>
+          <div class="modal-body">
+            <div class="form-horizontal">
+              <div class="control-group">
+                <input type="hidden" name="clon_lines" id="clon-lines" value=""/>
+                <select-menu class="search-products-input" name="products_id[]" multiple="true" options="&@products.map{|p| [p.name, p.id]}">
+                  <% for p in @products %>
+                    <option value="#{p.id}" ><%= p.metabusqueda %></option>
+                  <% end %>
+                </select-menu>
+              </div>
+            </div>
+          </div>
+          <modal-form-footer>
+            <submit: label="#{I18n.t 'product.show.search_products_button'}"/>
+          </modal-form-footer>
+        </formlet>
+      </modal:>
+    </modal>
+  </hobo-cache>
+</def>
+
+<def tag='lines'>
+  <div part='lines'>
+    <input type="hidden" id="selected_products_ids" value="#{@selected_products.*.id if @selected_products}"/>
+    <form action="change_amount">
+      <table with="&@selected_products" fields="name,amount,warehouse,actions" class='table table-striped table-bordered collection'>
+        <amount-view:><input type="text" name="[#{this_parent.id}][amount]"/> </amount-view:>
+        <warehouse-view:>
+          <select-input options="&Warehouse.all.map{|w| [w.name,w.id]}" name="[#{this_parent.id}][warehouse]"/>
+        </warehouse-view:>
+        <actions-view:>
+          <a href="/refill_lines"
+             params="&{:destroy=>true, :clon_lines=>@selected_products.*.id, :product_id=>this_parent.id, :page_path =>'/warehouses'}"
+             id="destroy" class="btn" updates="#lines">X</a>
+        </actions-view:>
+      </table>
+      <submit label="Cambiar cantidades" if="&@selected_products"/>
+    </form>
+  </div>
+</def>
+
