@@ -128,8 +128,18 @@
           </if>
         </unless>
       </span>
-      <repeat with='&PaymentMethod.all'>
-        <modal-open-button id='#{this.name}' modal='payment-modal' class='btn btn-large payment-method' data-method-id='#{this.id}'>
+      <repeat with='&PaymentMethod.not_voucher'>
+          <modal-open-button id='#{this.name}' modal='payment-modal' class='btn btn-large payment-method' data-method-id='#{this.id}'>
+          <if test='&@sale.payments.where(:payment_method_id => this.id) && @sale.payments.where(:payment_method_id => this.id).sum(:amount) != 0'>
+            <this/><br/><currency with='&@sale.payments.where(:payment_method_id => this.id).sum(:amount)'/>
+          </if>
+          <else>
+            <this/>
+          </else>
+        </modal-open-button>
+      </repeat>
+      <repeat with='&PaymentMethod.voucher'>
+        <modal-open-button id='#{this.name}' modal='payment-voucher-modal' class='btn btn-large payment-method' data-method-id='#{this.id}'>
           <if test='&@sale.payments.where(:payment_method_id => this.id) && @sale.payments.where(:payment_method_id => this.id).sum(:amount) != 0'>
             <this/><br/><currency with='&@sale.payments.where(:payment_method_id => this.id).sum(:amount)'/>
           </if>
@@ -147,6 +157,22 @@
         <modal-header id='modal-header'/>
         <div class='modal-body'>
           <input type='text' name='payment_amount' id="payment_modal" value='' placeholder='0'/>
+          <input type='hidden' name='payment_method_id' value=''/>
+          <input type='hidden' name='payment_sale_id' value='&@sale.id'/>
+        </div>
+        <modal-form-footer>
+          <submit: label="#{ht 'sale.actions.save', :default=>['Save']}"/>
+        </modal-form-footer>
+      </formlet>
+    </modal:>
+  </modal>
+  <modal>
+    <modal: id='payment-voucher-modal'>
+      <formlet action='/payments/at_sale' updates='#payment-register-message,#payment-buttons' 
+        complete="$('#payment-voucher-modal').modal('hide')">
+        <modal-header id='modal-header'/>
+        <div class='modal-body'>
+          <select-input name="payment_voucher" options="&Voucher.where('state = ?', 'emitido').map{|v| [v.name,v.id]}" first-option="#{t 'activerecord.attributes.voucher.choose'}"/>
           <input type='hidden' name='payment_method_id' value=''/>
           <input type='hidden' name='payment_sale_id' value='&@sale.id'/>
         </div>

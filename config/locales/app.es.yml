@@ -58,7 +58,13 @@ es:
       labelsheet:
         one: Plantilla
         other: Plantillas
+      voucher:
+        one: Vale
+        other: Vales
     attributes:
+      payment:
+        amount: Cantidad
+        payment_method: Nombre
       user:
         name: Nombre
         password: Contraseña
@@ -147,6 +153,13 @@ es:
         bottom_margin: Margen inferior
         left_margin: Margen izquierdo
         right_margin: Margen derecho
+      voucher:
+        Voucher: Vale
+        name: Nombre
+        choose: Elige un vale
+        amount: Cantidad
+        state: Estado
+        actions: Acciones
     attribute_help:
       variation:
         value: Utiliza valores separados por comas

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131205150844) do
+ActiveRecord::Schema.define(:version => 20131215181458) do
 
   create_table "labelsheets", :force => true do |t|
     t.string   "name_printer"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20131205150844) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "voucher",    :default => false
   end
 
   create_table "payments", :force => true do |t|
@@ -167,11 +168,15 @@ ActiveRecord::Schema.define(:version => 20131205150844) do
   end
 
   create_table "vouchers", :force => true do |t|
-    t.date     "validity_period"
     t.float    "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state"
+    t.string   "name"
+    t.integer  "payment_id"
   end
+
+  add_index "vouchers", ["payment_id"], :name => "index_vouchers_on_payment_id"
 
   create_table "warehouses", :force => true do |t|
     t.string   "name"

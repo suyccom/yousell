@@ -4,9 +4,10 @@ class PaymentMethod < ActiveRecord::Base
 
   fields do
     name :string, :unique
+    voucher :boolean, :default => false
     timestamps
   end
-  attr_accessible :name
+  attr_accessible :name, :voucher
 
   # --- Relations --- #
   has_many :payments

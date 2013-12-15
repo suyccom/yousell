@@ -81,7 +81,12 @@ class Sale < ActiveRecord::Base
       self.completed_at = Time.now
       self.sale_total = self.total
       for line in lines
-        pw = line.product.current_product_warehouse
+        # Si llegamos hasta aqui es porque alguno de los almacenes tienen stock, restamos del que tenga stock.
+        if line.product.current_product_warehouse.amount.blank? || line.product.current_product_warehouse.amount > 0
+          pw = line.product.product_warehouses.where("amount > 0").first 
+        else
+          pw = line.product.current_product_warehouse
+        end
         pw.update_attribute(:amount, pw.amount - line.amount)
       end
     end

@@ -50,7 +50,13 @@ en:
       labelsheet:
         one: Labelsheet
         other: Labelsheets
+      voucher:
+        one: Voucher
+        other: Vouchers
     attributes:
+      payment:
+        amount: Amount
+        payment_method: Name
       user:
         name: Name
         password: Password
@@ -107,6 +113,13 @@ en:
         name: Name
         amount: Amount
         price: Price
+        actions: Actions
+      voucher:
+        Voucher: Voucher
+        name: Name
+        choose: Choose a voucher
+        amount: Amount
+        state: State
         actions: Actions
     attribute_help:
       variation:

@@ -17,8 +17,17 @@
     <if test="&@this.payments">
       <h3 class="collection-heading"><t key="sale.show.payments"/></h3>
       <table:payments class="table table-striped table-bordered collection"
-                   fields="amount, payment_method.name">
+                   fields="amount, payment_method">
         <amount-view:><currency/></amount-view:>
+        <payment-method-view:>
+          <if test="&PaymentMethod.find_by_name(this.name).voucher">
+            <% voucher = Voucher.where("payment_id = ?",this_parent.id).first %>
+            <this.name/> <a href="/vouchers"><%= voucher.name %></a>
+          </if>
+          <else>
+            <this.name/>
+          </else>
+        </payment-method-view:>
       </table>
     </if>
   </collection:>
