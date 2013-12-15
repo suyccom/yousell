@@ -18,7 +18,7 @@
     <div class="span4"><t key='front.to'/> <select-menu name="to" options="&@warehouse"/></div>
     <div class="span12" style="margin-top:10px;" part="textarea">
       <b><t key='front.scan'/></b>
-      <textarea  class="span12 textarea-transfer" part="textarea-transfer" name="products_transfer"><%= @textarea %></textarea>
+      <textarea  class="span12 textarea-transfer" part="textarea-transfer" name="products_transfer" autofocus><%= @textarea %></textarea>
     </div>
     <div class="span12" style="margin-top:10px;">
       <input type="submit" class="btn btn-large btn-block" value="Trasladar"/>
@@ -27,30 +27,28 @@
 </def>
 
 <def tag="search-products-modal">
-  <hobo-cache suffix="search-products-modal">
-    <modal part="search-products-modal-part">
-      <modal: id="search-products-modal">
-        <formlet class="form-horizontal" action="rellenar_textarea" complete="$('#search-products-modal').modal('hide')" updates="#textarea-transfer">
-          <modal-header><t key="product.show.search_products"/></modal-header>
-          <div class="modal-body">
-            <div class="form-horizontal">
-              <div class="control-group">
-                <input type="hidden" name="clon_textarea" id="clon-textarea" value=""/>
-                <select-menu class="search-products-input" name="products_id[]" multiple="true" options="&@products.map{|p| [p.name, p.id]}">
-                  <% for p in @products %>
-                    <option value="#{p.id}" ><%= p.metabusqueda %></option>
-                  <% end %>
-                </select-menu>
-              </div>
+  <modal part="search-products-modal-part">
+    <modal: id="search-products-modal">
+      <formlet class="form-horizontal" action="rellenar_textarea" complete="$('#search-products-modal').modal('hide')" updates="#textarea-transfer">
+        <modal-header><t key="product.show.search_products"/></modal-header>
+        <div class="modal-body">
+          <div class="form-horizontal">
+            <div class="control-group">
+              <input type="hidden" name="clon_textarea" id="clon-textarea" value="" />
+              <select-menu class="search-products-input" name="products_id[]" multiple="true" options="&@products.map{|p| [p.name, p.id]}">
+                <% for p in @products %>
+                  <option value="#{p.id}" ><%= p.metabusqueda %></option>
+                <% end %>
+              </select-menu>
             </div>
           </div>
-          <modal-form-footer>
-            <submit: label="#{I18n.t 'product.show.search_products_button'}"/>
-          </modal-form-footer>
-        </formlet>
-      </modal:>
-    </modal>
-  </hobo-cache>
+        </div>
+        <modal-form-footer>
+          <submit: label="#{I18n.t 'product.show.search_products_button'}"/>
+        </modal-form-footer>
+      </formlet>
+    </modal:>
+  </modal>
 </def>
 
 <def tag="search-products">

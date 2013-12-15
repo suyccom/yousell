@@ -43,29 +43,27 @@
 </def>
 
 <def tag="search-products-modal">
-  <hobo-cache suffix="search-products-modal">
-    <modal part="search-products-modal-part">
-      <modal: id="search-products-modal">
-        <formlet class="form-horizontal" with='&this.lines.new' complete="$('#search-products-modal').modal('hide')" updates='#lines,#total,#payment-register-message'>
-          <modal-header><t key="product.show.search_products"/></modal-header>
-          <div class="modal-body">
-            <div class="form-horizontal">
-              <div class="control-group">
-                <select-menu class="search-products-input" name="products_id[]" multiple="true" options="&@products.map{|p| [p.name, p.id]}">
-                  <% for p in @products %>
-                    <option value="#{p.id}" ><%= p.metabusqueda %></option>
-                  <% end %>
-                </select-menu>
-              </div>
+  <modal part="search-products-modal-part">
+    <modal: id="search-products-modal">
+      <formlet class="form-horizontal" with='&this.lines.new' complete="$('#search-products-modal').modal('hide')" updates='#lines,#total,#payment-register-message'>
+        <modal-header><t key="product.show.search_products"/></modal-header>
+        <div class="modal-body">
+          <div class="form-horizontal">
+            <div class="control-group">
+              <select-menu class="search-products-input" name="products_id[]" multiple="true" options="&@products.map{|p| [p.name, p.id]}">
+                <% for p in @products %>
+                  <option value="#{p.id}" ><%= p.metabusqueda %></option>
+                <% end %>
+              </select-menu>
             </div>
           </div>
-          <modal-form-footer>
-            <submit: label="#{I18n.t 'product.show.search_products_button'}"/>
-          </modal-form-footer>
-        </formlet>
-      </modal:>
-    </modal>
-  </hobo-cache>
+        </div>
+        <modal-form-footer>
+          <submit: label="#{I18n.t 'product.show.search_products_button'}"/>
+        </modal-form-footer>
+      </formlet>
+    </modal:>
+  </modal>
 </def>
 
 <def tag='day-sale-formlet'>
@@ -148,11 +146,13 @@
         complete="$('#payment-modal').modal('hide')">
         <modal-header id='modal-header'/>
         <div class='modal-body'>
-          <input type='text' name='payment_amount' value='' placeholder='0'/>
+          <input type='text' name='payment_amount' id="payment_modal" value='' placeholder='0'/>
           <input type='hidden' name='payment_method_id' value=''/>
           <input type='hidden' name='payment_sale_id' value='&@sale.id'/>
         </div>
-        <modal-form-footer/>
+        <modal-form-footer>
+          <submit: label="#{ht 'sale.actions.save', :default=>['Save']}"/>
+        </modal-form-footer>
       </formlet>
     </modal:>
   </modal>

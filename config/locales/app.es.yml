@@ -71,7 +71,10 @@ es:
       warehouse:
         Warehouse: Almacén
         actions: Acciones
+        delete_all: Borrar todos
         name: Nombre
+        change_product: Cambiar productos de almacén
+        change: Cambiar
       product_type:
         ProductType: Tipo de producto
         actions: Acciones
