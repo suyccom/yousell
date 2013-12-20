@@ -1,0 +1,9 @@
+<index-page>
+  <content-header:>
+    <p if="Voucher.all.amount.sum "></p>
+    <a href="/vouchers/new" class="btn pull-right btn-primary new-link new-voucher-link"> <ht key="voucher.actions.new"></ht></a>
+    <h2 class="heading"><ht key="voucher.index.heading"></ht></h2>
+    <br/><filter-menu param-name="state" options="&Voucher.all.*.state.uniq" />
+  </content-header:>
+</index-page>
+

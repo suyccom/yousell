@@ -5,8 +5,9 @@ class VouchersController < ApplicationController
   auto_actions :all, :except => :show
 
   def index
-    # Añadir paginación y búsqueda por estado
-    hobo_index
+      hobo_index Voucher.apply_scopes(
+      :state_is => params[:state],
+    ), :per_page => params[:per_page] ? params[:per_page].to_i : 15
   end
 
 end
