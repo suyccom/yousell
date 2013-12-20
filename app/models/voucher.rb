@@ -3,7 +3,7 @@ class Voucher < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    name            :string
+    name            :string, :unique
     amount          :float
     state           enum_string(:emitido, :canjeado)
     timestamps
@@ -12,9 +12,10 @@ class Voucher < ActiveRecord::Base
 
   belongs_to :payment
 
-  before_create :set_state
-  def set_state
+  before_create :set_values
+  def set_values
     self.state = "emitido"
+    self.name = Voucher.all.size == 0 ? "#{Date.today}-000001" : "#{Date.today}-#{"%06d" % (Voucher.last.name.last(6).to_i + 1)}"
   end
 
   # --- Permissions --- #
