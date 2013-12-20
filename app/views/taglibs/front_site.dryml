@@ -27,7 +27,7 @@
 
 <extend tag="form" for="Voucher">
   <old-form merge multipart>
-    <field-list: fields="name,amount"/>
+    <field-list: fields="amount"/>
   </old-form>
 </extend>
 
