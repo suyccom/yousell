@@ -1,0 +1,22 @@
+<page without-navbar without-edit-link without-record-flags>
+  <content-header: replace>
+    <address>
+      <strong>ZAPATERIA MORALES</strong><br/>
+      C/ Rodriguez Arias, Nº37<br/>
+      48011 - Bilbao<br/>
+      Vizcaya<br/>
+      C.I.F.: 30583286W
+    </address>
+  </content-header:>
+  <content-body:>
+    <h2>Nº <%= @voucher.name %></h2>
+    <h4>CANTIDAD: <%= number_to_currency(@voucher.amount) %> </h4>
+  </content-body:>
+
+  <footer:>
+    <div class="align-center">
+      Sin fecha límite. No acumulable.<br/>
+    </div>
+  </footer:>
+
+</page>

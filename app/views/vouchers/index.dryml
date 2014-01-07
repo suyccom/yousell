@@ -1,9 +1,32 @@
 <index-page>
   <content-header:>
-    <p if="Voucher.all.amount.sum "></p>
     <a href="/vouchers/new" class="btn pull-right btn-primary new-link new-voucher-link"> <ht key="voucher.actions.new"></ht></a>
     <h2 class="heading"><ht key="voucher.index.heading"></ht></h2>
     <br/><filter-menu param-name="state" options="&Voucher.all.*.state.uniq" />
   </content-header:>
 </index-page>
+
+
+<!-- Small hack for Bootstrap template issue when disabling the show page -->
+<!-- We force the delete icon to work -->
+<def tag="bootstrap-table-actions">
+  <% if can_update?(this_parent) %>
+    <do with="&this_parent">
+      <a action="edit" if="&object_url(this, :edit)" param="edit">
+        <i class="icon icon-edit"></i>
+      </a>
+    </do>
+  <% end %>
+  <% if can_delete?(this_parent) %>
+    <do param="delete">
+      <%= link_to '<i class=\'icon-trash\'></i>'.html_safe, this_parent, :'data-confirm' => t('hobo.messages.confirm', :default=>'Are you sure?'), :method => :delete %>
+    </do>
+  <% end %>
+  <do with="&this_parent">
+    <a href="/vouchers?print=true&id=#{this.id}">
+      <i class="icon icon-print"></i>
+    </a>
+  </do>
+</def>
+
 
