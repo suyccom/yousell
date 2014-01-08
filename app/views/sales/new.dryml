@@ -136,7 +136,7 @@
         </unless>
       </span>
       <repeat with='&PaymentMethod.not_voucher'>
-          <modal-open-button id='#{this.name}' modal='payment-modal' class='btn btn-large payment-method' data-method-id='#{this.id}'>
+        <modal-open-button id='#{this.name}' modal='payment-modal' class='btn btn-large payment-method' data-method-id='#{this.id}'>
           <if test='&@sale.payments.where(:payment_method_id => this.id) && @sale.payments.where(:payment_method_id => this.id).sum(:amount) != 0'>
             <this/><br/><currency with='&@sale.payments.where(:payment_method_id => this.id).sum(:amount)'/>
           </if>

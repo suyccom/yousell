@@ -81,7 +81,7 @@ class Sale < ActiveRecord::Base
       self.completed_at = Time.now
       self.sale_total = self.total
       for line in lines
-        # Si llegamos hasta aqui es porque alguno de los almacenes tienen stock, restamos del que tenga stock.
+        # If we are here it is because warehouses have stock. We remove the product in the stock that has amount. 
         if line.product.current_product_warehouse.amount.blank? || line.product.current_product_warehouse.amount > 0
           pw = line.product.product_warehouses.where("amount > 0").first 
         else

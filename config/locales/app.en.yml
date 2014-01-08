@@ -1,5 +1,18 @@
 en:
+  total: TOTAL
+  amount: AMOUNT
+  company: ZAPATERIA MORALES
+  address: C/ Rodriguez Arias, Nº37
+  cpostal:48011
+  city:Bilbao
+  country:Vizcaya
+  cif: "C.I.F: 30583286W"
   currency: "$"
+  footer:
+    voucher: No deadline. Not combinable.
+    ticket1: PAID WITH CREDIT CARD
+    ticket2: NO CHANGES ACCEPTED WITHOUT BOX
+    ticket3: NO MONEY IS RETURNED
   errors:
     barcode_in_use: "The product already exists and you can't update it."
   front:
@@ -55,6 +68,9 @@ en:
         one: Voucher
         other: Vouchers
     attributes:
+      voucher/states:
+        canjeado: "Redeemed"
+        emitido: "Issued"
       payment:
         amount: Amount
         payment_method: Name
