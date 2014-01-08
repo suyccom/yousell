@@ -21,8 +21,7 @@
         <amount-view:><currency/></amount-view:>
         <payment-method-view:>
           <if test="&PaymentMethod.find_by_name(this.name).voucher">
-            <% voucher = Voucher.where("payment_id = ?",this_parent.id).first %>
-            <this.name/> <a href="/vouchers"><%= voucher.name %></a>
+            <this.name/> <a href="/vouchers"><%= @voucher.name %></a>
           </if>
           <else>
             <this.name/>
