@@ -9,6 +9,7 @@
 # please post it to http://hobousers.googlegroups.com. Thank you!
 
 es:
+  currency: €
   errors:
     barcode_in_use: El producto ya existe y no puedes actualizarlo.
   front:
@@ -109,6 +110,7 @@ es:
         product_type: Tipo de producto
         product_variations: Variaciones
         provider: Proveedor
+        generic: ¿Genérico?
         provider_code: Código proveedor-producto
         warehouse: Almacén
         actions: Acciones

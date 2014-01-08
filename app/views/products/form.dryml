@@ -1,6 +1,6 @@
 <def tag="product-form">
   <do part="product-form">
-    <field-list fields="product_type, provider, amount, product_variations, price, product_warehouses">
+    <field-list fields="product_type, provider, amount, product_variations, price,generic, product_warehouses">
       <product-type-view:>
         <name-one autocomplete="off"/>
       </product-type-view:>

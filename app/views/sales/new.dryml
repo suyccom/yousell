@@ -46,7 +46,6 @@
   <modal part="search-products-modal-part">
     <modal: id="search-products-modal">
       <formlet class="form-horizontal" with='&this.lines.new' complete="$('#search-products-modal').modal('hide')" updates='#lines,#total,#payment-register-message'>
-        <modal-header><t key="product.show.search_products"/></modal-header>
         <div class="modal-body">
           <div class="form-horizontal">
             <div class="control-group">
@@ -99,7 +98,15 @@
     <!-- We use reload here in order to get the lines fresh from the DB. 
     If not, the new line form adds one additional empty line to the array -->
     <table:lines.reload class='table table-striped table-bordered collection' fields='name, amount, discount, price, type-discount'>
-      <price-view:><currency/></price-view:>
+
+      <price-view:>
+        <if test="&this_parent.product.generic == true">
+          <click-editor-innards updates="#lines,#payment-register-message">
+            <after-view:> <t key="currency"/></after-view:>
+          </click-editor-innards>
+        </if>
+        <else><currency/></else>
+      </price-view:>
       <amount-view:><line-amount-controls/></amount-view:>
       <discount-view:><line-discount-controls/></discount-view:>
       <type-discount-heading:><t key='activerecord.attributes.line.remove'/></type-discount-heading:>
@@ -172,7 +179,10 @@
         complete="$('#payment-voucher-modal').modal('hide')">
         <modal-header id='modal-header'/>
         <div class='modal-body'>
-          <select-input name="payment_voucher" options="&Voucher.where('state = ?', 'emitido').map{|v| [v.name,v.id]}" first-option="#{t 'activerecord.attributes.voucher.choose'}"/>
+          <select-menu class="search-products-input" 
+                       name="payment_voucher" multiple="true"
+                       options="&Voucher.where('state = ?', 'emitido').map{|v| [v.name,v.id]}"
+                       first-option="#{t 'activerecord.attributes.voucher.choose'}"/>
           <input type='hidden' name='payment_method_id' value=''/>
           <input type='hidden' name='payment_sale_id' value='&@sale.id'/>
         </div>

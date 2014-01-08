@@ -8,12 +8,13 @@ class Product < ActiveRecord::Base
     price   :decimal, :precision => 8, :scale => 2, :default => 0
     barcode :string, :unique
     description :string
+    generic :boolean, :default => false
     metabusqueda :string
     timestamps
   end
   attr_accessible :price, :amount, :barcode, :product_type, :product_type_id, :product_variations, 
     :provider_code, :provider, :provider_id, :warehouse, :warehouse_id, :code,
-    :product_warehouses, :description
+    :product_warehouses, :description, :generic
 
   # --- Relations --- #
   belongs_to :product_type
@@ -130,7 +131,8 @@ class Product < ActiveRecord::Base
       when :code
         # What format have this? If it can be F000, 1000, 100, 300Z, 6000X, etc... Why dont have this field as wildcard and all that user puts here save it in our database 
         zero_amount = piece[:chars] - product_type.name.size
-        string += "0" * zero_amount + product_type.name unless product_type.name.blank?
+        string += "0" * zero_amount + product_type.name if !product_type.name.blank? && product_type.name.size <= 4
+        string += product_type.name.first(4) if !product_type.name.blank? && product_type.name.size > 4
       end
     end
     return string
