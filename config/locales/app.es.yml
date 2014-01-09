@@ -9,13 +9,13 @@
 # please post it to http://hobousers.googlegroups.com. Thank you!
 
 es:
-  total: TOTAL
-  amount: CANTIDAD
-  company: ZAPATERIA MORALES
-  address: C/ Rodriguez Arias, Nº37
-  cpostal:48011
-  city:Bilbao
-  country:Vizcaya
+  total: "TOTAL"
+  amount: "CANTIDAD"
+  company: "ZAPATERIA MORALES"
+  address: "C/ Rodriguez Arias, Nº37"
+  cpostal: "48011"
+  city: "Bilbao"
+  country: "Vizcaya"
   cif: "C.I.F: 30583286W"
   currency: €
   footer:
