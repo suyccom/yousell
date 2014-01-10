@@ -9,6 +9,20 @@
 # please post it to http://hobousers.googlegroups.com. Thank you!
 
 es:
+  total: "TOTAL"
+  amount: "CANTIDAD"
+  company: "ZAPATERIA MORALES"
+  address: "C/ Rodriguez Arias, Nº37"
+  cpostal: "48011"
+  city: "Bilbao"
+  country: "Vizcaya"
+  cif: "C.I.F: 30583286W"
+  currency: €
+  footer:
+    voucher: Sin fecha límite. No acumulable.
+    ticket1: PAGADO CON TARJETA CREDITO
+    ticket2: NO SE ACEPTAN CAMBIOS SIN CAJA
+    ticket3: NO SE DEVUELVE EL DINERO
   errors:
     barcode_in_use: El producto ya existe y no puedes actualizarlo.
   front:
@@ -58,7 +72,16 @@ es:
       labelsheet:
         one: Plantilla
         other: Plantillas
+      voucher:
+        one: Vale
+        other: Vales
     attributes:
+      voucher/states:
+        canjeado: "Canjeado"
+        emitido: "Emitido"
+      payment:
+        amount: Cantidad
+        payment_method: Nombre
       user:
         name: Nombre
         password: Contraseña
@@ -103,6 +126,7 @@ es:
         product_type: Tipo de producto
         product_variations: Variaciones
         provider: Proveedor
+        generic: ¿Genérico?
         provider_code: Código proveedor-producto
         warehouse: Almacén
         actions: Acciones
@@ -147,6 +171,13 @@ es:
         bottom_margin: Margen inferior
         left_margin: Margen izquierdo
         right_margin: Margen derecho
+      voucher:
+        Voucher: Vale
+        name: Nombre
+        choose: Elige un vale
+        amount: Cantidad
+        state: Estado
+        actions: Acciones
     attribute_help:
       variation:
         value: Utiliza valores separados por comas

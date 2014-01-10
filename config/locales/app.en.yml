@@ -1,12 +1,26 @@
 en:
+  total: "TOTAL"
+  amount: "AMOUNT"
+  company: "ZAPATERIA MORALES"
+  address: "C/ Rodriguez Arias, Nº37"
+  cpostal: "48011"
+  city: "Bilbao"
+  country: "Vizcaya"
+  cif: "C.I.F: 30583286W"
+  currency: "$"
+  footer:
+    voucher: No deadline. Not combinable.
+    ticket1: PAID WITH CREDIT CARD
+    ticket2: NO CHANGES ACCEPTED WITHOUT BOX
+    ticket3: NO MONEY IS RETURNED
   errors:
-    barcode_in_use: The product already exists and you can't update it.
+    barcode_in_use: "The product already exists and you can't update it."
   front:
-    transfer: Transfer
+    transfer: "Transfer"
     from: "FROM:"
     to: "TO:"
-    scan: Scan the products you want to move
-    date: Date
+    scan: "Scan the products you want to move"
+    date: "Date"
 
   pending_day_sales_date: Date
   adddiscount: apply
@@ -50,7 +64,16 @@ en:
       labelsheet:
         one: Labelsheet
         other: Labelsheets
+      voucher:
+        one: Voucher
+        other: Vouchers
     attributes:
+      voucher/states:
+        canjeado: "Redeemed"
+        emitido: "Issued"
+      payment:
+        amount: Amount
+        payment_method: Name
       user:
         name: Name
         password: Password
@@ -90,6 +113,7 @@ en:
         product_type: Product type
         product_variations: Variations
         provider: Provider
+        generic: Generic?
         warehouse: Warehouse
         provider_code: Provider-Product code
       sale:
@@ -107,6 +131,13 @@ en:
         name: Name
         amount: Amount
         price: Price
+        actions: Actions
+      voucher:
+        Voucher: Voucher
+        name: Name
+        choose: Choose a voucher
+        amount: Amount
+        state: State
         actions: Actions
     attribute_help:
       variation:

@@ -25,6 +25,12 @@
   <%= number_to_currency(this) %>
 </def>
 
+<extend tag="form" for="Voucher">
+  <old-form merge multipart>
+    <field-list: fields="amount"/>
+  </old-form>
+</extend>
+
 <extend tag="page">
   <old-page merge>
     <account-nav:>

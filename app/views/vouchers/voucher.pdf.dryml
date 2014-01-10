@@ -1,0 +1,22 @@
+<page without-navbar without-edit-link without-record-flags>
+  <content-header: replace>
+    <address>
+      <strong><t key="company"/></strong><br/>
+      <t key="address"/><br/>
+      <t key="cpostal"/> - <t key="city"/><br/>
+      <t key="country"/><br/>
+      <t key="cif"/>
+    </address>
+  </content-header:>
+  <content-body:>
+    <h2>Nº <%= @voucher.name %></h2>
+    <h4><t key="amount"/>: <%= number_to_currency(@voucher.amount) %> </h4>
+  </content-body:>
+
+  <footer:>
+    <div class="align-center">
+      <t key="footer.voucher"/><br/>
+    </div>
+  </footer:>
+
+</page>

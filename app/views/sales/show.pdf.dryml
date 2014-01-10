@@ -22,7 +22,7 @@
                  fields="name, amount, price">
       <price-view:><currency/></price-view:>
       <tfoot:>
-        <td><strong>Total</strong></td>
+        <td><strong><t key="total"/></strong></td>
         <td></td>
         <td><strong><currency with="&@sale.total"/></strong></td>
       </tfoot:>

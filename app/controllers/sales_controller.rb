@@ -38,7 +38,7 @@ class SalesController < ApplicationController
         break if cantidad <= 0
       end
       product_id = Product.find_by_name(w.product.name).id
-      if cantidad == 0 && !params[:complete]
+      if cantidad == 0 
         flash[:error] = I18n.t('activerecord.errors.models.product.attributes.amount.stock',
                         :href => ActionController::Base.helpers.link_to("#{w.product.name}",
                         "/products/#{product_id}/edit")).html_safe
@@ -55,7 +55,8 @@ class SalesController < ApplicationController
           elsif params[:sale][:client_name]
             redirect_to("/sales/#{@sale.id}.pdf")
           else
-          flash[:notice] = I18n.t('sale.messages.create.success', 
+            Voucher.find(params[:payment_voucher]).update_attributes(:state => "canjeado", :payment_id => @sale.payments.where("payment_method_id = 3").first.id) if params[:payment_voucher] && !params[:payment_voucher].blank?
+            flash[:notice] = I18n.t('sale.messages.create.success', 
                           :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
                           "/sales/#{Sale.find(params[:id]).id}")).html_safe
             redirect_to('/')
@@ -118,6 +119,7 @@ class SalesController < ApplicationController
   end
 
   def show
+    @voucher = Voucher.where("payment_id = ?",Payment.where("sale_id = ? AND payment_method_id = ?", params[:id],PaymentMethod.where("voucher = 't'").first.id).first.id).first if Sale.find(params[:id]).payments.*.payment_method.*.voucher.include?("true")
     hobo_show do
       if request.format.pdf?
         if params[:ticket]

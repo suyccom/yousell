@@ -3,11 +3,20 @@ class Voucher < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    validity_period :date
+    name            :string, :unique
     amount          :float
+    state           enum_string(:emitido, :canjeado)
     timestamps
   end
-  attr_accessible :validity_period, :amount
+  attr_accessible :name, :amount, :state, :payment_id
+
+  belongs_to :payment
+
+  before_create :set_values
+  def set_values
+    self.state = "emitido"
+    self.name = Voucher.all.size == 0 ? "#{Date.today}-000001" : "#{Date.today}-#{"%06d" % (Voucher.last.name.last(6).to_i + 1)}"
+  end
 
   # --- Permissions --- #
 
