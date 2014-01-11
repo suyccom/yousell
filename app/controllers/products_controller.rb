@@ -27,30 +27,36 @@ class ProductsController < ApplicationController
 
     # Create the array for the labels PDF
     barcodes = []
+    pngs = []
+    textos = []
     params[:empty_cells].to_i.times do
       barcodes << {}
+      pngs << ''
+      textos << ''
     end
 
     for product in products
       # Create the barcode PNGs
       temp_png = "#{Rails.root}/tmp/barcode-#{product[0].id}.png"
       barby = Barby::Code93.new(product[0].barcode)
-      png = Barby::PngOutputter.new(barby).to_png(:height => 35, :margin => 5, :xdim => 1)
+      png = Barby::PngOutputter.new(barby).to_png(:height => 35, :margin => 2, :xdim => 1)
       File.open(temp_png, 'w'){|f| f.write png }
       # Add the label to the barcodes array
       product[1].to_i.times do
-        barcodes << {:png => temp_png, :barcode => product[0].barcode, :name => product[0].name, :description => product[0].description }
+        pngs << temp_png
+        textos << product[0].barcode + "\n" + product[0].name + " " + product[0].description
       end
     end
 
+    logger.info('txapelgorri: ' + Prawn::Document::PageGeometry::SIZES["A4"][0].to_s)
+    logger.info('txapelgorri: ' + Prawn::Document::PageGeometry::SIZES["A4"][1].to_s)
+    logger.info('txapelgorri: ' + ((Prawn::Document::PageGeometry::SIZES['A4'][0] - (labelsheet.left_margin + labelsheet.right_margin))/4).to_s)
     # Generate the PDF
     temp_pdf = "#{Rails.root}/tmp/labels.pdf"
-    labels = Prawn::Labels.generate(temp_pdf, barcodes, :type => labelsheet.name) do |pdf, barcode|
-      unless barcode.blank?
-        pdf.image barcode[:png], :scale => 0.72
-        pdf.text  barcode[:barcode], :indent_paragraphs => 23, :size => 9
-        pdf.text  barcode[:name], :indent_paragraphs => 5, :size => 8
-        pdf.text  barcode[:description], :indent_paragraphs => 23, :size => 9 if barcode[:description]
+    labels = Prawn::Labels.generate(temp_pdf, textos, :type => labelsheet.name, :shrink_to_fit => true) do |pdf,texto|
+      unless texto.blank?
+        pdf.image pngs[textos.index(texto)], :fit => [(Prawn::Document::PageGeometry::SIZES['A4'][0] - (labelsheet.left_margin + labelsheet.right_margin))/4,], :scale => 0.6
+        pdf.text  texto, :size => 5 
       end
     end
 
