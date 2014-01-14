@@ -13,6 +13,8 @@ class ProductsController < ApplicationController
     require 'prawn'
     require 'prawn/labels'
 
+    printer_margin = 11.91 # FIXME: this data should not be hardcoded
+
     Prawn::Labels.types = {
       labelsheet.name => {
         "paper_size"    => "A4",
@@ -28,35 +30,48 @@ class ProductsController < ApplicationController
     # Create the array for the labels PDF
     barcodes = []
     pngs = []
-    textos = []
+    textos_barcodes = []
+    textos_resto = []
+
     params[:empty_cells].to_i.times do
       barcodes << {}
       pngs << ''
-      textos << ''
+      textos_barcodes << ''
+      textos_resto << ''
     end
+
+    # Calculate cell width
+    logger.info('txapelgorri ancho tipo documento: ' + Prawn::Document::PageGeometry::SIZES["A4"][0].to_s)
+    logger.info('txapelgorri alto tipo documento: ' + Prawn::Document::PageGeometry::SIZES["A4"][1].to_s)
+    logger.info('txapelgorri correccion de la impresora: 0.42mm a cada lado (11.91px a cada lado). El margen que mete la impresora no deve afectar al tamaño de la celda. Solamente al tamaño del papel.')
+    cell_width = (Prawn::Document::PageGeometry::SIZES['A4'][0] - ((labelsheet.left_margin - printer_margin) + (labelsheet.right_margin - printer_margin)))/labelsheet.columns
+    logger.info('txapelgorri ancho celda : ' + cell_width.to_s)
 
     for product in products
       # Create the barcode PNGs
       temp_png = "#{Rails.root}/tmp/barcode-#{product[0].id}.png"
       barby = Barby::Code93.new(product[0].barcode)
-      png = Barby::PngOutputter.new(barby).to_png(:height => 35, :margin => 2, :xdim => 1)
+      png = Barby::PngOutputter.new(barby)
+      logger.info('txapelgorri - barby_full_width: ' + png.full_width.to_s)
+      logger.info('txapelgorri - factor xdim: ' + (cell_width/png.full_width).round(2).to_s)
+      xdim_correction = (cell_width/png.full_width).round(2)
+      png = png.to_png(:height => 35, :margin => 5, :xdim => 1)
       File.open(temp_png, 'w'){|f| f.write png }
       # Add the label to the barcodes array
       product[1].to_i.times do
         pngs << temp_png
-        textos << product[0].barcode + "\n" + product[0].name + " " + product[0].description
+        textos_barcodes << product[0].barcode
+        textos_resto << "\n" + product[0].name  + " " + product[0].description # FIXME: until we achieve another solution, description remain hidden, because adding the description breaks the label generation (too much text).
       end
     end
 
-    logger.info('txapelgorri: ' + Prawn::Document::PageGeometry::SIZES["A4"][0].to_s)
-    logger.info('txapelgorri: ' + Prawn::Document::PageGeometry::SIZES["A4"][1].to_s)
-    logger.info('txapelgorri: ' + ((Prawn::Document::PageGeometry::SIZES['A4'][0] - (labelsheet.left_margin + labelsheet.right_margin))/4).to_s)
     # Generate the PDF
     temp_pdf = "#{Rails.root}/tmp/labels.pdf"
-    labels = Prawn::Labels.generate(temp_pdf, textos, :type => labelsheet.name, :shrink_to_fit => true) do |pdf,texto|
-      unless texto.blank?
-        pdf.image pngs[textos.index(texto)], :fit => [(Prawn::Document::PageGeometry::SIZES['A4'][0] - (labelsheet.left_margin + labelsheet.right_margin))/4,], :scale => 0.6
-        pdf.text  texto, :size => 5 
+    labels = Prawn::Labels.generate(temp_pdf, textos_barcodes, :type => labelsheet.name, :shrink_to_fit => true) do |pdf,texto_barcode|
+      unless texto_barcode.blank?
+        pdf.image pngs[textos_barcodes.index(texto_barcode)], :width => cell_width
+        pdf.text  texto_barcode, :size => 9
+        pdf.text  textos_resto[textos_barcodes.index(texto_barcode)], :size => 7
       end
     end
 
