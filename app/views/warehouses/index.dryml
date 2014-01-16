@@ -56,29 +56,44 @@
   </modal>
 </def>
 
+
+
+
+
 <def tag='lines'>
   <div part='lines'>
-    <input type="hidden" id="selected_products_ids" value="#{@selected_products.*.id if @selected_products}"/>
-    <form action="change_amount">
-      <table with="&@selected_products" fields="name,amount,warehouse,actions" class='table table-striped table-bordered collection'>
-        <name-heading:><t key="activerecord.attributes.product.name"/></name-heading:>
-        <amount-heading:><t key="activerecord.attributes.product_warehouse.amount"/></amount-heading:>
-        <warehouse-heading:><t key="activerecord.attributes.product_warehouse.warehouse"/></warehouse-heading:>
-        <actions-heading:><t key="activerecord.attributes.warehouse.actions"/></actions-heading:>
-
-        <amount-view:><input type="text" name="[#{this_parent.id}][amount]"/> </amount-view:>
-        <warehouse-view:>
-          <select-input options="&Warehouse.all.map{|w| [w.name,w.id]}" name="[#{this_parent.id}][warehouse]"/>
-        </warehouse-view:>
-        <actions-view:>
-          <a href="/refill_lines"
-             params="&{:destroy=>true, :clon_lines=>@selected_products.*.id, :product_id=>this_parent.id, :page_path =>'/warehouses'}"
-             id="destroy" class="btn" updates="#lines">X</a>
-        </actions-view:>
-      </table>
-      <submit label="#{t key='activerecord.attributes.warehouse.change'}" if="&@selected_products"/>
-      <a class="pull-right btn btn-warning button submit-button" if="&@selected_products" href="/warehouses"><t key="activerecord.attributes.warehouse.delete_all"/></a>
-    </form>
+    <unless test="&@selected_products.blank?">
+      <input type="hidden" id="selected_products_ids" value="#{@selected_products.*.id if @selected_products}"/>
+      <form action="change_amount">
+        <table id="table-selected-products" class="table table-striped table-bordered collection">
+          <!-- Dibujamos la cabecera de la tabla (Producto, almacenes) -->
+          <tr>
+            <th><t key="activerecord.attributes.product.name"/></th>
+            <% for w in Warehouse.order(:id) %>
+              <th><%= w.name %></th>
+            <% end %>
+            <th><t key="activerecord.attributes.warehouse.actions"/></th>
+          </tr>
+          <!-- Dibujamos el cuerpo de la tabla iterando por los productos seleccionados-->
+          <% for p in @selected_products %>
+            <tr>
+              <td><%= p.name %> </td>
+              <% for w in Warehouse.order(:id) %>
+                <td><input type="text" name="[#{w.id}][#{p.id}]"/></td>
+              <% end %>
+              <td>
+                <a href="/refill_lines" 
+                   params="&{:destroy => true, :clon_lines => @selected_products.*.id,
+                           :product_id => p.id, :page_path =>'/warehouses'}" 
+                   id="destroy" class="btn" updates="#lines">X</a>
+              </td>
+            </tr>
+           <% end %>
+        </table>
+        <submit label="#{t key='activerecord.attributes.warehouse.change'}" if="&@selected_products"/>
+        <a class="pull-right btn btn-warning button submit-button" if="&@selected_products" href="/warehouses"><t key="activerecord.attributes.warehouse.delete_all"/></a>
+      </form>
+    </unless>
   </div>
 </def>
 
