@@ -11,11 +11,11 @@ class WarehousesController < ApplicationController
   end
 
   def change_amount
-    for p in Product.all
-      if params.include?("#{p.id}")
-        unless params["#{p.id}"]["amount"].empty?
-          prw =  ProductWarehouse.where("warehouse_id = ? AND product_id = ?", params["#{p.id}"]["warehouse"].to_i, p.id).first
-          prw.amount && prw.amount > 0 ? prw.update_attribute(:amount,prw.amount+params["#{p.id}"]["amount"].to_i) : prw.update_attribute(:amount,params["#{p.id}"]["amount"].to_i)
+    for w in Warehouse.all
+      for param in params 
+        if param.include?("#{w.id}")
+          prw = ProductWarehouse.where("warehouse_id = ? AND product_id = ?", w.id, param.last.first.first.to_i).first
+          prw.amount && prw.amount > 0 ? prw.update_attribute(:amount,prw.amount+param.last.first.last.to_i) : prw.update_attribute(:amount,param.last.first.last.to_i)
         end
       end
     end
