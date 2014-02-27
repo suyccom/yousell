@@ -12,7 +12,6 @@
   </form:>
 </new-page>
 
-
 <def tag="products-table">
    <table id="products-table" class="table table-striped table-bordered collection">
     <thead>
@@ -38,6 +37,13 @@
   
   <input id="barcode" type="text" placeholder="&I18n.t 'product_type.optional_barcode'"/>
   <a class="add-product-button btn" href="#"><i class="icon-plus"></i></a>
+  
+  <script type="text/javascript">
+    jQuery("a").click(function () {  
+      $(document).scrollTop($(document).height()); 
+    });  
+  </script>
+  
 </def>
 
 
