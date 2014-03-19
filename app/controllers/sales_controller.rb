@@ -9,7 +9,7 @@ class SalesController < ApplicationController
     @products = Product.all
     session[:active_sale_id] = params[:active_sale_id] if params[:active_sale_id]
     # If there's an active sale in the DB, load it. Else, create a new one
-    if session[:active_sale_id] && Sale.not_complete.exists?(session[:active_sale_id]) ? 
+    if session[:active_sale_id] && Sale.not_complete.exists?(session[:active_sale_id]) 
       @sale = Sale.find(session[:active_sale_id])
     else
       @sale = Sale.create
