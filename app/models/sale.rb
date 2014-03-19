@@ -37,18 +37,15 @@ class Sale < ActiveRecord::Base
   # --- Custom methods --- #
   def discount
     if self.total_discount? && self.total_discount > 0
-      if self.type_discount == "%"
-        (lines.sum(:price) * self.total_discount)/100
-      else
-        self.total_discount
-      end
+        self.type_discount == "%" ? (lines.sum(:price) * self.total_discount)/100 : self.total_discount
     else
       0
     end
   end
 
   def total
-    lines.sum(:price) - discount
+    voucher_amount = Voucher.find_by_sale_id(self.id) ? Voucher.find_by_sale_id(self.id).amount : 0
+    lines.sum(:price) - discount + voucher_amount
   end
   
   def created_date
@@ -60,11 +57,7 @@ class Sale < ActiveRecord::Base
   end
 
   def name
-    if refunded_ticket
-      "#{I18n.t('sale.refund')} ticket #{refunded_ticket_id}"
-    else
-      "Ticket #{id}"
-    end
+    refunded_ticket ? "#{I18n.t('sale.refund')} ticket #{refunded_ticket_id}" : "Ticket #{id}"
   end
 
   def pending_amount
@@ -82,11 +75,7 @@ class Sale < ActiveRecord::Base
       self.sale_total = self.total
       for line in lines
         # If we are here it is because warehouses have stock. We remove the product in the stock that has amount. 
-        if line.product.current_product_warehouse.amount.blank? || line.product.current_product_warehouse.amount > 0
-          pw = line.product.product_warehouses.where("amount > 0").first 
-        else
-          pw = line.product.current_product_warehouse
-        end
+        pw = line.product.current_product_warehouse.amount.blank? || line.product.current_product_warehouse.amount > 0 ? line.product.product_warehouses.where("amount > 0").first : line.product.current_product_warehouse
         pw.update_attribute(:amount, pw.amount - line.amount)
       end
     end

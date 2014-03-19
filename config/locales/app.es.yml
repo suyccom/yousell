@@ -235,6 +235,8 @@ es:
   voucher:
     nav_item: Vales de descuento
   sale:
+    voucher_message: Compra complementada con vale de descuento nº
+    voucher: Generar vale de descuento
     save: Aparcar y una nueva
     new_sale: Nueva venta
     cancel: Cancelar

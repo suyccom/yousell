@@ -198,6 +198,8 @@ en:
     nav_item: Vouchers
 
   sale:
+    voucher_message: Purchase complemented by discount voucher number
+    voucher: Create discount voucher
     save: Save and new one
     new_sale: New sale
     cancel: Cancel
