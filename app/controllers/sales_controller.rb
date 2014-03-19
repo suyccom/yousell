@@ -9,7 +9,7 @@ class SalesController < ApplicationController
     @products = Product.all
     session[:active_sale_id] = params[:active_sale_id] if params[:active_sale_id]
     # If there's an active sale in the DB, load it. Else, create a new one
-    if session[:active_sale_id] && Sale.not_complete.exists?(session[:active_sale_id])
+    if session[:active_sale_id] && Sale.not_complete.exists?(session[:active_sale_id]) ? 
       @sale = Sale.find(session[:active_sale_id])
     else
       @sale = Sale.create
@@ -28,17 +28,22 @@ class SalesController < ApplicationController
     if params[:payment_sale_id] && Sale.find(params[:payment_sale_id]).pending_amount > 0
       flash[:error] = I18n.t('sale.messages.pending_amount')
       redirect_to('/')
+    elsif params[:payment_sale_id] && Sale.find(params[:payment_sale_id]).pending_amount < 0
+      flash[:error] = I18n.t('sale.messages.pending_amount')
+      redirect_to('/')
     else
       # Comprobamos si todos los productos tienen stock
       for l in Sale.find(params[:id]).lines
-        cantidad = 0
-        for w in l.product.product_warehouses
-          cantidad += w.amount if w.amount
+        if l.amount > 0
+          cantidad = 0
+          for w in l.product.product_warehouses
+            cantidad += w.amount if w.amount
+          end
+          break if cantidad <= 0
         end
-        break if cantidad <= 0
       end
-      product_id = Product.find_by_name(w.product.name).id
-      if cantidad == 0 
+      if cantidad && cantidad == 0
+        product_id = Product.find_by_name(w.product.name).id
         flash[:error] = I18n.t('activerecord.errors.models.product.attributes.amount.stock',
                         :href => ActionController::Base.helpers.link_to("#{w.product.name}",
                         "/products/#{product_id}/edit")).html_safe

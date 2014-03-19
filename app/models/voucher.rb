@@ -6,9 +6,10 @@ class Voucher < ActiveRecord::Base
     name            :string, :unique
     amount          :float
     state           enum_string(:emitido, :canjeado)
+    sale_id         :integer
     timestamps
   end
-  attr_accessible :name, :amount, :state, :payment_id
+  attr_accessible :name, :amount, :state, :payment_id, :sale_id
 
   belongs_to :payment
 

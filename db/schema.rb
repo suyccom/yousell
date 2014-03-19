@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140108075209) do
+ActiveRecord::Schema.define(:version => 20140305113448) do
 
   create_table "labelsheets", :force => true do |t|
     t.string   "name_printer"
@@ -175,6 +175,7 @@ ActiveRecord::Schema.define(:version => 20140108075209) do
     t.string   "state"
     t.string   "name"
     t.integer  "payment_id"
+    t.integer  "sale_id"
   end
 
   add_index "vouchers", ["payment_id"], :name => "index_vouchers_on_payment_id"

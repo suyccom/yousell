@@ -4,6 +4,16 @@ class VouchersController < ApplicationController
 
   auto_actions :all, :except => :show
 
+  def create
+    if request.xhr?
+      @sale = Sale.find(params[:voucher][:sale_id])
+      Voucher.create(:amount => @sale.pending_amount.abs, :sale_id => @sale.id)
+      hobo_ajax_response
+    else
+      hobo_create
+    end
+  end
+
   def index
     if params[:print]
       @voucher = Voucher.find(params[:id])
