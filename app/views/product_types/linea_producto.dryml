@@ -9,7 +9,7 @@
       <td>
         <input type="hidden" name="product_type[products][]product_variations[][variation_id]" value="&this.id"/>
         <% @variations ||= {} %>
-        <select-menu name="product_type[products][]product_variations[][value]" options="&this.value.split(',')" selected="&@variations[this.name]"/>
+        <select-menu name="product_type[products][]product_variations[][value]" options="&this.variation_values.map{|v| [v.name,v.code]}" selected="&@variations[this.name]"/>
       </td>
     </repeat>
     <td><select-menu name="product_type[products][][product_warehouses][][warehouse_id]" options="&Warehouse.all.map{|w|[w.name,w.id]}"/></td>
