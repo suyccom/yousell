@@ -10,11 +10,11 @@
 <def tag='add-line-form'>
   <div class="well" style="padding-bottom:40px">
   <search-products/>
-  <form with='&this.lines.new' updates='#lines,#total,#payment-register-message' class="span5" refocus-form reset-form>
-    <div id='add-product-form' part='add-product-form'>
+  <form with='&this.lines.new' updates='#lines,#payment-buttons,#complete-sale-buttons' class="span5" message="#{I18n.t('saving')}" refocus-form reset-form>
+    <div part='add-product-form'>
       <div class='row-fluid'>
         <div class='span11'>
-          <input type='text' placeholder="&t('sale.barcode', :default => 'Barcode')" name='barcode' class='span barcode' autofocus/>&nbsp;
+          <input type='text' placeholder="&t('sale.barcode', :default => 'Barcode')" name='barcode' class='span barcode search' autofocus/>&nbsp;
         </div>
         <div class='span1'>
           <button type='submit' class='btn'><i class="icon-plus"></i></button>
@@ -45,7 +45,7 @@
 <def tag="search-products-modal">
   <modal part="search-products-modal-part">
     <modal: id="search-products-modal">
-      <formlet class="form-horizontal" with='&this.lines.new' complete="$('#search-products-modal').modal('hide')" updates='#lines,#total,#payment-register-message'>
+      <formlet class="form-horizontal" message="#{I18n.t('saving')}" with='&this.lines.new' complete="$('#search-products-modal').modal('hide')" updates='#lines,#payment-buttons,#complete-sale-buttons'>
         <div class="modal-body">
           <div class="form-horizontal">
             <div class="control-group">
@@ -67,7 +67,7 @@
 
 <def tag='day-sale-formlet'>
   <div part='day-sale-formlet'>
-    <formlet updates='#lines, #day-sale-formlet,#payment-register-message' class='pull-left'>
+    <formlet message="#{I18n.t('saving')}" updates='#lines, #day-sale-formlet,#payment-register-message' class='pull-left' spinner-next-to='day_sale_button'>
       <% value = this.day_sale ? false : true %>
       <input id='day_sale_hidden' type='hidden' name='sale[day_sale]' value="#{value}"/>
       <input id='submit_day_sale' type='submit' class='hide'/>
@@ -81,15 +81,20 @@
   <form without-cancel>
     <field-list: replace>
       <lines/>
+      <payment-buttons/>
     </field-list:>
     <submit: replace>
-      <input type='hidden' name='sale[complete]' value='true'/>
-      <div class='span8'>
-        <submit id='complete-sale-button' class='btn-large btn-success span8' restore/>
-      </div>
-      <div class='span3'>
-        <save-sale/>
-      </div>
+    <div part='complete-sale-buttons'>
+      <unless test='&this.lines.empty?'>
+        <input type='hidden' name='sale[complete]' value='true'/>
+        <div class='span8'>
+          <submit id='complete-sale-button' class='btn-large btn-success span8' value="#{I18n.t('sale.actions.save')}"/>
+        </div>
+        <div class='span3'>
+          <save-sale/>
+        </div>
+      </unless>
+    </div>
     </submit:>
   </form>
 </def>
@@ -102,7 +107,7 @@
 
       <price-view:>
         <if test="&this_parent.product.generic == true">
-          <click-editor-innards updates="#lines,#payment-register-message">
+          <click-editor-innards message="#{I18n.t('saving')}" updates="#lines,#payment-register-message">
             <after-view:> <t key="currency"/></after-view:>
           </click-editor-innards>
         </if>
@@ -117,14 +122,13 @@
       <tfoot:><total-row with='&this.first.sale' if='&this.first'/></tfoot:>
     </table>
   </div>
-  <payment-buttons/>
 </def>
 
 <def tag='payment-buttons'>
   <if test='&PaymentMethod.count > 0'>
     <div part='payment-buttons' class='text-right'>
-      <span part='payment-register-message'>
-        <unless test='&this.lines.empty?'>
+      <unless test='&this.lines.empty?'>
+        <span part='payment-register-message'>
           <if test='&this.pending_amount > 0'>
             <span class='text-error'><strong><t key='sale.messages.pending'/><currency with='&this.pending_amount'/></strong></span>
           </if>
@@ -137,33 +141,33 @@
           <if test='&this.pending_amount == 0'>
             <span class='text-success'><strong><t key='sale.messages.matches'/></strong></span>
           </if>
-        </unless>
-      </span>
-      <repeat with='&PaymentMethod.not_voucher'>
-        <modal-open-button id='#{this.name}' modal='payment-modal' class='btn btn-large payment-method' data-method-id='#{this.id}'>
-          <if test='&@sale.payments.where(:payment_method_id => this.id) && @sale.payments.where(:payment_method_id => this.id).sum(:amount) != 0'>
-            <this/><br/><currency with='&@sale.payments.where(:payment_method_id => this.id).sum(:amount)'/>
-          </if>
-          <else>
-            <this/>
-          </else>
-        </modal-open-button>
-      </repeat>
-      <repeat with='&PaymentMethod.voucher'>
-        <modal-open-button id='#{this.name}' modal='payment-voucher-modal' class='btn btn-large payment-method' data-method-id='#{this.id}'>
-          <if test='&@sale.payments.where(:payment_method_id => this.id) && @sale.payments.where(:payment_method_id => this.id).sum(:amount) != 0'>
-            <this/><br/><currency with='&@sale.payments.where(:payment_method_id => this.id).sum(:amount)'/>
-          </if>
-          <else>
-            <this/>
-          </else>
-        </modal-open-button>
-      </repeat>
+        </span>
+        <repeat with='&PaymentMethod.not_voucher'>
+          <modal-open-button id='#{this.name}' modal='payment-modal' class='btn btn-large payment-method' data-method-id='#{this.id}'>
+            <if test='&@sale.payments.where(:payment_method_id => this.id) && @sale.payments.where(:payment_method_id => this.id).sum(:amount) != 0'>
+              <this/><br/><currency with='&@sale.payments.where(:payment_method_id => this.id).sum(:amount)'/>
+            </if>
+            <else>
+              <this/>
+            </else>
+          </modal-open-button>
+        </repeat>
+        <repeat with='&PaymentMethod.voucher'>
+          <modal-open-button id='#{this.name}' modal='payment-voucher-modal' class='btn btn-large payment-method' data-method-id='#{this.id}'>
+            <if test='&@sale.payments.where(:payment_method_id => this.id) && @sale.payments.where(:payment_method_id => this.id).sum(:amount) != 0'>
+              <this/><br/><currency with='&@sale.payments.where(:payment_method_id => this.id).sum(:amount)'/>
+            </if>
+            <else>
+              <this/>
+            </else>
+          </modal-open-button>
+        </repeat>
+      </unless>
     </div>
   </if>
   <modal>
     <modal: id='payment-modal'>
-      <formlet action='/payments/at_sale' updates='#payment-register-message,#payment-buttons' 
+      <formlet message="#{I18n.t('saving')}" action='/payments/at_sale' updates='#payment-buttons' 
         complete="$('#payment-modal').modal('hide')">
         <modal-header id='modal-header'/>
         <div class='modal-body'>
@@ -179,7 +183,7 @@
   </modal>
   <modal>
     <modal: id='payment-voucher-modal'>
-      <formlet action='/payments/at_sale' updates='#payment-register-message,#payment-buttons' 
+      <formlet message="#{I18n.t('saving')}" action='/payments/at_sale' updates='#payment-buttons' 
         complete="$('#payment-voucher-modal').modal('hide')">
         <modal-header id='modal-header'/>
         <div class='modal-body'>
@@ -230,7 +234,7 @@
 <def tag='total-discount'>
   <div class='btn-group discount-group'>
     <div part='total-discount-part' class='pull-left discount-button'>
-      <click-editor-innards:total-discount updates='#lines,#payment-register-message'>
+      <click-editor-innards:total-discount message="#{I18n.t('saving')}" updates='#lines,#payment-register-message'>
         <view: replace>
           <span data-rapid='{&quot;click-editor&quot;:{}}' 
                 class='in-place-edit btn view total-discount' 
@@ -245,14 +249,14 @@
     </button>
     <ul class='dropdown-menu'>
       <li>
-        <formlet updates='#lines, #payment-register-message' class='pull-left'>
+        <formlet message="#{I18n.t('saving')}" updates='#lines, #payment-register-message' class='pull-left'>
           <input type='hidden' name='sale[type_discount]' value='%'/>
           <input id='submit_percentage_total' type='submit' value='%' class='hide'/>
         </formlet>
         <a href='#' onclick="$('#submit_percentage_total').click(); return false;">%</a>
       </li>
       <li>
-        <formlet updates='#lines, #payment-register-message' class='pull-left'>
+        <formlet message="#{I18n.t('saving')}" updates='#lines, #payment-register-message' class='pull-left'>
           <input type='hidden' name='sale[type_discount]' value='€'/>
           <input id='submit_euro_total' type='submit' value='€' class='hide'/>
         </formlet>
@@ -265,7 +269,7 @@
 <def tag='line-amount-controls'>
   <ajax-button name='minus' icon='minus' id='&this_parent.id'/>
   <div part='amount-part' class='pull-left amount-button'>
-    <click-editor-innards>
+    <click-editor-innards updates='#lines,#payment-register-message'>
       <view: class='btn' />
     </click-editor-innards>
   </div>
@@ -273,7 +277,7 @@
 </def>
 
 <def tag='ajax-button' attrs='id, name, icon'>
-  <formlet with='&this_parent' updates='#lines,#payment-register-message' class='pull-left'>
+  <formlet message="#{I18n.t('saving')}" with='&this_parent' updates='#lines,#payment-buttons,#complete-sale-buttons' class='pull-left'>
     <input type='hidden' name="#{name}" value='true'/>
     <label for="input-#{name}-#{id}" class='btn'><i class="icon-#{icon}"></i></label>
     <input id="input-#{name}-#{id}" type='submit' value='Go' class='hide' />
@@ -283,7 +287,7 @@
 <def tag='line-discount-controls'>
   <div class='btn-group discount-group'>
     <div part='discount-part' class='pull-left discount-button'>
-      <click-editor-innards updates='#lines,#payment-register-message'>
+      <click-editor-innards updates='#lines,#payment-register-message' message="#{I18n.t('saving')}">
         <view: replace>
           <span data-rapid='{&quot;click-editor&quot;:{}}' 
                 class='in-place-edit btn view line-discount' 
@@ -298,14 +302,14 @@
     </button>
     <ul class='dropdown-menu'>
       <li>
-        <formlet with='&this_parent' updates='#lines,#payment-register-message' class='pull-left'>
+        <formlet with='&this_parent' message="#{I18n.t('saving')}" updates='#lines,#payment-register-message' class='pull-left'>
           <input type='hidden' name='line[type_discount]' value='%'/>
           <input id="submit_percentage-#{this.id}" type='submit' value='%' class='hide'/>
         </formlet>
         <a href='#' onclick="$('#submit_percentage-#{this_parent.id}').click(); return false;">%</a>
       </li>
       <li>
-        <formlet with='&this_parent' updates='#lines,#payment-register-message' class='pull-left'>
+        <formlet with='&this_parent' message="#{I18n.t('saving')}" updates='#lines,#payment-register-message' class='pull-left'>
           <input type='hidden' name='line[type_discount]' value='€'/>
           <input id="submit_euro-#{this.id}" type='submit' value='€' class='hide'/>
         </formlet>
