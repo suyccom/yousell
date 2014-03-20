@@ -15,10 +15,6 @@ class Variation < ActiveRecord::Base
   
   has_many :variation_values, :accessible => true, :order => 'name asc'
   
-  def value
-    variation_values.*.name.join(',')
-  end
-
   after_create :add_null_value
   def add_null_value
    self.variation_values.create(:name => I18n.t('product.without_variation'), :code => "XX")

@@ -9,8 +9,8 @@
           <field-list fields="value, variation" size="4">
             <value-label:><%= this_parent.variation %></value-label:>
             <value-view:>
-              <select-menu name="&param_name_for_this" options="&this_parent.variation.value.split(',')" 
-                           if="&this_parent.variation" selected="&this"/>
+              <select-menu name="&param_name_for_this" options="&this_parent.variation.variation_values.map{|v| [v.name,v.code]}" 
+                           if="&this_parent.variation" selected="&this_parent.code"/>
             </value-view:>
           </field-list>
         </input-many>

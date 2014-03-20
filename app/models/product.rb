@@ -40,7 +40,7 @@ class Product < ActiveRecord::Base
       clauses = []
       args = []
       for value in values.split(",")
-        clauses << "products.name LIKE ?"
+        clauses << "products.barcode LIKE ?"
         args << "%#{value}%"
       end
     clause = clauses.join(' AND '), *args

@@ -58,7 +58,7 @@
               <label><%= this.name %></label>
               <select-menu first-option="Selecciona un/a #{this.name.downcase}"
                            name="#{this.name.downcase}" selected="&params[this.name.downcase]"
-                           options="&this.value.split(',')" />
+                           options="&this.variation_values.map{|v| [v.name,v.code]}" />
             </div>
           </repeat>
           <div class="span4 controls-row">
