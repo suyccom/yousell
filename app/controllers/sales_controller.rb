@@ -25,6 +25,10 @@ class SalesController < ApplicationController
   end
 
   def update
+
+    # This avoids the user to set '' as total discount
+    params[:sale][:total_discount] = 0 if params[:sale] && params[:sale][:total_discount] && params[:sale][:total_discount].blank?
+    
     if params[:payment_sale_id] && Sale.find(params[:payment_sale_id]).pending_amount > 0
       flash[:error] = I18n.t('sale.messages.pending_amount')
       redirect_to('/')

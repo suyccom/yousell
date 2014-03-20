@@ -17,6 +17,15 @@ $ ->
   $(".modal").on "shown", -> 
     $("#payment_modal").focus()
 
+  # Don't allow enter key press on sale view, in order to avoid double POSTing
+  $(document).on "keypress", ".in-place-form.formlet", (event) ->
+    if event.keyCode is 13
+      event.preventDefault()
+      false
+
+  $(document).on "focus", "#line_discount, #line_amount, #sale_total_discount", ->
+    $(this).select()
+
 @check_toggle = ->
   $("input[type='checkbox']").click()
 
