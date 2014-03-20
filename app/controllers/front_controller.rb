@@ -24,7 +24,6 @@ class FrontController < ApplicationController
       args << "%#{value}%"
     end
     clause = clauses.join(' AND '), *args
-    logger.info "esto es clause #{clause}"
     @products = Product.where(clause)
     hobo_ajax_response
   end

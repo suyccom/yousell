@@ -89,7 +89,6 @@ class SalesController < ApplicationController
     @sales,@sales_count = calculate_sales_and_count
   end
 
-
   def destroy_pending_day_sales
     if params[:sales_date]
       Sale.where(:completed_at => params[:sales_date].to_date.beginning_of_day..params[:sales_date].to_date.end_of_day).complete.day_sale.destroy_all
