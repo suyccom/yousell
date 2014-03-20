@@ -77,7 +77,6 @@
 
 <def tag='complete-sale-form'>
   <flash-messages/>
-  <generate-voucher part="generate-voucher"/>
   <form without-cancel>
     <field-list: replace>
       <lines/>
@@ -130,16 +129,21 @@
       <unless test='&this.lines.empty?'>
         <span part='payment-register-message'>
           <if test='&this.pending_amount > 0'>
-            <span class='text-error'><strong><t key='sale.messages.pending'/><currency with='&this.pending_amount'/></strong></span>
+            <span class='text-error'><strong>
+              <t key='sale.messages.pending'/><currency with='&this.pending_amount'/></strong>
+            </span>
           </if>
           <if test='&this.pending_amount < 0'>
-            <a href="#" onclick="jQuery('#generate-voucher-form').submit();"><t key="sale.voucher"/></a>
+            <a class='btn-large btn-info' href="#" onclick="jQuery('#generate-voucher-form').submit();"><t key="sale.voucher"/></a>
             <span class='text-info'>
               <strong><t key='sale.messages.return'/><currency with='&this.pending_amount.abs'/></strong>
             </span>
           </if>
           <if test='&this.pending_amount == 0'>
-            <span class='text-success'><strong><t key='sale.messages.matches'/></strong></span>
+            <span class='text-success'>
+              <generate-voucher/>
+              <span class='offset1'><strong><t key='sale.messages.matches'/></strong></span>
+            </span>
           </if>
         </span>
         <repeat with='&PaymentMethod.not_voucher'>
@@ -204,14 +208,14 @@
 
 <def tag="generate-voucher">
   <if test="&Voucher.find_by_sale_id(@sale.id).blank?">
-    <form class="hidden" action="/vouchers" id="generate-voucher-form" updates="#generate-voucher,#payment-register-message,#payment-buttons">
+    <form class="hidden" action="/vouchers" id="generate-voucher-form" updates="#payment-buttons">
       <input type="hidden" name="voucher[sale_id]" value="&@sale.id"/>
       <submit label="#{t 'sale.voucher'}"/>
     </form>
   </if>
   <if test="&Voucher.find_by_sale_id(@sale.id)">
     <t key="sale.voucher_message"/>
-    <a href="/vouchers?print=true&id=#{Voucher.find_by_sale_id(@sale.id).id}" target="_blank">
+    <a class='btn-large btn-info' style='margin-left:10px' href="/vouchers?print=true&id=#{Voucher.find_by_sale_id(@sale.id).id}" target="_blank">
       <%= Voucher.find_by_sale_id(@sale.id).name %>
     </a>
   </if>
