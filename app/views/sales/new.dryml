@@ -2,6 +2,7 @@
   <content: with-flash-messages='&false'/>
   <form: replace>
     <add-line-form/>
+    <generate-voucher/>
     <day-sale-formlet/>
     <complete-sale-form/>
   </form:>
@@ -127,7 +128,7 @@
   <if test='&PaymentMethod.count > 0'>
     <div part='payment-buttons' class='text-right'>
       <unless test='&this.lines.empty?'>
-        <generate-voucher/><br/><br/>
+        <generated-voucher/><br/><br/>
         <span part='payment-register-message'>
           <if test='&this.pending_amount > 0'>
             <span class='text-error'><strong>
@@ -213,6 +214,9 @@
       <submit label="#{t 'sale.voucher'}"/>
     </form>
   </if>
+</def>
+
+<def tag="generated-voucher">
   <if test="&Voucher.find_by_sale_id(@sale.id)">
     <t key="sale.voucher_message"/>
     <a class='btn-large btn-info' style='margin-left:10px' href="/vouchers?print=true&id=#{Voucher.find_by_sale_id(@sale.id).id}" target="_blank">
