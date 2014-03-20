@@ -127,6 +127,7 @@
   <if test='&PaymentMethod.count > 0'>
     <div part='payment-buttons' class='text-right'>
       <unless test='&this.lines.empty?'>
+        <generate-voucher/><br/><br/>
         <span part='payment-register-message'>
           <if test='&this.pending_amount > 0'>
             <span class='text-error'><strong>
@@ -141,15 +142,14 @@
           </if>
           <if test='&this.pending_amount == 0'>
             <span class='text-success'>
-              <generate-voucher/>
-              <span class='offset1'><strong><t key='sale.messages.matches'/></strong></span>
+              <strong><t key='sale.messages.matches'/></strong>
             </span>
           </if>
         </span>
         <repeat with='&PaymentMethod.not_voucher'>
           <modal-open-button id='#{this.name}' modal='payment-modal' class='btn btn-large payment-method' data-method-id='#{this.id}'>
             <if test='&@sale.payments.where(:payment_method_id => this.id) && @sale.payments.where(:payment_method_id => this.id).sum(:amount) != 0'>
-              <this/><br/><currency with='&@sale.payments.where(:payment_method_id => this.id).sum(:amount)'/>
+              <this/> <currency with='&@sale.payments.where(:payment_method_id => this.id).sum(:amount)'/>
             </if>
             <else>
               <this/>
@@ -159,7 +159,7 @@
         <repeat with='&PaymentMethod.voucher'>
           <modal-open-button id='#{this.name}' modal='payment-voucher-modal' class='btn btn-large payment-method' data-method-id='#{this.id}'>
             <if test='&@sale.payments.where(:payment_method_id => this.id) && @sale.payments.where(:payment_method_id => this.id).sum(:amount) != 0'>
-              <this/><br/><currency with='&@sale.payments.where(:payment_method_id => this.id).sum(:amount)'/>
+              <this/> <currency with='&@sale.payments.where(:payment_method_id => this.id).sum(:amount)'/>
             </if>
             <else>
               <this/>
