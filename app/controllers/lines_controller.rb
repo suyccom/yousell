@@ -5,7 +5,7 @@ class LinesController < ApplicationController
   auto_actions :all
   
   def create
-    sale = Sale.find(params[:line][:sale_id])
+    @sale = Sale.find(params[:line][:sale_id])
     products = []
     lines = []
 
@@ -19,7 +19,7 @@ class LinesController < ApplicationController
     for product in products
       params[:line][:product_id] = product.id if product
       # If the sale already has the same product, just add one unit to it instead of creating a new line
-      line = sale.lines.find{|s| s.product == product;}
+      line = @sale.lines.find{|s| s.product == product;}
       if line
         line.update_attributes(:amount => line.amount + 1)
       else
@@ -31,8 +31,13 @@ class LinesController < ApplicationController
   
   def update
     @line = Line.find(params[:id])
+    @sale = @line.sale
+    # This avoids the user to set '' as line discount
+    params[:line][:discount] = 0 if params[:line] && params[:line][:discount] && params[:line][:discount].blank?
+
     # If there is only one unit, destroy the line!
     params[:line] ||= {}
+    
     if params[:minus]
       params[:line][:amount] = @line.amount - 1
     elsif params[:sum]
@@ -41,11 +46,12 @@ class LinesController < ApplicationController
     if @line.product.generic == true && params[:line][:price]
       @line.product.update_attribute(:price, params[:line][:price])
     end
+
     if params[:destroy]
       @line.destroy
       hobo_ajax_response
     else
-      hobo_update
+      hobo_update 
     end
   end
 end

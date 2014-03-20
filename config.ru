@@ -6,7 +6,13 @@ run Yousell::Application
 # http://blog.phusion.nl/2013/01/22/phusion-passenger-4-technology-preview-out-of-band-work/
 
 if defined?(PhusionPassenger) && !Rails.env.development?
-  require 'phusion_passenger/rack/out_of_band_gc'
+  if PhusionPassenger.respond_to?(:require_passenger_lib)
+    # Phusion Passenger >= 4.0.33
+    PhusionPassenger.require_passenger_lib 'rack/out_of_band_gc'
+  else
+    # Phusion Passenger < 4.0.33
+    require 'phusion_passenger/rack/out_of_band_gc'
+  end
   # Trigger out-of-band GC every 3 requests.
   use PhusionPassenger::Rack::OutOfBandGc, 3
   ## Optional: disable normal GC triggers and only GC outside
