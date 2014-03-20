@@ -17,6 +17,7 @@
 
 .rvmrc
 .rbenv-version
+.ruby-version
 /lib/photos
 /public/assets/
 /config/hobo_routes.rb

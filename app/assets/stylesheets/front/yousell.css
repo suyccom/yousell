@@ -42,15 +42,14 @@ button.delete{
   height: 1.5em;
   margin-top: 0;
 }
-a#search-products{
-  margin-top:2px;
-}
-
+input.barcode{padding-left:14px;padding-right:14px}
 input#search-query {
   font-size: 1.8em;
   height: 1.5em;
   margin-top: 0;
+  line-height: normal;
 }
+input.search{line-height:normal}
 .new-page.sale #search-products-form button{
   margin-top:2px;
 }
