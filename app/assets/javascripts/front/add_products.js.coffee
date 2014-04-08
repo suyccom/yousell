@@ -6,7 +6,7 @@ $(window).bind 'page:change', ->
 
 
 add_products_run_only_once = ->
-  $(document).on 'click', 'a.add-product-button', (e) ->
+  $('a.add-product-button').on 'click', (e) ->
     e.preventDefault()
     if $('#barcode').val().length > 0
       $.ajax({
@@ -20,9 +20,9 @@ add_products_run_only_once = ->
       $(selects).each (i) ->
         select = this
         $(clone).find("select").eq(i).val($(select).val())
-      $(clone).hide().appendTo("#products-table").fadeIn(250)
+      $(clone).appendTo("#products-table").fadeIn(250)
 
-  $(document).on 'click', 'a.remove-product-button', (e) ->
+  $('a.remove-product-button').on 'click', (e) ->
     if $('#products-table tr').length > 2
       $(this).parent().parent().fadeOut 250, ->
         $(this).remove();
