@@ -21,7 +21,7 @@ class VouchersController < ApplicationController
         :show_as_html => params[:debug].present?, 
         :encoding => 'UTF-8',
         :disable_javascript => true,
-        :use_xserver => true,
+        :use_xserver => false,
         :template => 'vouchers/voucher.pdf.dryml'
     else
       hobo_index Voucher.apply_scopes(
