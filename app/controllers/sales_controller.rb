@@ -135,14 +135,14 @@ class SalesController < ApplicationController
             :show_as_html => params[:debug].present?, 
             :encoding => 'UTF-8',
             :disable_javascript => true,
-            :use_xserver => true,
+            :use_xserver => false,
             :template => 'sales/ticket.pdf.dryml'
         else
           render :pdf => I18n.t('sale.show.invoice'), 
             :show_as_html => params[:debug].present?, 
             :encoding => 'UTF-8',
             :disable_javascript => true,
-            :use_xserver => true
+            :use_xserver => false
         end
       end
     end

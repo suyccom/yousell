@@ -20,14 +20,15 @@ add_products_run_only_once = ->
       $(selects).each (i) ->
         select = this
         $(clone).find("select").eq(i).val($(select).val())
-      $(clone).appendTo("#products-table").fadeIn(250)
+      $(clone).appendTo("#products-table")
 
-  $('a.remove-product-button').on 'click', (e) ->
-    if $('#products-table tr').length > 2
-      $(this).parent().parent().fadeOut 250, ->
-        $(this).remove();
+  # We hook this callback like so as the dom is changing when you click on minus.
+  $(document).on 'click', 'a.remove-product-button', (e) ->
     e.preventDefault()
-  
+    if $('#products-table tr').length > 2
+      $(this).parent().parent().fadeOut 150, ->
+        $(this).remove()
+
 add_products_run_always = ->
   $('#barcode').keydown (e) ->
     if (e.keyCode == 13)
