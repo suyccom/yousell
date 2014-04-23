@@ -64,7 +64,8 @@ class SalesController < ApplicationController
           elsif params[:sale][:client_name]
             redirect_to("/sales/#{@sale.id}.pdf")
           else
-            Voucher.find(params[:payment_voucher]).update_attributes(:state => "canjeado", :payment_id => @sale.payments.where("payment_method_id = 3").first.id) if params[:payment_voucher] && !params[:payment_voucher].blank?
+            payment_method_id = PaymentMethod.voucher.first.id
+            Voucher.find(params[:payment_voucher]).update_attributes(:state => "canjeado", :payment_id => @sale.payments.where("payment_method_id = ?", payment_method_id).first.id) if params[:payment_voucher] && !params[:payment_voucher].blank?
             flash[:notice] = I18n.t('sale.messages.create.success', 
                           :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
                           "/sales/#{Sale.find(params[:id]).id}")).html_safe
