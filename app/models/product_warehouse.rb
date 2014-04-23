@@ -3,7 +3,7 @@ class ProductWarehouse < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    amount :integer
+    amount :integer, :default => 0
     timestamps
   end
   

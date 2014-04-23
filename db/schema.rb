@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(:version => 20140424113724) do
   add_index "product_variations", ["variation_id"], :name => "index_product_variations_on_variation_id"
 
   create_table "product_warehouses", :force => true do |t|
-    t.integer  "amount"
+    t.integer  "amount",       :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "warehouse_id"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(:version => 20140424113724) do
     t.integer  "provider_id"
     t.string   "description"
     t.string   "metabusqueda"
+
   end
 
   add_index "products", ["product_type_id"], :name => "index_products_on_product_type_id"

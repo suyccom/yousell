@@ -73,9 +73,14 @@ class Sale < ActiveRecord::Base
       self.payments.delete_all if day_sale # Only run if the sale is day sale.
       self.completed_at = Time.now
       self.sale_total = self.total
+      # En el controlador tengo que contabilizar si un producto tiene stock y cuanto para el aviso.
       for line in lines
-        # If we are here it is because warehouses have stock. We remove the product in the stock that has amount. 
-        pw = line.product.current_product_warehouse.amount.blank? || line.product.current_product_warehouse.amount > 0 ? line.product.product_warehouses.where("amount > 0").first : line.product.current_product_warehouse
+        if line.amount > 0
+        # If we are here it is because warehouses have stock. We remove the product in the stock that has amount.
+          pw = line.product.current_product_warehouse.amount <= 0 ? line.product.product_warehouses.where("amount > 0").first : line.product.current_product_warehouse
+        elsif line.amount < 0
+          pw = line.product.current_product_warehouse
+        end
         pw.update_attribute(:amount, pw.amount - line.amount)
       end
     end
