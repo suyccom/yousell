@@ -16,7 +16,6 @@
    <table id="products-table" class="table table-striped table-bordered collection">
     <thead>
       <tr class="field-heading-row">
-        <th><t key='activerecord.attributes.product.generic'/></th>
         <th style="width:15%"><t key='activerecord.attributes.product.provider'/></th>
         <th style="width:13%"><t key='activerecord.attributes.product.model'/></th>
         <th style="width:13%"><t key='activerecord.attributes.product.description'/></th>

@@ -1,129 +1,35 @@
-.product .form-horizontal ul.input-many{
-  margin-left: 0px;
-}
-.product .form-horizontal .input-many-item .control-group {
-  margin-bottom: 6px;
-}
-
-#product-form .control-group label {
-  width:17%;
-  margin-right:5px;
-  text-align: left;
-  
-}
-.product ul.input-many > li > div.input-many-item {
-  border: 0;
-  padding-top: 5px;
-}
-.product ul.input-many .buttons{
-  display: none;
-}
-.product ul.input-many .variation-field{
-  display: none;
-}
-
-a.modal-left{
-  margin-left:10px;
-}
-button.delete{
-  margin-left:10px;
-}
-
-.modal-body input{
-  font-size:5em;
-  height:1em;
-  width:200px;
-}
-.payment-method {
-  margin-left:1em;
-}
-.new-page.sale #add-product-form input {
-  font-size: 1.8em;
-  height: 1.5em;
-  margin-top: 0;
-}
+.product .form-horizontal ul.input-many{margin-left: 0px;}
+.product .form-horizontal .input-many-item .control-group{margin-bottom: 6px;}
+#product-form .control-group label{width:17%;margin-right:5px;text-align: left;}
+.product ul.input-many > li > div.input-many-item{border: 0;padding-top: 5px;}
+.product ul.input-many .buttons{display: none;}
+.product ul.input-many .variation-field{display: none;}
+a.modal-left{margin-left:10px;}
+button.delete{margin-left:10px;}
+.modal-body input{font-size:5em;height:1em;width:200px;}
+.payment-method{margin-left:1em;}
+.new-page.sale #add-product-form input{font-size: 1.8em;height: 1.5em;margin-top: 0;}
 input.barcode{padding-left:14px;padding-right:14px}
-input#search-query {
-  font-size: 1.8em;
-  height: 1.5em;
-  margin-top: 0;
-  line-height: normal;
-}
+input#search-query{font-size: 1.8em;height: 1.5em;margin-top: 0;line-height: normal;}
 input.search{line-height:normal}
-.new-page.sale #search-products-form button{
-  margin-top:2px;
-}
-
-.new-page.sale .form-horizontal .actions {
-  padding-left: 0px;
-}
-
-.form-horizontal .control-group label {
-  width:17%;
-  margin-right:5px;
-  text-align: left;
-  
-}
-.new-page.sale .table th,.new-page.sale .table td {
-  line-height: 33px;
-}
-.new-page.sale input.line-amount, .new-page.sale input.line-discount, .new-page.sale input.sale-total-discount{
-  width:20px;
-}
-.new-page.sale .amount-button{
-  margin:0 6px;
-  font-weight: bold;
-}
-.new-page.sale .ajax-button{
-  margin-top:0;
-  margin-left:2px;
-  height:30px;
-}
-
-.new-page.sale .name-heading{
-  width:55%;
-}
-
-.new-page.sale .discount-button{
-  margin:0;
-}
-.new-page.sale .discount-button .btn{
-  border-radius: 4px 0 0 4px;
-}
-.new-page.sale .discount-group .dropdown-toggle{
-    box-shadow: 1px 0 0 rgba(255, 255, 255, 0.125) inset, 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-#complete-sale-button{
-  font-weight: bold;
-}
-
-
-.index-page.product h2 span{
-  font-size: 0.8em;
-  color: #555;
-}
-
-.search-products-input{
-  width:100%;
-  height:330px!important;
-}
-.textarea-transfer{
-  height:200px;
-  margin-top:5px;
-}
-.form-horizontal .search-products{
-  margin-top:50px;
-}
-input.barcode{
-  border-radius:15px;
-  border: 1px solid #CCCCCC;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-  transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
-}
+.new-page.sale #search-products-form button{margin-top:2px;}
+.new-page.sale .form-horizontal .actions{padding-left: 0px;}
+.form-horizontal .control-group label{width:17%;margin-right:5px;text-align: left;}
+.new-page.sale .table th,.new-page.sale .table td{line-height: 33px;}
+.new-page.sale input.line-amount, .new-page.sale input.line-discount, .new-page.sale input.sale-total-discount{width:20px;}
+.new-page.sale .amount-button{margin:0 6px;font-weight: bold;}
+.new-page.sale .ajax-button{margin-top:0;margin-left:2px;height:30px;}
+.new-page.sale .name-heading{width:55%;}
+.new-page.sale .discount-button{margin:0;}
+.new-page.sale .discount-button .btn{border-radius: 4px 0 0 4px;}
+.new-page.sale .discount-group .dropdown-toggle{box-shadow: 1px 0 0 rgba(255, 255, 255, 0.125) inset, 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);padding-left: 8px;padding-right: 8px;}
+#complete-sale-button{font-weight: bold;}
+.index-page.product h2 span{font-size: 0.8em;color: #555;}
+.search-products-input{width:100%;height:330px!important;}
+.textarea-transfer{height:200px;margin-top:5px;}
+.form-horizontal .search-products{margin-top:50px;}
+input.barcode{border-radius:15px;border: 1px solid #CCCCCC;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;}
 #table-selected-products{width:100%}
 #table-selected-products th{text-align:left;}
-
+#line_price{width:40px}
 

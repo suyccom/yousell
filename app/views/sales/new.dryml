@@ -106,7 +106,7 @@
     <table:lines.reload class='table table-striped table-bordered collection' fields='name, amount, discount, price, type-discount'>
 
       <price-view:>
-        <if test="&this_parent.product.generic == true">
+        <if test="&this_parent.product.provider.generic == true">
           <click-editor-innards message="#{I18n.t('saving')}" updates="#lines,#payment-register-message">
             <after-view:> <t key="currency"/></after-view:>
           </click-editor-innards>

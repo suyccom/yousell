@@ -43,10 +43,7 @@ class LinesController < ApplicationController
     elsif params[:sum]
       params[:line][:amount] = @line.amount + 1
     end
-    if @line.product.generic == true && params[:line][:price]
-      @line.product.update_attribute(:price, params[:line][:price])
-    end
-
+    @line.product.update_attribute(:price, params[:line][:price]) if @line.product.provider.generic == true && params[:line][:price]
     if params[:destroy]
       @line.destroy
       hobo_ajax_response

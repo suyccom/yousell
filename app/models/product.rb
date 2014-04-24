@@ -8,13 +8,12 @@ class Product < ActiveRecord::Base
     price   :decimal, :precision => 8, :scale => 2, :default => 0
     barcode :string, :unique
     description :string
-    generic :boolean, :default => false
     metabusqueda :string
     timestamps
   end
   attr_accessible :price, :amount, :barcode, :product_type, :product_type_id, :product_variations, 
     :provider_code, :provider, :provider_id, :warehouse, :warehouse_id, :code,
-    :product_warehouses, :description, :generic
+    :product_warehouses, :description
 
   # --- Relations --- #
   belongs_to :product_type

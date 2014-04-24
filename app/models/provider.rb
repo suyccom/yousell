@@ -5,9 +5,10 @@ class Provider < ActiveRecord::Base
   fields do
     name :string
     code :string, :unique
+    generic :boolean, :default => false
     timestamps
   end
-  attr_accessible :name, :code
+  attr_accessible :name, :code, :generic
 
   # --- Relations --- #
   has_many :products
