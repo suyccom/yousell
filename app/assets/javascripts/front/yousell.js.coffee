@@ -18,7 +18,7 @@ $ ->
     $("#payment_modal").focus()
 
   # Don't allow enter key press on sale view, in order to avoid double POSTing
-  $(document).on "keypress", ".in-place-form.formlet", (event) ->
+  $(document).on "keypress", (event) ->
     if event.keyCode is 13
       event.preventDefault()
       false
