@@ -1,6 +1,5 @@
 <def tag="linea-producto">
   <tr class="odd product">
-    <td style="text-align:center"><input  type="checkbox" name="product_type[products][][generic]"/></td>
     <td><select-menu name="product_type[products][][provider_id]" options="&Provider.all.map{|p|[p.name,p.id]}" selected="&@provider"/></td>
     <td><input type="text" name="product_type[products][][code]" value="&@code" /></td>
     <td><input type="text" maxlength="8" name="product_type[products][][description]" /></td>
