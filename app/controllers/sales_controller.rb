@@ -40,6 +40,8 @@ class SalesController < ApplicationController
         if l.amount > 0
           cantidad = 0 if l.amount > l.product.amount
           break if cantidad == 0
+        elsif l.amount == 0
+          l.delete
         end
       end
       if cantidad && cantidad == 0
@@ -59,6 +61,8 @@ class SalesController < ApplicationController
             hobo_ajax_response
           elsif params[:sale][:client_name]
             redirect_to("/sales/#{@sale.id}.pdf")
+          elsif @sale.sale_total == 0
+            redirect_to("/")
           else
             payment_method_id = PaymentMethod.voucher.first.id
             Voucher.find(params[:payment_voucher]).update_attributes(:state => "canjeado", :payment_id => @sale.payments.where("payment_method_id = ?", payment_method_id).first.id) if params[:payment_voucher] && !params[:payment_voucher].blank?
