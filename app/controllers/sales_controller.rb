@@ -25,7 +25,6 @@ class SalesController < ApplicationController
   end
 
   def update
-
     # This avoids the user to set '' as total discount
     params[:sale][:total_discount] = 0 if params[:sale] && params[:sale][:total_discount] && params[:sale][:total_discount].blank?
     
@@ -39,17 +38,16 @@ class SalesController < ApplicationController
       # Comprobamos si todos los productos tienen stock
       for l in Sale.find(params[:id]).lines
         if l.amount > 0
-          cantidad = 0
-          for w in l.product.product_warehouses
-            cantidad += w.amount if w.amount
-          end
-          break if cantidad <= 0
+          cantidad = 0 if l.amount > l.product.amount
+          break if cantidad == 0
+        elsif l.amount == 0
+          l.delete
         end
       end
       if cantidad && cantidad == 0
-        product_id = Product.find_by_name(w.product.name).id
+        product_id = Product.find_by_name(l.product.name).id
         flash[:error] = I18n.t('activerecord.errors.models.product.attributes.amount.stock',
-                        :href => ActionController::Base.helpers.link_to("#{w.product.name}",
+                        :href => ActionController::Base.helpers.link_to("#{l.product.name}",
                         "/products/#{product_id}/edit")).html_safe
         if params[:sale][:day_sale] 
           hobo_update
@@ -63,6 +61,8 @@ class SalesController < ApplicationController
             hobo_ajax_response
           elsif params[:sale][:client_name]
             redirect_to("/sales/#{@sale.id}.pdf")
+          elsif @sale.sale_total == 0
+            redirect_to("/")
           else
             payment_method_id = PaymentMethod.voucher.first.id
             Voucher.find(params[:payment_voucher]).update_attributes(:state => "canjeado", :payment_id => @sale.payments.where("payment_method_id = ?", payment_method_id).first.id) if params[:payment_voucher] && !params[:payment_voucher].blank?

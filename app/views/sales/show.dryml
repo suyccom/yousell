@@ -5,9 +5,8 @@
   </before-heading:>
   <field-list: fields="sale_total, total_discount, type_discount, refunded_ticket"/>
   <collection: replace>
-    <a class="pull-right btn btn-danger"
-       onclick="confirm('#{I18n.t('sale.are_you_sure')}')"
-       href="/sales/#{this.id}/cancel">
+    <a class="pull-right btn btn-danger" onclick="confirm('#{I18n.t('sale.are_you_sure')}')"
+    href="/sales/#{this.id}/cancel" unless="&!this.refunded_ticket_id.blank? || DateTime.now > this.created_at + 30.days">
       <t key="sale.cancel">Cancel</t>
     </a>
     <table:lines class="table table-striped table-bordered collection" 
