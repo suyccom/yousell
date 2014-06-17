@@ -51,7 +51,7 @@ group :test do
   gem "rspec-rails", ">= 2.5.0"
   gem "spork", ">= 1.0.0rc3"
   gem "capybara"
-  gem "capybara-webkit", "0.12.1"
+  gem "capybara-webkit", "0.13.2"
   gem "timecop"
   gem "headless"
 end
