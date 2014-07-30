@@ -6,9 +6,7 @@
 // appear at the bottom of the the compiled file.
 //
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery-ui
-//= require turbolinks
 //= require_tree ./application
 
