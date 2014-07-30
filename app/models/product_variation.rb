@@ -15,6 +15,7 @@ class ProductVariation < ActiveRecord::Base
   before_save :save_code, :touch_product
   def save_code
     self.code = value
+    self.value = VariationValue.find_by_code(value).name
   end
 
   def touch_product
