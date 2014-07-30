@@ -30,7 +30,9 @@ add_products_run_only_once = ->
         $(this).remove()
 
 add_products_run_always = ->
-  $('#barcode').keydown (e) ->
+  # This is related to the impediment of the use of ENTER key (see yousell.js.coffee). 
+  # This way we workaround the use of ENTER key, just for barcode readers.
+  $('#add-product-form input.barcode').keydown (e) ->
     if (e.keyCode == 13)
       e.preventDefault()
-      $('.add-product-button').click()
+      $('#add-product-form button').click()

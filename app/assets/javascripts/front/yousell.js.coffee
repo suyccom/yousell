@@ -17,7 +17,7 @@ $ ->
   $(".modal").on "shown", -> 
     $("#payment_modal").focus()
 
-  # Don't allow enter key press on sale view, in order to avoid double POSTing
+  # Don't allow ENTER key press on whole app, in order to avoid double POSTing in some forms. Besides, the app is for touchscreens! (no ENTER key) :)
   $(document).on "keypress", (event) ->
     if event.keyCode is 13
       event.preventDefault()
