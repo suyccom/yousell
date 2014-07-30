@@ -23,52 +23,51 @@ class SalesController < ApplicationController
     redirect_to('/')
   end
 
+  def not_have_stock
+    # This check if all products have stock. 
+    for @l in Sale.find(params[:id]).lines
+      if @l.amount > 0
+        cantidad = 0 if @l.amount > @l.product.amount
+        break if cantidad == 0
+      elsif @l.amount == 0
+        @l.delete
+      end
+    end
+    comodin = cantidad == 0 ? true : false
+    return comodin
+  end
+
   def update
     # This avoids the user to set '' as total discount
     params[:sale][:total_discount] = 0 if params[:sale] && params[:sale][:total_discount] && params[:sale][:total_discount].blank?
-    
+
     if params[:payment_sale_id] && Sale.find(params[:payment_sale_id]).pending_amount > 0
       flash[:error] = I18n.t('sale.messages.pending_amount')
       redirect_to('/')
     elsif params[:payment_sale_id] && Sale.find(params[:payment_sale_id]).pending_amount < 0
       flash[:error] = I18n.t('sale.messages.pending_amount')
       redirect_to('/')
+    elsif not_have_stock && !request.xhr?
+      # Se añade la ultima condición para evitar que se calcule si tienen o no stock 
+      flash[:error] = I18n.t('activerecord.errors.models.product.attributes.amount.stock',
+                      :href => ActionController::Base.helpers.link_to("#{@l.product.name}",
+                      "/products/#{@l.product.id}/edit")).html_safe
+      redirect_to ("/")
     else
-      # Comprobamos si todos los productos tienen stock
-      for l in Sale.find(params[:id]).lines
-        if l.amount > 0
-          cantidad = 0 if l.amount > l.product.amount
-          break if cantidad == 0
-        elsif l.amount == 0
-          l.delete
-        end
-      end
-      if cantidad && cantidad == 0
-        product_id = Product.find_by_name(l.product.name).id
-        flash[:error] = I18n.t('activerecord.errors.models.product.attributes.amount.stock',
-                        :href => ActionController::Base.helpers.link_to("#{l.product.name}",
-                        "/products/#{product_id}/edit")).html_safe
-        if params[:sale][:day_sale] 
-          hobo_update
-        else
+      hobo_update do
+        if request.xhr?
           hobo_ajax_response
-        end
-      else
-        hobo_update do
-          if request.xhr?
-            hobo_ajax_response
-          elsif params[:sale][:client_name]
-            redirect_to("/sales/#{@sale.id}.pdf")
-          elsif @sale.sale_total == 0
-            redirect_to("/")
-          else
-            payment_method_id = PaymentMethod.voucher.first.id
-            Voucher.find(params[:payment_voucher]).update_attributes(:state => "canjeado", :payment_id => @sale.payments.where("payment_method_id = ?", payment_method_id).first.id) if params[:payment_voucher] && !params[:payment_voucher].blank?
-            flash[:notice] = I18n.t('sale.messages.create.success', 
-                          :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
-                          "/sales/#{Sale.find(params[:id]).id}")).html_safe
-            redirect_to('/')
-          end
+        elsif params[:sale][:client_name]
+          redirect_to("/sales/#{@sale.id}.pdf")
+        elsif @sale.sale_total == 0
+          redirect_to("/")
+        else
+          payment_method_id = PaymentMethod.voucher.first.id
+          Voucher.find(params[:payment_voucher]).update_attributes(:state => "canjeado", :payment_id => @sale.payments.where("payment_method_id = ?", payment_method_id).first.id) if params[:payment_voucher] && !params[:payment_voucher].blank?
+          flash[:notice] = I18n.t('sale.messages.create.success', 
+                        :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
+                        "/sales/#{Sale.find(params[:id]).id}")).html_safe
+          redirect_to('/')
         end
       end
     end

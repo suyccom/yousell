@@ -142,7 +142,7 @@ es:
         actions: Acciones
         lines: Líneas
         sale_total: Total
-        total_discount: Descuento
+        total_discount: Descuento total
         type_discount: Tipo de descuento
         refunded_ticket: Ticket devolución
         client_name: Nombre del cliente
