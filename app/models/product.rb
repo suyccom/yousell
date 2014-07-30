@@ -24,11 +24,6 @@ class Product < ActiveRecord::Base
   has_many :warehouses, :through => :product_warehouses
   children :product_warehouses
 
-
-
-
-
-
   # --- Validations --- #
   validates_presence_of :provider
   validates :description, :length => { :maximum => 8 }

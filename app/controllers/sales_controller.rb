@@ -1,4 +1,3 @@
-
 class SalesController < ApplicationController
 
   hobo_model_controller
@@ -53,7 +52,6 @@ class SalesController < ApplicationController
           hobo_update
         else
           hobo_ajax_response
-          redirect_to ("/")
         end
       else
         hobo_update do
