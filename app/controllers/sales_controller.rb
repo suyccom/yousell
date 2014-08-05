@@ -66,7 +66,7 @@ class SalesController < ApplicationController
           Voucher.find(params[:payment_voucher]).update_attributes(:state => "canjeado", :payment_id => @sale.payments.where("payment_method_id = ?", payment_method_id).first.id) if params[:payment_voucher] && !params[:payment_voucher].blank?
           flash[:notice] = I18n.t('sale.messages.create.success', 
                         :href => ActionController::Base.helpers.link_to("#{Sale.find(params[:id]).id}",
-                        "/sales/#{Sale.find(params[:id]).id}")).html_safe
+                        "/sales/#{Sale.find(params[:id]).id}", id:'new-successful-sale')).html_safe
           redirect_to('/')
         end
       end

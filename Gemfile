@@ -2,21 +2,16 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.12'
 gem 'sqlite3'
 gem 'jquery-rails', '2.2.1'
-gem "hobo", "= 2.0.0"
+gem "hobo", "= 2.0.1"
 # Hobo's version of will_paginate is required.
 gem "will_paginate", :git => "git://github.com/Hobo/will_paginate.git"
-gem "hobo_bootstrap", :git => "git://github.com/Hobo/hobo_bootstrap.git"
-gem "hobo_jquery_ui", "2.0.0"
-gem "hobo_bootstrap_ui", "2.0.0"
+gem "hobo_bootstrap", "2.0.1"
+gem "hobo_jquery_ui", "2.0.1"
+gem "hobo_bootstrap_ui", "2.0.1"
 gem "jquery-ui-themes", "~> 0.0.4"
 gem 'bootswatch-rails'
 gem 'hobo-metasearch', :git => "git://github.com/suyccom/hobo-metasearch"
-gem "factory_girl_rails", "4.2.0", :require => false
-gem "faker", :git => 'git://github.com/jorgegorka/faker'
-gem "turbolinks"
-gem "jquery-turbolinks"
 gem "rails-settings-cached", "0.2.4"
-gem "whisk_deploy"
 gem 'exception_notification'
 gem "barby" # Barcodes
 gem "chunky_png"
@@ -44,14 +39,17 @@ group :development do
   gem 'thin'
   # Stop cluttering the log in development mode.
   gem 'quiet_assets'
+  gem "whisk_deploy"
 end
 
 # Testing gems
 group :test do
-  gem "rspec-rails", ">= 2.5.0"
+  gem "rspec-rails", "~> 2.14.2"
   gem "spork", ">= 1.0.0rc3"
-  gem "capybara"
-  gem "capybara-webkit", "0.13.2"
+  gem "capybara", "2.0.2"
+  gem "capybara-webkit", "1.1.0"
   gem "timecop"
   gem "headless"
+  gem "factory_girl_rails", "4.2.0", :require => false
+  gem "faker", :git => 'git://github.com/jorgegorka/faker'
 end

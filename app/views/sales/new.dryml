@@ -18,7 +18,7 @@
           <input type='text' placeholder="&t('sale.barcode', :default => 'Barcode')" name='barcode' class='span barcode search' autofocus/>&nbsp;
         </div>
         <div class='span1'>
-          <button type='submit' class='btn'><i class="icon-plus"></i></button>
+          <button id='add-product-by-barcode' type='submit' class='btn'><i class="icon-plus"></i></button>
         </div>
       </div>
     </div>
@@ -50,7 +50,7 @@
         <div class="modal-body">
           <div class="form-horizontal">
             <div class="control-group">
-              <select-menu class="search-products-input" name="products_id[]" multiple="true" options="&@products.map{|p| [p.name, p.id]}">
+              <select-menu id='search-products-input' class="search-products-input" name="products_id[]" multiple="true" options="&@products.map{|p| [p.name, p.id]}">
                 <% for p in @products %>
                   <option value="#{p.id}" ><%= p.metabusqueda %></option>
                 <% end %>
@@ -59,7 +59,7 @@
           </div>
         </div>
         <modal-form-footer>
-          <submit: label="#{I18n.t 'product.show.search_products_button'}"/>
+          <submit: id='add-products-by-search' label="#{I18n.t 'product.show.search_products_button'}"/>
         </modal-form-footer>
       </formlet>
     </modal:>
@@ -183,7 +183,7 @@
           <input type='hidden' name='payment_sale_id' value='&@sale.id'/>
         </div>
         <modal-form-footer>
-          <submit: label="#{ht 'sale.actions.save', :default=>['Save']}"/>
+          <submit: id='add-payment-amount' label="#{ht 'sale.actions.save', :default=>['Save']}"/>
         </modal-form-footer>
       </formlet>
     </modal:>

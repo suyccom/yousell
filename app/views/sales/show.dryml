@@ -47,12 +47,14 @@
       </form>
     </modal:>
   </modal>
-  <modal-open-button class="pull-right" modal="print-invoice-modal">
+  <modal-open-button id='print-invoice' class="pull-right" modal="print-invoice-modal">
     <i class="icon-print"></i> <t key="sale.show.print_invoice"/>
   </modal-open-button>
 </def>
 
 <def tag="print-ticket">
-  <a class="btn pull-right" style="margin-right:2%" href="/sales/#{this.id}.pdf?ticket=true" name="ticket"><i class="icon-print"></i> <t key="sale.show.print_ticket"/></a>
+  <a class="btn pull-right" style="margin-right:2%" href="/sales/#{this.id}.pdf?ticket=true" name="ticket">
+    <i class="icon-print"></i> <t key="sale.show.print_ticket"/>
+  </a>
 </def>
 
