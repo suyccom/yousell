@@ -35,5 +35,6 @@ def clear_tables_and_create_admin
   # Create some PaymentMethods
   PaymentMethod.create(:name => 'Cash')
   PaymentMethod.create(:name => 'Credit Card')
+  PaymentMethod.create(:name => 'Voucher', :voucher => true)
   
 end

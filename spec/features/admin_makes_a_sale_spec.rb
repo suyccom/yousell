@@ -20,95 +20,106 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     click_on('Sell')
     page.should_not have_css('tr.line')
 
-    # Adds a product
+    # Adds a product via barcode
     within '#add-product-form' do
       fill_in('barcode', :with => @product1.barcode)
-      click_on('+')
+      click_button('add-product-by-barcode')
     end
     sleep 0.3
     page.should have_css 'tr.line:nth-child(1)'
     page.find('tr.line:nth-child(1)').should have_content @product1.name
     page.should have_content '$15.00'
-
-    # Adds another product
-    within '#add-product-form' do
-      fill_in('search', :with => '400')
-      click_on(@product2.name.strip)
-      click_on('+')
+    within('tfoot div.discount-group') do
+      # We use global discount to discount $1
+      page.find('span.total-discount').click
+      fill_in('sale_total_discount', :with => '1')
+      page.find('button').click
+      click_link('€')
     end
-    #page.should have_css 'tr.line:nth-child(2)'
+    within('span.text-error') do
+      page.should have_content('Pending: $14.00')
+    end
+
+    # Adds another product via search
+    within '#search-product-form' do
+      fill_in('search-query', :with => '400')
+      sleep(1)
+      click_link('search-products')
+    end
+    select('Proveedor2 400',:from => 'search-products-input')
+    click_on('add-products-by-search')
     page.find('tr.line:nth-child(2)').should have_content @product2.name
-    page.should have_content('$31.00')
+    page.should have_content('$30.00')
 
     # Adds another pair of white shoes
     within 'tr.line:nth-child(2)' do
       page.find(".icon-plus").click
     end
-    page.should have_content('$47.00')
+    page.should have_content('$46.00')
     
     # Adds an incorrect barcode
-    fill_in('search', :with => '')
-    fill_in('barcode', :with => '11GREEN')
-    click_on('+')
+    within '#add-product-form' do
+      fill_in('barcode', :with => '11GREEN')
+      click_on('add-product-by-barcode')
+    end
     page.should have_css 'tr.line', :count => 2
-    page.driver.browser.switch_to.alert.accept
 
     # Selects a Payment Method
     click_on('Cash') 
     within('#payment-modal') do
       fill_in("payment_amount", :with => 10)
-      click_on('Submit')
+      click_on('add-payment-amount')
     end
     sleep 1
     page.find('a#Cash').should have_content('$10.00')
-    page.should have_content("Pending: $37.00")
-    click_on('Complete Sale')
+    page.should have_content("Pending: $36.00")
+    click_on('complete-sale-button')
     page.should have_content("The sale can't be completed because there is an amount pending to be paid")
     click_on('Cash')
     within('#payment-modal') do
       find_field("payment_amount").value.should == ''
       fill_in("payment_amount", :with => 50)
-      click_on('Submit')
+      click_on('add-payment-amount')
     end
     sleep 1
     Sale.last.payments.size.should eq 1
     Sale.last.payments.last.payment_method.to_s.should eq 'Cash'
     Sale.last.payments.last.amount.to_i.should eq 50
-    Sale.last.pending_amount.to_i.should eq -3
+    Sale.last.pending_amount.to_i.should eq -4
     page.find('a#Cash').should have_content('$50.00')
-    page.should have_content("Return: $3.00")
+    page.should have_content("Return: $4.00")
     # Admin cancels Cash payment
     click_on('Cash')
-    click_on('Submit')
+    click_on('add-payment-amount')
     sleep 1
     page.find('a#Cash').text.should eq('Cash')
     Sale.last.payments.size.should eq 0
-    Sale.last.pending_amount.to_i.should eq 47
-    page.should have_content("Pending: $47.00")
+    Sale.last.pending_amount.to_i.should eq 46
+    page.should have_content("Pending: $46.00")
     click_on('Credit Card')
     within('#payment-modal') do
       find_field("payment_amount").value.should == ''
-      fill_in("payment_amount", :with => 47)
-      click_on('Submit')
+      fill_in("payment_amount", :with => 46)
+      click_on('add-payment-amount')
     end
     page.should have_content("Payment matches total amount")
 
     # Complete the sale
-    click_on('Complete Sale')
+    click_on('complete-sale-button')
     page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
     # Check that the amount in stock has been reduced
     @product1.amount.should eq 9
     @product2.amount.should eq 8
     
     # Goes to the sale and prints an invoice
-    click_on "#{Sale.last.id - 1}"
-    click_on 'Print Invoice'
+    click_on('new-successful-sale')
+    click_on('print-invoice')
     fill_in 'sale[client_name]', :with => 'Jon Gutierrez'
     fill_in 'sale[tax_number]', :with => '22222222A'
     fill_in 'sale[address]', :with => 'Uribitarte 22'
     fill_in 'sale[zip_code]', :with => '48001'
     fill_in 'sale[city]', :with => 'Bilbao'
-    click_on 'Print'
+    page.find('input.button.submit-button').click
   end
 
   scenario 'Admin makes a day sale' do
@@ -119,17 +130,16 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     # Adds a product
     within '#add-product-form' do
       fill_in('barcode', :with => @product1.barcode)
-      click_on('+')
+      click_button('add-product-by-barcode')
     end
     page.should have_css('tr.line:nth-child(1)')
     page.find('tr.line:nth-child(1)').should have_content(@product1.name)
     page.should have_content('$15.00')
 
     # Clicks on 'day sale', but after that adds more products and discounts and the button should remain pushed
-
     within '#add-product-form' do
       fill_in('barcode', :with => @product2.barcode)
-      click_on('+')
+      click_button('add-product-by-barcode')
     end
     page.should have_css('tr.line:nth-child(2)')
     page.should have_content('$31.00')
@@ -140,13 +150,13 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     within('#payment-modal') do
       find_field("payment_amount").value.should == ''
       fill_in("payment_amount", :with => 31)
-      click_on('Submit')
+      click_on('add-payment-amount')
     end
 
     # ...and completes the sale
-    click_on('Complete Sale')
+    click_on('complete-sale-button')
     page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
-    click_on "#{Sale.last.id - 1}"
+    click_on('new-successful-sale')
     page.should_not have_content('Payments')
 
     # Goes to the pending day_sales view
@@ -160,7 +170,7 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     # Adds a product
     within '#add-product-form' do
       fill_in('barcode', :with => @product1.barcode)
-      click_on('+')
+      click_button('add-product-by-barcode')
     end
     page.should have_css('tr.line:nth-child(1)')
     page.find('tr.line:nth-child(1)').should have_content(@product1.name)
@@ -171,12 +181,12 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     within('#payment-modal') do
       find_field("payment_amount").value.should == ''
       fill_in("payment_amount", :with => 15)
-      click_on('Submit')
+      click_on('add-payment-amount')
     end
 
     # Clicks on 'day sale' and completes the sale
     page.find('#day_sale_button').click
-    click_on('Complete Sale')
+    click_on('complete-sale-button')
     page.should have_content("The sale #{Sale.last.id - 1} has been completed successfully")
     Sale.complete.last.update_attribute(:completed_at, Date.today + 10.days)
 
@@ -187,7 +197,7 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     click_on('There are 2 day(s) with pending day sales to be checked')
 
     # Can see all the 'day_sales' of a specific day
-    page.find('td.completed-at-date-view:first a').click
+    click_link('2012-12-15')
     page.should have_content(Date.today.strftime('%Y-%m-%d'))
     page.should have_css('tr.sale', :count => 1)
 
@@ -195,11 +205,11 @@ feature 'The admin wants to make a sale', :driver => :selenium do
     click_on ('Back to pending day sales')
     page.find('tr.sale:nth-child(1)').should have_content(Sale.first.created_at.to_date.strftime('%Y-%m-%d'))
     page.find('tr.sale:nth-child(1)').should have_content("31")
-    page.find('td.controls a i.icon-trash').click
+    page.find('tr.sale:nth-child(1) td.controls a i.icon-trash').click
     page.driver.browser.switch_to.alert.accept
-    page.find('tr.sale:nth-child(1)').should have_content(Date.today.strftime('%Y-%m-%d'))
+    page.find('tr.sale:nth-child(1)').should have_content(Sale.first.completed_at.to_date.strftime('%Y-%m-%d'))
     page.find('tr.sale:nth-child(1)').should have_content("15")
-    page.find('td.controls a i.icon-trash').click
+    page.find('tr.sale:nth-child(1) td.controls a i.icon-trash').click
     page.driver.browser.switch_to.alert.accept
     page.should have_content('No pending day sales to be checked')
   end

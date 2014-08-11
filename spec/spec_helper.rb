@@ -53,7 +53,7 @@ Spork.prefork do
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
   end
 
-  require 'integration_helper'
+  require File.expand_path("spec/features/integration_helper.rb")
   
   # Hack to start a headless session when running tests from our integration server "abeja"
   require 'socket'
