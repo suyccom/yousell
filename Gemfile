@@ -12,7 +12,7 @@ gem "jquery-ui-themes", "~> 0.0.4"
 gem 'bootswatch-rails'
 gem 'hobo-metasearch', :git => "git://github.com/suyccom/hobo-metasearch"
 gem "rails-settings-cached", "0.2.4"
-gem 'exception_notification'
+gem 'exception_notification', "3.0.1"
 gem "barby" # Barcodes
 gem "chunky_png"
 gem "prawn-labels" # Labels

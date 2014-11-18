@@ -65,9 +65,23 @@ class Sale < ActiveRecord::Base
   end
 
   # --- Hooks --- #
+  after_create :save_and_print_ticket
+  def save_and_print_ticket
+    FileUtils.mkdir( File.join(TICKETS_PATH, self.created_at.year.to_s) ) unless File.exist?( File.join(TICKETS_PATH, Date.today.year.to_s) )
+    ticket_item_abs_path = File.join(TICKETS_PATH, self.created_at.year.to_s, self.id.to_s + '.txt')
+    File.open(
+      ticket_item_abs_path,
+      'w'
+    ) do |f| f.write(ticket_content(self.lines)) end
+    system("lp -o cpi=18 -o lpi=10 #{ticket_item_abs_path}") unless Rails.env.development?
+  end
+  def ticket_content(lines)
+    'Esto es una prueba'
+  end
+
   include ActiveModel::Dirty  # http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
-  before_save :set_some_attributes
-  def set_some_attributes
+  before_save :attributes_ticket_stock
+  def attributes_ticket_stock
     # Only run if the sale has just been marked as completed
     if complete && complete_changed? && !completed_at
       self.payments.delete_all if day_sale # Only run if the sale is day sale.

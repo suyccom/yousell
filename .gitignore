@@ -5,26 +5,31 @@
 #   git config --global core.excludesfile ~/.gitignore_global
 
 # Ignore bundler config
-/.bundle
+.bundle
 
 # Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3.bak
+db/*.sqlite3
+db/*.sqlite3.bak
 
 # Ignore all logfiles and tempfiles.
-/log/*.log*
-/tmp
+log/*.log*
+tmp
 
+# Ruby version
 .rvmrc
 .rbenv-version
 .ruby-version
-/lib/photos
-/public/assets/
-/config/hobo_routes.rb
-/app/views/taglibs/auto/*
+
+# Some files / folders
+lib/photos
+public/assets/
+config/hobo_routes.rb
+app/views/taglibs/auto/*
 lib/attachments
 lib/logos
+lib/tasks
 config/application.rb
+app/documentation/tickets/*
 
 # Ignore zeus config files
 custom_plan.rb
