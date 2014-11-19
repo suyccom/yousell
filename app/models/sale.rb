@@ -65,18 +65,28 @@ class Sale < ActiveRecord::Base
   end
 
   # --- Hooks --- #
-  after_create :save_and_print_ticket
+  after_save :save_and_print_ticket, :if => "self.complete?"
   def save_and_print_ticket
     FileUtils.mkdir( File.join(TICKETS_PATH, self.created_at.year.to_s) ) unless File.exist?( File.join(TICKETS_PATH, Date.today.year.to_s) )
     ticket_item_abs_path = File.join(TICKETS_PATH, self.created_at.year.to_s, self.id.to_s + '.txt')
     File.open(
       ticket_item_abs_path,
       'w'
-    ) do |f| f.write(ticket_content(self.lines)) end
-    system("lp -o cpi=18 -o lpi=10 #{ticket_item_abs_path}") unless Rails.env.development?
+    ) do |f| f.write(ticket_content) end
+    system( PRINT_TICKETS_COMMAND + ticket_item_abs_path ) unless Rails.env.development?
   end
-  def ticket_content(lines)
-    'Esto es una prueba'
+
+  def ticket_content
+    items = ''
+    for line in self.lines
+      items += [line.name, line.amount.to_s, line.price.to_s].join(' ') + "\n"
+    end
+    return(self.created_at.to_s + " - " + SHOP_NAME + "\n" + 
+           "Ticket #{self.id}\n" +
+          "Articulos" + "\n" + 
+          items + 
+          "Total: #{self.total}\n" +
+          "\n\n\n\n\n\n\n")
   end
 
   include ActiveModel::Dirty  # http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
