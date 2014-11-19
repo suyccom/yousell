@@ -80,3 +80,11 @@ module Yousell
     }
   end
 end
+
+BARCODE_FORMAT = [
+  {:type => :provider,  :chars => 2},
+  {:type => :variation, :chars => 1, :name => 'Type'},
+  {:type => :code,      :chars => 4},
+  {:type => :variation, :chars => 3, :name => 'Color'},
+  {:type => :variation, :chars => 2, :name => 'Size'}
+]
