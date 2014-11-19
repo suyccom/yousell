@@ -2,6 +2,9 @@ class Sale < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
 
+  #Incluimos este helper para poder utilizar "number_to_currency"
+  include ActionView::Helpers::NumberHelper
+
   fields do
     complete :boolean, :default => false
     day_sale :boolean, :default => false
@@ -79,14 +82,17 @@ class Sale < ActiveRecord::Base
   def ticket_content
     items = ''
     for line in self.lines
-      items += [line.name, line.amount.to_s, line.price.to_s].join(' ') + "\n"
+      items += [line.name, line.amount.to_s, number_to_currency(line.price)].join(' ') + "\n"
     end
     return(self.created_at.to_s + " - " + SHOP_NAME + "\n" + 
-           "Ticket #{self.id}\n" +
-          "Articulos" + "\n" + 
-          items + 
-          "Total: #{self.total}\n" +
-          "\n\n\n\n\n\n\n")
+           "\nTicket #{self.id}\n" +
+          "\nArticulos:" + "\n" + 
+          "---\n" +
+          items +
+          "\n\n---\n" +
+          "Total: #{number_to_currency(self.total)}\n" +
+          "\n\nFormas de pago: #{self.payments.*.payment_method.*.name.join(', ')}" +
+          "\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
   end
 
   include ActiveModel::Dirty  # http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
