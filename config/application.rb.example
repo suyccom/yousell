@@ -88,3 +88,6 @@ BARCODE_FORMAT = [
   {:type => :variation, :chars => 3, :name => 'Color'},
   {:type => :variation, :chars => 2, :name => 'Size'}
 ]
+PRINT_LABELS_COMMAND = "lp "
+PRINT_TICKETS_COMMAND = "lp -o cpi=18 -o lpi=10 "
+SHOP_NAME = 'Shop name'
